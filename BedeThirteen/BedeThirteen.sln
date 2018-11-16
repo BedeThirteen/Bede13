@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BedeThirteen.Data", "BedeTh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BedeThirteen.Services", "BedeThirteen.Services\BedeThirteen.Services.csproj", "{1746D64D-F3B0-414F-829B-F1A32DF49299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BedeThirteen.Games", "BedeThirteen.Games\BedeThirteen.Games.csproj", "{4D6C6AB2-112A-4881-ABBA-45FBABBA996C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BedeThirteen.Tests", "BedeThirteen.Tests\BedeThirteen.Tests.csproj", "{B97596AA-2D10-47D6-AF56-51677D255181}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{1746D64D-F3B0-414F-829B-F1A32DF49299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1746D64D-F3B0-414F-829B-F1A32DF49299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1746D64D-F3B0-414F-829B-F1A32DF49299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D6C6AB2-112A-4881-ABBA-45FBABBA996C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D6C6AB2-112A-4881-ABBA-45FBABBA996C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D6C6AB2-112A-4881-ABBA-45FBABBA996C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D6C6AB2-112A-4881-ABBA-45FBABBA996C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B97596AA-2D10-47D6-AF56-51677D255181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B97596AA-2D10-47D6-AF56-51677D255181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B97596AA-2D10-47D6-AF56-51677D255181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B97596AA-2D10-47D6-AF56-51677D255181}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
