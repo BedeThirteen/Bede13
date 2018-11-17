@@ -10,11 +10,11 @@
     using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
 
-    public class CardService : ICardService
+    public class CreditCardService : ICreditCardService
     {
         private readonly BedeThirteenContext context;
 
-        public CardService(BedeThirteenContext context)
+        public CreditCardService(BedeThirteenContext context)
         {
             this.context = context;
         }

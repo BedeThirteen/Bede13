@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using BedeThirteen.Data.Models;
 
-    public interface ICardService
+    public interface ICreditCardService
     {
         Task<CreditCard> AddCreditCardAsync(string number, string cvv, DateTime expiry, string userId);
 

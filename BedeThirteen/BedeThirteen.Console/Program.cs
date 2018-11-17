@@ -20,7 +20,7 @@ namespace BedeThirteen.ConsoleClient
 
         //var context = new BedeThirteenContext();
 
-        //var cardService = new CardService(context);
+        //var cardService = new CreditCardService(context);
         //var user = context.Users.FirstOrDefault();
 
         //var card = await cardService.AddCreditCardAsync("1234567890123456", "333", DateTime.Now.AddDays(1), user.Id);

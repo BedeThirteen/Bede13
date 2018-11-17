@@ -3,23 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using BedeThirteen.Data.Models.Contracts;
+    using Microsoft.AspNetCore.Identity;
 
-    public class User : IEditable, IDeletable
+    public class User : IdentityUser, IEditable, IDeletable
     {
         public User()
         {
             this.CreditCards = new HashSet<CreditCard>();
         }
-
-        // temp
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
-
-        // temp
-        public string UserName { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }

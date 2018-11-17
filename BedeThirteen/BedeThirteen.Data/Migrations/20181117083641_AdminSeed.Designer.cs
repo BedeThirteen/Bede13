@@ -4,14 +4,16 @@ using BedeThirteen.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    partial class BedeThirteenContextModelSnapshot : ModelSnapshot
+    [Migration("20181117083641_AdminSeed")]
+    partial class AdminSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
