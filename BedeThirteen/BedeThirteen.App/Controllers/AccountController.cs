@@ -7,10 +7,12 @@
     using BedeThirteen.App.Models.AccountViewModels;
     using BedeThirteen.App.Services;
     using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.Contracts;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
     [Authorize]
@@ -21,17 +23,23 @@
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICurrencyService _currencyService;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ICurrencyService currencyService, 
+            IConfiguration  configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _currencyService = currencyService;
+            _configuration = configuration;
         }
 
         [TempData]
@@ -218,6 +226,15 @@
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
+                if (model.Currency != null && await _currencyService.CurrencyIsValidAsync(model.Currency))
+                {
+                    user.Currency = await _currencyService.GetCurrencyByNameAsync(model.Currency);
+                }
+                else
+                {
+                    user.CurrencyId = new Guid(_configuration.GetSection("CurrencySettings")["DefaultCurrencyId"]);
+                }
+                
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

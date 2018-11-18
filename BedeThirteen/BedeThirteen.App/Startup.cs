@@ -79,6 +79,8 @@ namespace BedeThirteen.App
         {
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICreditCardService, CreditCardService>();
+            services.AddTransient<ICurrencyService, CurrencyService>();
+
         }
 
         private void RegisterAuthentication(IServiceCollection services)
