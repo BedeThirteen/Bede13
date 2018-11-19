@@ -52,8 +52,11 @@ namespace BedeThirteen.Data.Migrations
 
             modelBuilder.Entity("BedeThirteen.Data.Models.Currency", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Name")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(5);
+
+                    b.Property<decimal>("ConversionRateToUSD");
 
                     b.Property<DateTime?>("CreatedOn");
 
@@ -63,20 +66,15 @@ namespace BedeThirteen.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(5);
-
-                    b.HasKey("Id");
+                    b.HasKey("Name");
 
                     b.ToTable("Currencies");
 
                     b.HasData(
-                        new { Id = new Guid("e8a817e6-c21e-452d-9f87-670de776737d"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("f046df30-72d3-43b7-a83c-f0c9a2ab3941"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("f475b78d-9efe-4208-9ae0-7dd1ec5ed319"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("da4efe00-2faa-4171-a6f9-958b19a33e8b"), IsDeleted = false, Name = "GBP" },
-                        new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "GBP" }
+                        new { Name = "EUR", ConversionRateToUSD = 1m, IsDeleted = false },
+                        new { Name = "USD", ConversionRateToUSD = 1m, IsDeleted = false },
+                        new { Name = "BGN", ConversionRateToUSD = 1m, IsDeleted = false },
+                        new { Name = "GBP", ConversionRateToUSD = 1m, IsDeleted = false }
                     );
                 });
 
@@ -154,6 +152,8 @@ namespace BedeThirteen.Data.Migrations
 
                     b.Property<Guid>("CurrencyId");
 
+                    b.Property<string>("CurrencyName");
+
                     b.Property<DateTime?>("DeletedOn");
 
                     b.Property<string>("Email")
@@ -190,7 +190,7 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurrencyId");
+                    b.HasIndex("CurrencyName");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -337,8 +337,7 @@ namespace BedeThirteen.Data.Migrations
                 {
                     b.HasOne("BedeThirteen.Data.Models.Currency", "Currency")
                         .WithMany("Users")
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CurrencyName");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

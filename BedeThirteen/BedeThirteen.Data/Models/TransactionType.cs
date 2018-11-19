@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using BedeThirteen.Data.Models.Abstract;
 
-    public class TransactionType : Entity
+    public class TransactionType : GUIDEntity
     {
         public TransactionType()
         {

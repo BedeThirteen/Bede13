@@ -263,8 +263,7 @@ namespace BedeThirteen.Data.Migrations
                     { new Guid("e8a817e6-c21e-452d-9f87-670de776737d"), null, null, false, null, "EUR" },
                     { new Guid("f046df30-72d3-43b7-a83c-f0c9a2ab3941"), null, null, false, null, "USD" },
                     { new Guid("f475b78d-9efe-4208-9ae0-7dd1ec5ed319"), null, null, false, null, "BGN" },
-                    { new Guid("da4efe00-2faa-4171-a6f9-958b19a33e8b"), null, null, false, null, "GBP" },
-                    { new Guid("618d2663-fd74-497e-965b-572076e97ca0"), null, null, false, null, "GBP" }
+                    { new Guid("da4efe00-2faa-4171-a6f9-958b19a33e8b"), null, null, false, null, "GBP" }
                 });
 
             migrationBuilder.CreateIndex(

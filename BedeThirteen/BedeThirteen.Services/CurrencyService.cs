@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BedeThirteen.Services
 {
-  public  class CurrencyService : ICurrencyService
+    public class CurrencyService : ICurrencyService
     {
         private readonly BedeThirteenContext context;
 
@@ -17,12 +17,12 @@ namespace BedeThirteen.Services
 
         public async Task<Currency> GetCurrencyByNameAsync(string name)
         {
-            return await this.context.Currencies.FirstAsync(currency => currency.Name == name);
+            return await context.Currencies.FirstAsync(currency => currency.Name == name);
         }
 
         public async Task<bool> CurrencyIsValidAsync(string givenNotation)
-        { 
-            return await this.context.Currencies.AnyAsync(currency => currency.Name == givenNotation);
+        {
+            return await context.Currencies.AnyAsync(currency => currency.Name == givenNotation);
         }
 
     }

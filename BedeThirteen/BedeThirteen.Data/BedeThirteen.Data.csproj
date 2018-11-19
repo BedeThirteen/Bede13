@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181119100230_CurrencyNameIsTableNameAndAddedConversionRateColumn.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
   <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>

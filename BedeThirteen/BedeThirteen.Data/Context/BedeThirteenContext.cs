@@ -51,31 +51,10 @@
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            //var currencyId = Guid.NewGuid();
-            //var userId = Guid.NewGuid().ToString();
-
-            //modelBuilder.Entity<Currency>().HasData(new Currency { Id = currencyId, IsDeleted = false, Name = "euro" });
-
-            //modelBuilder.Entity<User>().HasData(
-            //                                 new User
-            //                                 {
-            //                                     Id = userId,
-            //                                     Balance = 1000,
-            //                                     BirthDate = DateTime.Now.AddYears(-25),
-            //                                     IsDeleted = false,
-            //                                     CurrencyId = currencyId,
-            //                                     UserName = "TestUser"
-            //                                 });
-
-
-            string noneGuidString = "618d2663-fd74-497e-965b-572076e97ca0";
-            Guid noneGuid = new Guid(noneGuidString);
-            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), IsDeleted = false, Name = "EUR" });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), IsDeleted = false, Name = "USD" });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), IsDeleted = false, Name = "BGN" });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), IsDeleted = false, Name = "GBP" });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Id =noneGuid , IsDeleted = false, Name = "GBP" });
-
+            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "EUR", ConversionRateToUSD = 1, IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "USD", ConversionRateToUSD = 1, IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "BGN", ConversionRateToUSD = 1, IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "GBP", ConversionRateToUSD = 1, IsDeleted = false });
         }
 
         private void ApplyAuditInfoRules()
