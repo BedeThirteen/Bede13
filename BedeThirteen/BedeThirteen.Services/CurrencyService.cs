@@ -17,13 +17,18 @@ namespace BedeThirteen.Services
 
         public async Task<Currency> GetCurrencyByNameAsync(string name)
         {
-            return await context.Currencies.FirstAsync(currency => currency.Name == name);
+            return await this.context.Currencies.FirstAsync(currency => currency.Name == name);
         }
 
         public async Task<bool> CurrencyIsValidAsync(string givenNotation)
         {
-            return await context.Currencies.AnyAsync(currency => currency.Name == givenNotation);
+            return await this.context.Currencies.AnyAsync(currency =>
+            this.CurrencyStringComparer(currency.Name.ToUpper(), givenNotation.ToUpper()));
         }
 
+        private bool CurrencyStringComparer(string firstCurrency,string secondCurrency)
+        {
+            return firstCurrency.ToUpper() == secondCurrency.ToUpper();
+        }
     }
 }
