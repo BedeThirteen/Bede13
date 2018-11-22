@@ -1,11 +1,11 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Services
+﻿namespace BedeThirteen.Services
 {
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.Contracts;
+    using Microsoft.EntityFrameworkCore;
+
     public class CurrencyService : ICurrencyService
     {
         private readonly BedeThirteenContext context;
@@ -26,7 +26,7 @@ namespace BedeThirteen.Services
             this.CurrencyStringComparer(currency.Name.ToUpper(), givenNotation.ToUpper()));
         }
 
-        private bool CurrencyStringComparer(string firstCurrency,string secondCurrency)
+        private bool CurrencyStringComparer(string firstCurrency, string secondCurrency)
         {
             return firstCurrency.ToUpper() == secondCurrency.ToUpper();
         }
