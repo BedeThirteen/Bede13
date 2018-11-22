@@ -8,20 +8,20 @@ namespace BedeThirteen.Tests.ServicesTests.ExchangeRateServiceTests
     public class GetRates_Should
     {
         [TestMethod]
-        public async Task ReturnData()
+        public async Task ReturnPropperData_WhenExternalApiIsAvailable()
         {
             //Arrange
-            var sut = new ExchangeRateService();
+          var sut = new ExchangeRateService();
 
             //Act
             var result = await sut.GetRates();
 
             //Assert
-            Assert.IsNotNull(result);
+            Assert.AreEqual(4, result.Count);
 
             //act
-            var result2 = await sut.GetRates();
-            Assert.IsNull(result2);
+            var secondResult = await sut.GetRates();
+            Assert.AreEqual(4, secondResult.Count);
         }
     }
 }

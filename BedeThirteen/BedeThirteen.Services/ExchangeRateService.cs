@@ -10,15 +10,16 @@
 
     public class ExchangeRateService
     {
-        public IDictionary<string, decimal> Rates { get; private set; } = new Dictionary<string, decimal>();
+        private static readonly object LockObject = new object(); // single lock for both fields
 
-        public DateTime LastUpdate { get; private set; }
+        private IDictionary<string, decimal> rates = new Dictionary<string, decimal>();
 
-        private static object lockObject = new object(); // single lock for both fields
+        private DateTime lastUpdate;
+
 
         public async Task<IDictionary<string, decimal>> GetRates()
         {
-            if (this.Rates.Count == 0 || DateTime.UtcNow.Subtract(this.LastUpdate).Hours > 6)
+            if (this.rates.Count == 0 || DateTime.UtcNow.Subtract(this.lastUpdate).Hours > 6)
             {
                 ExchangeRates jsonResult = null;
                 using (var client = new HttpClient())
@@ -36,22 +37,22 @@
                 if (jsonResult == null)
                 {
                     // todo : inform user if api is unavailable
-                    if (this.Rates != null)
+                    if (this.rates != null)
                     {
                         throw new ServiceException("Service unavailable!");
                     }
 
-                    return this.Rates;
+                    return this.rates;
                 }
 
-                lock (lockObject)
+                lock (LockObject)
                 {
-                    this.Rates = jsonResult.Rates;
-                    this.LastUpdate = DateTime.UtcNow;
+                    this.rates = jsonResult.Rates;
+                    this.lastUpdate = DateTime.UtcNow;
                 }
             }
 
-            return this.Rates;
+            return this.rates;
         }
     }
 }
