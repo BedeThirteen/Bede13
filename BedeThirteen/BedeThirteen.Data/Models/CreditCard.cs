@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using BedeThirteen.Data.Models.Abstract;
 
-    public class CreditCard : GUIDEntity
+    public class CreditCard : Entity
     {
         [Required]
 

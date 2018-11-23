@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using BedeThirteen.Data.Models.Abstract;
 
-    public class Transaction : GUIDEntity
+    public class Transaction : Entity
     {
         [Required]
         [DataType(DataType.DateTime)]

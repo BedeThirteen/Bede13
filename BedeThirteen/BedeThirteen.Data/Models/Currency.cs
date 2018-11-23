@@ -11,13 +11,9 @@
             this.Users = new HashSet<User>();
         }
 
-        [Key]
         [MaxLength(5)]
         [MinLength(2)]
         public string Name { get; set; }
-
-        [Required]
-        public decimal ConversionRateToUSD { get; set; }
 
         public ICollection<User> Users { get; set; }
     }

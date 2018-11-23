@@ -24,10 +24,10 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 .UseInMemoryDatabase($"ReturnCurrency_WhenNameIsValid-{name}").Options;
 
             var currenciesToSeedWith = new[] {
-                new Currency() { Name="BGN",ConversionRateToUSD = 5},
-                new Currency() { Name="USD",ConversionRateToUSD = 1},
-                new Currency() { Name="GBP",ConversionRateToUSD = 2},
-                new Currency() { Name="YEN",ConversionRateToUSD = 0.01m}
+                new Currency() { Name="BGN"/*,ConversionRateToUSD = 5*/},
+                new Currency() { Name="USD"/*,ConversionRateToUSD = 1*/},
+                new Currency() { Name="GBP"/*,ConversionRateToUSD = 2*/},
+                new Currency() { Name="YEN"/*,ConversionRateToUSD = 0.01m*/}
 
 
             };
@@ -50,7 +50,7 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 var result = await sut.GetCurrencyByNameAsync(name);
 
                 Assert.IsTrue(result.Name == name);
-                Assert.IsTrue(result.ConversionRateToUSD == decimal.Parse(conversionRate));
+               // Assert.IsTrue(result.ConversionRateToUSD == decimal.Parse(conversionRate));
             }
         }
     }

@@ -32,10 +32,10 @@
         public DateTime? DeletedOn { get; set; }
 
         [DataType(DataType.DateTime)]
-
         public DateTime? CreatedOn { get; set; }
 
         [DataType(DataType.DateTime)]
+
         public DateTime? ModifiedOn { get; set; }
 
         public ICollection<CreditCard> CreditCards { get; private set; }

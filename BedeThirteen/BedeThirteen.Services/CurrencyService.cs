@@ -1,11 +1,13 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Services
+﻿namespace BedeThirteen.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.Contracts;
+    using Microsoft.EntityFrameworkCore;
+
     public class CurrencyService : ICurrencyService
     {
         private readonly BedeThirteenContext context;
@@ -15,9 +17,20 @@ namespace BedeThirteen.Services
             this.context = context;
         }
 
+        public async Task<Currency> FindCurrencyAsync(Guid currencyId)
+        {
+            var currency = await this.context.Currencies.FindAsync(currencyId);
+            return currency;
+        }
+
         public async Task<Currency> GetCurrencyByNameAsync(string name)
         {
             return await this.context.Currencies.FirstAsync(currency => currency.Name == name);
+        }
+
+        public async Task<IList<Currency>> GetAllCurrenciesAsync()
+        {
+            return await this.context.Currencies.ToListAsync();
         }
 
         public async Task<bool> CurrencyIsValidAsync(string givenNotation)
@@ -26,7 +39,7 @@ namespace BedeThirteen.Services
             this.CurrencyStringComparer(currency.Name.ToUpper(), givenNotation.ToUpper()));
         }
 
-        private bool CurrencyStringComparer(string firstCurrency,string secondCurrency)
+        private bool CurrencyStringComparer(string firstCurrency, string secondCurrency)
         {
             return firstCurrency.ToUpper() == secondCurrency.ToUpper();
         }

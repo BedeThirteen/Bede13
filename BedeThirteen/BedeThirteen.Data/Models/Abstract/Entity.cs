@@ -6,7 +6,11 @@
     using BedeThirteen.Data.Models.Contracts;
 
     public class Entity : IEditable, IDeletable
-    { 
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public Guid Id { get; set; }
+
         public bool IsDeleted { get; set; }
 
         [DataType(DataType.DateTime)]

@@ -41,7 +41,6 @@
             return await this.SaveChangesAsync(true, cancellationToken);
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             this.SeedData(modelBuilder);
@@ -51,10 +50,11 @@
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "EUR", ConversionRateToUSD = 1, IsDeleted = false });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "USD", ConversionRateToUSD = 1, IsDeleted = false });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "BGN", ConversionRateToUSD = 1, IsDeleted = false });
-            modelBuilder.Entity<Currency>().HasData(new Currency { Name = "GBP", ConversionRateToUSD = 1, IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), Name = "none", IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "EUR", IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "USD", IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "BGN", IsDeleted = false });
+            modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "GBP", IsDeleted = false });
         }
 
         private void ApplyAuditInfoRules()

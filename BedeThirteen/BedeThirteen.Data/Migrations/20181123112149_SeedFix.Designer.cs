@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    [Migration("20181117083641_AdminSeed")]
-    partial class AdminSeed
+    [Migration("20181123112149_SeedFix")]
+    partial class SeedFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,7 +66,6 @@ namespace BedeThirteen.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(5);
 
                     b.HasKey("Id");
@@ -74,10 +73,11 @@ namespace BedeThirteen.Data.Migrations
                     b.ToTable("Currencies");
 
                     b.HasData(
-                        new { Id = new Guid("e8a817e6-c21e-452d-9f87-670de776737d"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("f046df30-72d3-43b7-a83c-f0c9a2ab3941"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("f475b78d-9efe-4208-9ae0-7dd1ec5ed319"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("da4efe00-2faa-4171-a6f9-958b19a33e8b"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
+                        new { Id = new Guid("f5bbe226-9f4d-4636-a4a7-36e372f4b2dc"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("d63926c8-2134-4cde-b93a-3126ac7f8e31"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("9c160898-9e61-4c42-a2a9-cc72fd5c5bc6"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("f1b04f02-25b5-4527-80b3-5c32bcc164b9"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 

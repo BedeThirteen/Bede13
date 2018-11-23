@@ -62,7 +62,7 @@ namespace BedeThirteen.App
             });
 
             this.CreateRoles(serviceProvider).Wait();
-            // this.CreateAdmin(serviceProvider).Wait();
+            //this.CreateAdmin(serviceProvider).Wait();
         }
 
 
@@ -79,6 +79,8 @@ namespace BedeThirteen.App
         {
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ICreditCardService, CreditCardService>();
+            services.AddTransient<ICurrencyService, CurrencyService>();
+            services.AddSingleton<IExchangeRateService, ExchangeRateService>();
             services.AddTransient<ICurrencyService, CurrencyService>();
 
         }

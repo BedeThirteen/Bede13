@@ -1,9 +1,9 @@
 ﻿namespace BedeThirteen.App.Controllers
 {
     using System;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using BedeThirteen.App.Models;
     using BedeThirteen.App.Models.AccountViewModels;
     using BedeThirteen.App.Services;
     using BedeThirteen.Data.Models;
@@ -31,8 +31,8 @@
             SignInManager<User> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ICurrencyService currencyService, 
-            IConfiguration  configuration)
+            ICurrencyService currencyService,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -211,6 +211,15 @@
 
         [HttpGet]
         [AllowAnonymous]
+        [ResponseCache(Duration = 60 * 60, Location = ResponseCacheLocation.Any)]
+        public async Task<JsonResult> PopulateCurrenciesDdlOnRegister()
+        {
+            var list = await this._currencyService.GetAllCurrenciesAsync();
+            return Json(list.Select(c => new { c.Id, c.Name }));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -226,15 +235,15 @@
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
-                if (model.Currency != null && await _currencyService.CurrencyIsValidAsync(model.Currency))
+                if (model.CurrencyId != null/* && await _currencyService.CurrencyIsValidAsync(model.Currency)*/)
                 {
-                    user.Currency = await _currencyService.GetCurrencyByNameAsync(model.Currency);
+                    user.Currency = await _currencyService.FindCurrencyAsync(model.CurrencyId);
                 }
                 else
                 {
                     user.CurrencyId = new Guid(_configuration.GetSection("CurrencySettings")["DefaultCurrencyId"]);
                 }
-                
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -254,6 +263,7 @@
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
