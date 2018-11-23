@@ -17,7 +17,7 @@ namespace BedeThirteen.Tests.ServicesTests.ExchangeRateServiceTests
             var result = await sut.GetRatesAsync();
 
             //Assert
-            
+
             Assert.AreEqual(4, result.Count);
 
             //act
