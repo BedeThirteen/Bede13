@@ -1,6 +1,7 @@
 ﻿namespace BedeThirteen.App.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -25,6 +26,7 @@
         private readonly ILogger _logger;
         private readonly ICurrencyService _currencyService;
         private readonly IConfiguration _configuration;
+        private readonly ICreditCardService _creditCardService;
 
         public AccountController(
             UserManager<User> userManager,
@@ -32,7 +34,7 @@
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             ICurrencyService currencyService,
-            IConfiguration configuration)
+            IConfiguration configuration, ICreditCardService creditCardService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,6 +42,7 @@
             _logger = logger;
             _currencyService = currencyService;
             _configuration = configuration;
+            _creditCardService = creditCardService;
         }
 
         [TempData]
@@ -461,6 +464,7 @@
             return View();
         }
 
+        
         #region Helpers
 
         private void AddErrors(IdentityResult result)

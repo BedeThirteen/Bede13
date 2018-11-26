@@ -1,0 +1,46 @@
+﻿@model List<TransactionViewModel>
+
+<div>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Description</th>
+                <th scope="col">User</th>
+
+
+            </tr>
+        </thead>
+        <tbody class="">
+
+            <tr>
+                <th scope="row">1</th>
+                <td>16:30 22/11/18</td>
+                <td>Deposit</td>
+                <td>$100</td>
+                <td>Deposit with card **** **** **** 1234</td>
+
+                <td>Test</td>
+
+            </tr>
+
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <th scope="row">@transaction.Id</th>
+                    <td>@transaction.Date</td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.Amount</td>
+                    <td>@transaction.User</td>
+                </tr>
+            }
+
+
+    </table>
+
+</div>

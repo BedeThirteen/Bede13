@@ -4,14 +4,16 @@ using BedeThirteen.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    partial class BedeThirteenContextModelSnapshot : ModelSnapshot
+    [Migration("20181126180658_AddedTypeToTransactions")]
+    partial class AddedTypeToTransactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,10 +74,10 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasData(
                         new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
-                        new { Id = new Guid("a3e67dbc-0a53-4a11-9aeb-50929027fe86"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("488c936d-f3f4-48e3-88bf-cbfcc1adf81a"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("1549fd8c-7235-4248-97eb-230dc28b1942"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("5253e4f2-035e-4f9c-8ec8-cd0f0696f78c"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("2de33907-3501-4f53-bf6b-585c0f8b9103"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("bfa5694a-de5a-4e7c-aa0f-40b67c47bb71"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("b5d8df24-0b7f-4e60-a606-b5be93452d16"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("9d8f48de-0b14-4421-bf96-06a3751c8644"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 
@@ -136,12 +138,6 @@ namespace BedeThirteen.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TransactionTypes");
-
-                    b.HasData(
-                        new { Id = new Guid("7865ad1d-2bd6-4be0-a0af-996b6ee7376c"), IsDeleted = false, Name = "Deposit" },
-                        new { Id = new Guid("cecf24b6-6be9-4dd2-a835-67641eae8d66"), IsDeleted = false, Name = "Win" },
-                        new { Id = new Guid("4bd92933-6825-43fc-9a13-3f997d60daa7"), IsDeleted = false, Name = "Stake" }
-                    );
                 });
 
             modelBuilder.Entity("BedeThirteen.Data.Models.User", b =>
