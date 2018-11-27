@@ -235,14 +235,14 @@
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
-                if (model.CurrencyId != null/* && await _currencyService.CurrencyIsValidAsync(model.Currency)*/)
-                {
+                //if (model.CurrencyId != null/* && await _currencyService.CurrencyIsValidAsync(model.Currency)*/)
+                //{
                     user.Currency = await _currencyService.FindCurrencyAsync(model.CurrencyId);
-                }
-                else
-                {
-                    user.CurrencyId = new Guid(_configuration.GetSection("CurrencySettings")["DefaultCurrencyId"]);
-                }
+                //}
+                //else
+                //{
+                //    user.CurrencyId = new Guid(_configuration.GetSection("CurrencySettings")["DefaultCurrencyId"]);
+                //}
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

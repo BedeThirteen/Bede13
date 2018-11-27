@@ -7,10 +7,7 @@
     public class CreditCard : Entity
     {
         [Required]
-
-        // Commented during development
-        // [MaxLength(16)]
-        // [MinLength(16)]
+        [CreditCard]
         public string Number { get; set; }
 
         [MaxLength(4)]

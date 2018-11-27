@@ -3,6 +3,7 @@ using BedeThirteen.Data.Models;
 using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace BedeThirteen.App.ViewComponents
@@ -35,7 +36,7 @@ namespace BedeThirteen.App.ViewComponents
                     var rate = (await this.exchangeRateService.GetRatesAsync())[userCurrency];
                     var balanceVm = new BalanceViewModel()
                     {
-                        Balance = user.Balance * rate,
+                        Balance = Math.Round(user.Balance * rate, 2),
                         Currency = user.Currency.Name
                     };
 

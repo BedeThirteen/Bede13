@@ -21,7 +21,6 @@
 
         public async Task<CreditCard> AddCreditCardAsync(string number, string cvv, DateTime expiry, string userId)
         {
-            // TODO: can be moved to separate validator class
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(number) || string.IsNullOrEmpty(cvv) || expiry == null)
             {
                 throw new ServiceException("Invalid parameters!");

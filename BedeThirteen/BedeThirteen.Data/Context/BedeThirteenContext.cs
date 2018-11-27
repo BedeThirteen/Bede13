@@ -45,7 +45,26 @@
         {
             this.SeedData(modelBuilder);
 
+            this.TransactionTypeConfiguration(modelBuilder);
+            this.CurrencyConfiguration(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void CurrencyConfiguration(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Currency>(entity =>
+            {
+                entity.HasIndex(e => e.Name).IsUnique();
+            });
+        }
+
+        private void TransactionTypeConfiguration(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TransactionType>(entity =>
+            {
+                entity.HasIndex(e => e.Name).IsUnique();
+            });
         }
 
         private void SeedData(ModelBuilder modelBuilder)
@@ -55,6 +74,8 @@
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "USD", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "BGN", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "GBP", IsDeleted = false });
+
+            modelBuilder.Entity<TransactionType>().HasData(new TransactionType { Id = Guid.NewGuid(), Name = "Deposit", IsDeleted = false });
         }
 
         private void ApplyAuditInfoRules()

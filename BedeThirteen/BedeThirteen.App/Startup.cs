@@ -62,7 +62,6 @@ namespace BedeThirteen.App
             });
 
             this.CreateRoles(serviceProvider).Wait();
-            //this.CreateAdmin(serviceProvider).Wait();
         }
 
 
@@ -78,10 +77,12 @@ namespace BedeThirteen.App
         private void RegisterServices(IServiceCollection services)
         {
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<ICreditCardService, CreditCardService>();
-            services.AddTransient<ICurrencyService, CurrencyService>();
+            services.AddScoped<ICreditCardService, CreditCardService>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddSingleton<IExchangeRateService, ExchangeRateService>();
-            services.AddTransient<ICurrencyService, CurrencyService>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IBalanceService, BalanceService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 
@@ -118,7 +119,8 @@ namespace BedeThirteen.App
 
         private void RegisterInfrastructure(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(/*options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())*/)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -162,45 +164,5 @@ namespace BedeThirteen.App
                 }
             }
         }
-        //private async Task CreateRoles(IServiceProvider serviceProvider)
-        //{
-        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        //    string[] roleNames = { "Admin", "User" };
-        //    IdentityResult roleResult;
-
-        //    foreach (var roleName in roleNames)
-        //    {
-        //        var roleExist = await RoleManager.RoleExistsAsync(roleName);
-        //        if (!roleExist)
-        //        {
-        //            roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
-        //        }
-        //    }
-
-
-        //}
-        //private async Task CreateAdmin(IServiceProvider serviceProvider)
-        //{
-        //    var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
-        //    var adminUser = new User
-        //    {
-        //        UserName = Configuration.GetSection("UserSettings")["UserEmail"],
-        //        Email = Configuration.GetSection("UserSettings")["UserEmail"]
-        //    };
-
-        //    string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
-        //    var user = await UserManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
-
-        //    if (user == null)
-        //    {
-        //        var createPowerUser = await UserManager.CreateAsync(adminUser, userPassword);
-        //        if (createPowerUser.Succeeded)
-        //        {
-        //            await UserManager.AddToRoleAsync(adminUser, "Admin");
-        //        }
-        //    }
-        //}
-
-
     }
 }

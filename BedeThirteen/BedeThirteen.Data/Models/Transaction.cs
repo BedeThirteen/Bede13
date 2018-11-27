@@ -19,6 +19,11 @@
         public string Description { get; set; }
 
         [Required]
+        public Guid TransactionTypeId { get; set; }
+
+        public TransactionType TransactionType { get; set; }
+
+        [Required]
         public string UserId { get; set; }
 
         public User User { get; set; }

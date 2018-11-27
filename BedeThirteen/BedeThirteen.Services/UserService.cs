@@ -2,8 +2,8 @@
 {
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
     using BedeThirteen.Services.Contracts;
-    using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
 
     public class UserService : IUserService
@@ -15,15 +15,10 @@
             this.context = context;
         }
 
-        public async Task<string> GetUserBalance(string userId)
+        public async Task<User> GetUserAsync(string userId)
         {
-            var user = await this.context.Users.Include(u => u.Currency).FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
-            {
-                throw new ServiceException("Invalid userId!");
-            }
-
-            return string.Concat(user.Balance, " ", user.Currency.Name);
+            return await this.context.Users.Include(u => u.Currency)
+                             .FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿namespace BedeThirteen.Services.Contracts
 {
     using System.Threading.Tasks;
+    using BedeThirteen.Data.Models;
 
     public interface IUserService
     {
-        Task<string> GetUserBalance(string userId);
+        Task<User> GetUserAsync(string userId);
     }
 }

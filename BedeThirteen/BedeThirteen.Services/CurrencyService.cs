@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
@@ -30,7 +31,7 @@
 
         public async Task<IList<Currency>> GetAllCurrenciesAsync()
         {
-            return await this.context.Currencies.ToListAsync();
+            return await this.context.Currencies.Where(c => c.Name != "none").ToListAsync();
         }
 
         public async Task<bool> CurrencyIsValidAsync(string givenNotation)
