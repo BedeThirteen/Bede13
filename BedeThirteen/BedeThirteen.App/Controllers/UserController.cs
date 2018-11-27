@@ -69,7 +69,24 @@ namespace BedeThirteen.App.Controllers
             var userCurrency = user.Currency.Name.ToUpper();
             var userRate = rates[userCurrency];
             var amount = model.Amount / userRate;
-            var result = await this.balanceService.Deposit(user.Id, amount, model.CardId);
+            var result = await this.balanceService.DepositAsync(user.Id, amount, model.CardId);
+
+            return Json(new { result = string.Concat(Math.Round(result * userRate, 2), $" {user.Currency.Name.ToUpper()}") });
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        //[ValidateAntiForgeryToken] //Todo: fix
+        public async Task<JsonResult> WithdrawAmountAsync(DepositViewModel model)
+        {
+            //if (!ModelState.IsValid)
+            //{ //Todo:
+            //}
+            var user = await this.userService.GetUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var rates = await this.exchangeRateService.GetRatesAsync();
+            var userRate = rates[user.Currency.Name.ToUpper()];
+            var result = await this.balanceService.WithdrawAsync(user.Id, model.Amount / userRate, model.CardId);
 
             return Json(new { result = string.Concat(Math.Round(result * userRate, 2), $" {user.Currency.Name.ToUpper()}") });
         }

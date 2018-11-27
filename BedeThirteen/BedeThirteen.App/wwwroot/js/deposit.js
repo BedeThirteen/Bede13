@@ -4,10 +4,12 @@
         url: url
     }).done(function (data) {
         var creditCardsDdl = $("#creditCardsDdl");
+        var cardsWithdrawDdl = $("#cardsWithdrawDdl");
         creditCardsDdl.empty();
+        cardsWithdrawDdl.empty();
         data.forEach(function (currentElement) {
-            var creditCardOption = $("<option />").val(currentElement.id).text(currentElement.number);
-            creditCardsDdl.append(creditCardOption);
+            creditCardsDdl.append($("<option />").val(currentElement.id).text(currentElement.number));
+            cardsWithdrawDdl.append($("<option />").val(currentElement.id).text(currentElement.number));
         });
     });
 });
@@ -29,8 +31,9 @@ $("#addCardBtn").click(function () {
         },
         function (data) {
             var creditCardsDdl = $("#creditCardsDdl");
-            var creditCardOption = $("<option />").val(data.id).text(data.number);
-            creditCardsDdl.append(creditCardOption);
+            var cardsWithdrawDdl = $("#cardsWithdrawDdl");
+            creditCardsDdl.append($("<option />").val(data.id).text(data.number));
+            cardsWithdrawDdl.append($("<option />").val(data.id).text(data.number));
             creditCardsDdl.val(creditCardOption.val());
         });
 });
@@ -42,6 +45,25 @@ $("#depositBtn").click(function () {
 
     //var token = $("#verfToken").val();
     var url = "/User/DepositAmountAsync";
+    $.post(url,
+        {
+            cardId: cardId,
+            amount: amount
+            //__RequestVerificationToken: token
+        },
+        function (data) {
+            var balanceValue = $("#balanceValue");
+            balanceValue.text(data.result);
+            $("#closeBtn").click();
+        });
+});
+
+$("#withdrawBtn").click(function () {
+    var amount = $("#withdrawAmount").val();
+    var cardId = $("#cardsWithdrawDdl").val();
+
+    //var token = $("#verfToken").val();
+    var url = "/User/WithdrawAmountAsync";
     $.post(url,
         {
             cardId: cardId,

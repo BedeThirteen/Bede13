@@ -106,7 +106,7 @@
                                             <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                                         </div>
                                         @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                        <select class="form-control"></select>
+                                        <select id="cardsWithdrawDdl" class="form-control"></select>
                                     </div>
                                 </div>
 
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
-                                <a class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawCardBtn" data-toggle="collapse" href="#collapse2">Withdraw</a>
+                                <a class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawBtn" data-toggle="collapse" href="#collapse2">Withdraw</a>
                             </div>
                         </div>
                     </div>
