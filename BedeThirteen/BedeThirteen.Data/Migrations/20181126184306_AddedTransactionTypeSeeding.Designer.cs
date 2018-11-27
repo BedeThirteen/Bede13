@@ -4,14 +4,16 @@ using BedeThirteen.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    partial class BedeThirteenContextModelSnapshot : ModelSnapshot
+    [Migration("20181126184306_AddedTransactionTypeSeeding")]
+    partial class AddedTransactionTypeSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,18 +70,14 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
-
                     b.ToTable("Currencies");
 
                     b.HasData(
                         new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
-                        new { Id = new Guid("1b071447-e2fa-45e9-8fe6-c934562c3b6d"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("7629a256-709a-48f1-aff0-40e60e7397e5"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("3d189776-e86f-4e22-8fd7-27daa130a2a4"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("06abcf60-e288-48b1-aa6c-9fcc89122dbe"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("a3e67dbc-0a53-4a11-9aeb-50929027fe86"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("488c936d-f3f4-48e3-88bf-cbfcc1adf81a"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("1549fd8c-7235-4248-97eb-230dc28b1942"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("5253e4f2-035e-4f9c-8ec8-cd0f0696f78c"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 
@@ -103,14 +101,17 @@ namespace BedeThirteen.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<Guid>("TransactionTypeId");
+                    b.Property<string>("TransactionTypeId")
+                        .IsRequired();
+
+                    b.Property<Guid?>("TransactionTypeId1");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionTypeId");
+                    b.HasIndex("TransactionTypeId1");
 
                     b.HasIndex("UserId");
 
@@ -136,16 +137,12 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("TransactionTypes");
 
                     b.HasData(
-                        new { Id = new Guid("8c74e09f-47c2-4ef6-8deb-e1be13483211"), IsDeleted = false, Name = "Withdraw" },
-                        new { Id = new Guid("9d92e77d-c25f-4b50-8be2-0b7fb50fbd3e"), IsDeleted = false, Name = "Deposit" },
-                        new { Id = new Guid("c34b047e-da02-45e4-9a1f-2b53f6fdbd44"), IsDeleted = false, Name = "Win" },
-                        new { Id = new Guid("d661b256-64c2-4c53-aed3-d960df157c82"), IsDeleted = false, Name = "Stake" }
+                        new { Id = new Guid("7865ad1d-2bd6-4be0-a0af-996b6ee7376c"), IsDeleted = false, Name = "Deposit" },
+                        new { Id = new Guid("cecf24b6-6be9-4dd2-a835-67641eae8d66"), IsDeleted = false, Name = "Win" },
+                        new { Id = new Guid("4bd92933-6825-43fc-9a13-3f997d60daa7"), IsDeleted = false, Name = "Stake" }
                     );
                 });
 
@@ -338,8 +335,7 @@ namespace BedeThirteen.Data.Migrations
                 {
                     b.HasOne("BedeThirteen.Data.Models.TransactionType", "TransactionType")
                         .WithMany("Transactions")
-                        .HasForeignKey("TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TransactionTypeId1");
 
                     b.HasOne("BedeThirteen.Data.Models.User", "User")
                         .WithMany()

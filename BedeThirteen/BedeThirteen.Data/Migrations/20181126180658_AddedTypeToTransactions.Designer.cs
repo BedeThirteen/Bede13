@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    [Migration("20181123112149_SeedFix")]
-    partial class SeedFix
+    [Migration("20181126180658_AddedTypeToTransactions")]
+    partial class AddedTypeToTransactions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,10 +74,10 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasData(
                         new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
-                        new { Id = new Guid("f5bbe226-9f4d-4636-a4a7-36e372f4b2dc"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("d63926c8-2134-4cde-b93a-3126ac7f8e31"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("9c160898-9e61-4c42-a2a9-cc72fd5c5bc6"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("f1b04f02-25b5-4527-80b3-5c32bcc164b9"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("2de33907-3501-4f53-bf6b-585c0f8b9103"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("bfa5694a-de5a-4e7c-aa0f-40b67c47bb71"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("b5d8df24-0b7f-4e60-a606-b5be93452d16"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("9d8f48de-0b14-4421-bf96-06a3751c8644"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 
@@ -101,14 +101,17 @@ namespace BedeThirteen.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<Guid?>("TransactionTypeId");
+                    b.Property<string>("TransactionTypeId")
+                        .IsRequired();
+
+                    b.Property<Guid?>("TransactionTypeId1");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransactionTypeId");
+                    b.HasIndex("TransactionTypeId1");
 
                     b.HasIndex("UserId");
 
@@ -324,9 +327,9 @@ namespace BedeThirteen.Data.Migrations
 
             modelBuilder.Entity("BedeThirteen.Data.Models.Transaction", b =>
                 {
-                    b.HasOne("BedeThirteen.Data.Models.TransactionType")
+                    b.HasOne("BedeThirteen.Data.Models.TransactionType", "TransactionType")
                         .WithMany("Transactions")
-                        .HasForeignKey("TransactionTypeId");
+                        .HasForeignKey("TransactionTypeId1");
 
                     b.HasOne("BedeThirteen.Data.Models.User", "User")
                         .WithMany()

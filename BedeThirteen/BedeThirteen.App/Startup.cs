@@ -57,10 +57,16 @@ namespace BedeThirteen.App
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                name: "areas",
+                template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+              );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+              
             });
-
+             
             this.CreateRoles(serviceProvider).Wait();
         }
 
@@ -83,6 +89,9 @@ namespace BedeThirteen.App
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IBalanceService, BalanceService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITransactionService, TransactionService>();
+
+            
 
         }
 

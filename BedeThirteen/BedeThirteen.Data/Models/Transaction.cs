@@ -7,6 +7,10 @@
     public class Transaction : Entity
     {
         [Required]
+        public string TransactionTypeId { get; set; }
+        public TransactionType TransactionType { get; set; }
+
+        [Required]
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 

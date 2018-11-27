@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BedeThirteen.Data.Migrations
 {
-    public partial class SeedFix : Migration
+    public partial class AfterMergeMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -235,8 +235,8 @@ namespace BedeThirteen.Data.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(maxLength: 150, nullable: true),
-                    UserId = table.Column<string>(nullable: false),
-                    TransactionTypeId = table.Column<Guid>(nullable: true)
+                    TransactionTypeId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,7 +246,7 @@ namespace BedeThirteen.Data.Migrations
                         column: x => x.TransactionTypeId,
                         principalTable: "TransactionTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -261,10 +261,21 @@ namespace BedeThirteen.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("618d2663-fd74-497e-965b-572076e97ca0"), null, null, false, null, "none" },
-                    { new Guid("f5bbe226-9f4d-4636-a4a7-36e372f4b2dc"), null, null, false, null, "EUR" },
-                    { new Guid("d63926c8-2134-4cde-b93a-3126ac7f8e31"), null, null, false, null, "USD" },
-                    { new Guid("9c160898-9e61-4c42-a2a9-cc72fd5c5bc6"), null, null, false, null, "BGN" },
-                    { new Guid("f1b04f02-25b5-4527-80b3-5c32bcc164b9"), null, null, false, null, "GBP" }
+                    { new Guid("1b071447-e2fa-45e9-8fe6-c934562c3b6d"), null, null, false, null, "EUR" },
+                    { new Guid("7629a256-709a-48f1-aff0-40e60e7397e5"), null, null, false, null, "USD" },
+                    { new Guid("3d189776-e86f-4e22-8fd7-27daa130a2a4"), null, null, false, null, "BGN" },
+                    { new Guid("06abcf60-e288-48b1-aa6c-9fcc89122dbe"), null, null, false, null, "GBP" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TransactionTypes",
+                columns: new[] { "Id", "CreatedOn", "DeletedOn", "IsDeleted", "ModifiedOn", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("8c74e09f-47c2-4ef6-8deb-e1be13483211"), null, null, false, null, "Withdraw" },
+                    { new Guid("9d92e77d-c25f-4b50-8be2-0b7fb50fbd3e"), null, null, false, null, "Deposit" },
+                    { new Guid("c34b047e-da02-45e4-9a1f-2b53f6fdbd44"), null, null, false, null, "Win" },
+                    { new Guid("d661b256-64c2-4c53-aed3-d960df157c82"), null, null, false, null, "Stake" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -317,6 +328,13 @@ namespace BedeThirteen.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Currencies_Name",
+                table: "Currencies",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_TransactionTypeId",
                 table: "Transactions",
                 column: "TransactionTypeId");
@@ -325,6 +343,12 @@ namespace BedeThirteen.Data.Migrations
                 name: "IX_Transactions_UserId",
                 table: "Transactions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransactionTypes_Name",
+                table: "TransactionTypes",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

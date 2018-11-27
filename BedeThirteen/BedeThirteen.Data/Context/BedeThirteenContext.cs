@@ -69,13 +69,18 @@
 
         private void SeedData(ModelBuilder modelBuilder)
         {
+            //Seed Currencies
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), Name = "none", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "EUR", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "USD", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "BGN", IsDeleted = false });
             modelBuilder.Entity<Currency>().HasData(new Currency { Id = Guid.NewGuid(), Name = "GBP", IsDeleted = false });
 
+            // Seed Transaction Types
+            modelBuilder.Entity<TransactionType>().HasData(new TransactionType { Id = Guid.NewGuid(), Name = "Withdraw", IsDeleted = false });
             modelBuilder.Entity<TransactionType>().HasData(new TransactionType { Id = Guid.NewGuid(), Name = "Deposit", IsDeleted = false });
+            modelBuilder.Entity<TransactionType>().HasData(new TransactionType { Id = Guid.NewGuid(), Name = "Win", IsDeleted = false });
+            modelBuilder.Entity<TransactionType>().HasData(new TransactionType { Id = Guid.NewGuid(), Name = "Stake", IsDeleted = false });
         }
 
         private void ApplyAuditInfoRules()
