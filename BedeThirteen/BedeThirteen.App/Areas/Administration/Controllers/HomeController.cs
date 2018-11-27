@@ -38,7 +38,7 @@ namespace BedeThirteen.App.Areas.Administration.Controllers
                 var viewModel = new List<TransactionViewModel>();
                 foreach(var transaction in results)
                 {
-                    viewModel.Add(new TransactionViewModel
+                    viewModel.Add(new TransactionViewModel()
                     {
                         Amount = transaction.Amount,
                         Date = transaction.Date,

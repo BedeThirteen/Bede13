@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-BedeThirteen.App-A90A44AE-7A6B-4F19-8487-D6094B71E99C</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Areas\Administration\Data\**" />
+    <Content Remove="Areas\Administration\Data\**" />
+    <EmbeddedResource Remove="Areas\Administration\Data\**" />
+    <None Remove="Areas\Administration\Data\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
@@ -17,10 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BedeThirteen.Services\BedeThirteen.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Administration\Data\" />
   </ItemGroup>
 
   <ItemGroup>

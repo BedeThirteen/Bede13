@@ -43,8 +43,8 @@
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var transaction = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
-            if (transaction == null)
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
+            if (type == null)
             {
                 throw new ServiceException($"Cannot find transaction type : Deposit.");
             }
@@ -55,7 +55,7 @@
                 Amount = amount,
                 Description = $"Deposit with card {card.Number}",
                 UserId = userId,
-                TransactionTypeId = transaction.Id
+                TransactionTypeId = type.Id
             };
 
             this.context.Transactions.Add(deposit);

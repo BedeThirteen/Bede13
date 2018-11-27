@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BedeThirteen.Data.Migrations
 {
     [DbContext(typeof(BedeThirteenContext))]
-    [Migration("20181127094116_AfterMergeMigration")]
+    [Migration("20181127094802_AfterMergeMigration")]
     partial class AfterMergeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,10 +78,10 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasData(
                         new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
-                        new { Id = new Guid("1b071447-e2fa-45e9-8fe6-c934562c3b6d"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("7629a256-709a-48f1-aff0-40e60e7397e5"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("3d189776-e86f-4e22-8fd7-27daa130a2a4"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("06abcf60-e288-48b1-aa6c-9fcc89122dbe"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("ff4d9d9a-1f00-47cc-b589-5c467a343b67"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("9310f845-318a-4f1b-b1fd-c845df9e78c9"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("2bd37350-b648-4d2f-b511-188897edf963"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("3d449b15-e7a7-4344-97e1-354585461680"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 
@@ -144,10 +144,10 @@ namespace BedeThirteen.Data.Migrations
                     b.ToTable("TransactionTypes");
 
                     b.HasData(
-                        new { Id = new Guid("8c74e09f-47c2-4ef6-8deb-e1be13483211"), IsDeleted = false, Name = "Withdraw" },
-                        new { Id = new Guid("9d92e77d-c25f-4b50-8be2-0b7fb50fbd3e"), IsDeleted = false, Name = "Deposit" },
-                        new { Id = new Guid("c34b047e-da02-45e4-9a1f-2b53f6fdbd44"), IsDeleted = false, Name = "Win" },
-                        new { Id = new Guid("d661b256-64c2-4c53-aed3-d960df157c82"), IsDeleted = false, Name = "Stake" }
+                        new { Id = new Guid("1d67ab84-1ac0-438a-9c0a-6136e6264ba2"), IsDeleted = false, Name = "Withdraw" },
+                        new { Id = new Guid("047669c6-0d3c-4b53-8cbe-c4c67b3cfa50"), IsDeleted = false, Name = "Deposit" },
+                        new { Id = new Guid("79d5466a-6dec-466e-94e4-68aa5b89bb5a"), IsDeleted = false, Name = "Win" },
+                        new { Id = new Guid("fa1355ae-76be-40ec-9cd3-d252e5088f66"), IsDeleted = false, Name = "Stake" }
                     );
                 });
 

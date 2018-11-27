@@ -261,10 +261,10 @@ namespace BedeThirteen.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("618d2663-fd74-497e-965b-572076e97ca0"), null, null, false, null, "none" },
-                    { new Guid("1b071447-e2fa-45e9-8fe6-c934562c3b6d"), null, null, false, null, "EUR" },
-                    { new Guid("7629a256-709a-48f1-aff0-40e60e7397e5"), null, null, false, null, "USD" },
-                    { new Guid("3d189776-e86f-4e22-8fd7-27daa130a2a4"), null, null, false, null, "BGN" },
-                    { new Guid("06abcf60-e288-48b1-aa6c-9fcc89122dbe"), null, null, false, null, "GBP" }
+                    { new Guid("ff4d9d9a-1f00-47cc-b589-5c467a343b67"), null, null, false, null, "EUR" },
+                    { new Guid("9310f845-318a-4f1b-b1fd-c845df9e78c9"), null, null, false, null, "USD" },
+                    { new Guid("2bd37350-b648-4d2f-b511-188897edf963"), null, null, false, null, "BGN" },
+                    { new Guid("3d449b15-e7a7-4344-97e1-354585461680"), null, null, false, null, "GBP" }
                 });
 
             migrationBuilder.InsertData(
@@ -272,10 +272,10 @@ namespace BedeThirteen.Data.Migrations
                 columns: new[] { "Id", "CreatedOn", "DeletedOn", "IsDeleted", "ModifiedOn", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("8c74e09f-47c2-4ef6-8deb-e1be13483211"), null, null, false, null, "Withdraw" },
-                    { new Guid("9d92e77d-c25f-4b50-8be2-0b7fb50fbd3e"), null, null, false, null, "Deposit" },
-                    { new Guid("c34b047e-da02-45e4-9a1f-2b53f6fdbd44"), null, null, false, null, "Win" },
-                    { new Guid("d661b256-64c2-4c53-aed3-d960df157c82"), null, null, false, null, "Stake" }
+                    { new Guid("1d67ab84-1ac0-438a-9c0a-6136e6264ba2"), null, null, false, null, "Withdraw" },
+                    { new Guid("047669c6-0d3c-4b53-8cbe-c4c67b3cfa50"), null, null, false, null, "Deposit" },
+                    { new Guid("79d5466a-6dec-466e-94e4-68aa5b89bb5a"), null, null, false, null, "Win" },
+                    { new Guid("fa1355ae-76be-40ec-9cd3-d252e5088f66"), null, null, false, null, "Stake" }
                 });
 
             migrationBuilder.CreateIndex(
