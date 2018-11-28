@@ -26,6 +26,12 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
                         curLineIsDirty = true;
                         break;
                     }
+                    //Makes sure a wildcare token does not overwrite the key token for the line
+                    if (curToken.Type != 0)
+                    {
+                        lastTolen = curToken;
+
+                    }
                     curLineCoef += curToken.Coefficient;
                 }
 

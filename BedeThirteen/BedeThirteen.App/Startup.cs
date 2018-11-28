@@ -13,6 +13,7 @@ using BedeThirteen.Data.Models;
 using BedeThirteen.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 using BedeThirteen.Services.Requesters;
+using BedeThirteen.Games.Games;
 
 namespace BedeThirteen.App
 {
@@ -90,6 +91,10 @@ namespace BedeThirteen.App
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<FourByThreeGame>();
+
+
+
         }
 
         private void RegisterAuthentication(IServiceCollection services)
