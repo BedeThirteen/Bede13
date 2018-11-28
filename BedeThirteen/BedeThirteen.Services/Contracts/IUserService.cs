@@ -6,5 +6,7 @@
     public interface IUserService
     {
         Task<User> GetUserAsync(string userId);
+
+        Task<string> GetUserBalanceAsync(string userId);
     }
 }

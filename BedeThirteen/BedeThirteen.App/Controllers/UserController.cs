@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BedeThirteen.App.Models;
+using BedeThirteen.Services;
 using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +13,19 @@ namespace BedeThirteen.App.Controllers
     public class UserController : Controller
     {
         private readonly ICreditCardService creditCardService;
-        private readonly IBalanceService balanceService;
-        private readonly IExchangeRateService exchangeRateService;
         private readonly IUserService userService;
+        private readonly IExchangeRateService exchangeRateService;
+        private readonly ITransactionService transactionService;
 
         public UserController(ICreditCardService creditCardService,
-            IBalanceService balanceService,
             IExchangeRateService exchangeRateService,
-            IUserService userService)
+            IUserService userService,
+            ITransactionService transactionService)
         {
             this.creditCardService = creditCardService;
-            this.balanceService = balanceService;
             this.exchangeRateService = exchangeRateService;
             this.userService = userService;
+            this.transactionService = transactionService;
         }
 
         [HttpGet]
@@ -69,7 +70,7 @@ namespace BedeThirteen.App.Controllers
             var userCurrency = user.Currency.Name.ToUpper();
             var userRate = rates[userCurrency];
             var amount = model.Amount / userRate;
-            var result = await this.balanceService.DepositAsync(user.Id, amount, model.CardId);
+            var result = await this.transactionService.DepositAsync(user.Id, amount, model.CardId);
 
             return Json(new { result = string.Concat(Math.Round(result * userRate, 2), $" {user.Currency.Name.ToUpper()}") });
         }
@@ -86,7 +87,7 @@ namespace BedeThirteen.App.Controllers
             var user = await this.userService.GetUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var rates = await this.exchangeRateService.GetRatesAsync();
             var userRate = rates[user.Currency.Name.ToUpper()];
-            var result = await this.balanceService.WithdrawAsync(user.Id, model.Amount / userRate, model.CardId);
+            var result = await this.transactionService.WithdrawAsync(user.Id, model.Amount / userRate, model.CardId);
 
             return Json(new { result = string.Concat(Math.Round(result * userRate, 2), $" {user.Currency.Name.ToUpper()}") });
         }

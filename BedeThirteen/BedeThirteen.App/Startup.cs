@@ -88,7 +88,6 @@ namespace BedeThirteen.App
             services.AddScoped<ICreditCardService, CreditCardService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
-            services.AddScoped<IBalanceService, BalanceService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITransactionService, TransactionService>();
         }
