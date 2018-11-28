@@ -14,42 +14,43 @@
     });
 });
 
-$("#addCardBtn").click(function () {
+$("#addCardBtn").click(function (e) {
+    e.preventDefault();
     var cardNumber = $("#cardNumber").val();
     var month = $("#expirationMonth").val();
     var year = $("#expirationYear").val();
     var cvv = $("#cvv").val();
-    //var token = $("#verfToken").val();
+    var token = $("input[name='__RequestVerificationToken']").val();
     var url = "/User/AddCreditCardAsync";
     $.post(url,
         {
             cardNumber: cardNumber,
             month: month,
             year: year,
-            cvv: cvv
-            //__RequestVerificationToken: token
+            cvv: cvv,
+            "__RequestVerificationToken": token
         },
         function (data) {
             var creditCardsDdl = $("#creditCardsDdl");
             var cardsWithdrawDdl = $("#cardsWithdrawDdl");
             creditCardsDdl.append($("<option />").val(data.id).text(data.number));
             cardsWithdrawDdl.append($("<option />").val(data.id).text(data.number));
-            creditCardsDdl.val(creditCardOption.val());
+            creditCardsDdl.val(data.id);
         });
 });
 
 
-$("#depositBtn").click(function () {
+$("#depositBtn").click(function (e) {
+    e.preventDefault();
     var cardId = $("#creditCardsDdl").val();
     var amount = $("#depositAmount").val();
-
-    //var token = $("#verfToken").val();
+    var token = $("input[name='__RequestVerificationToken']").val();
     var url = "/User/DepositAmountAsync";
     $.post(url,
         {
             cardId: cardId,
-            amount: amount
-            //__RequestVerificationToken: token
+            amount: amount,
+            "__RequestVerificationToken": token
         },
         function (data) {
             var balanceValue = $("#balanceValue");
@@ -58,17 +59,17 @@ $("#depositBtn").click(function () {
         });
 });
 
-$("#withdrawBtn").click(function () {
+$("#withdrawBtn").click(function (e) {
+    e.preventDefault();
     var amount = $("#withdrawAmount").val();
     var cardId = $("#cardsWithdrawDdl").val();
-
-    //var token = $("#verfToken").val();
+    var token = $("input[name='__RequestVerificationToken']").val();
     var url = "/User/WithdrawAmountAsync";
     $.post(url,
         {
             cardId: cardId,
-            amount: amount
-            //__RequestVerificationToken: token
+            amount: amount,
+            "__RequestVerificationToken": token
         },
         function (data) {
             var balanceValue = $("#balanceValue");

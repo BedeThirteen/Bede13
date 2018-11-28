@@ -1,0 +1,43 @@
+﻿<form method="post">
+    <div class="form-group">
+        <label for="cardNumber">Card number</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+            </div>
+            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+            <input type="text" id="cardNumber" class="form-control" placeholder="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label><span class="hidden-xs">Expiration</span> </label>
+                <div class="form-inline">
+                    <select class="form-control" id="expirationMonth" style="width:45%">
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option>@i</option>
+                        }
+                    </select>
+                    <span style="width:10%; text-align: center"> / </span>
+                    <select class="form-control" id="expirationYear" style="width:45%">
+                        @for (int i = 0; i < 9; i++)
+                        {
+                            <option>@DateTime.UtcNow.AddYears(i).Year</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                @*<span asp-validation-for="CardCVV" class="text-danger"></span>*@
+                <input class="form-control" id="cvv" required="" type="text">
+            </div>
+        </div>
+    </div>
+    @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
+    <button class="subscribe btn btn-primary btn-block" id="addCardBtn" data-toggle="collapse" href="#collapse1">Add</button>
+</form>

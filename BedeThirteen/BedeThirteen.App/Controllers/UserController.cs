@@ -40,7 +40,7 @@ namespace BedeThirteen.App.Controllers
 
         [HttpPost]
         [Authorize]
-        //[ValidateAntiForgeryToken] //TODO:  fix token
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> AddCreditCardAsync(CreditCardViewModel model)
         {
             //if (!ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace BedeThirteen.App.Controllers
 
         [HttpPost]
         [Authorize]
-        //[ValidateAntiForgeryToken] //Todo: fix
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> DepositAmountAsync(DepositViewModel model)
         {
             //if (!ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace BedeThirteen.App.Controllers
 
         [HttpPost]
         [Authorize]
-        //[ValidateAntiForgeryToken] //Todo: fix
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> WithdrawAmountAsync(DepositViewModel model)
         {
             //if (!ModelState.IsValid)

@@ -12,7 +12,6 @@ using BedeThirteen.Services;
 using BedeThirteen.Data.Models;
 using BedeThirteen.Data.Context;
 using Microsoft.AspNetCore.Mvc;
-using BedeThirteen.Services.Requesters;
 
 namespace BedeThirteen.App
 {
@@ -83,7 +82,6 @@ namespace BedeThirteen.App
         private void RegisterServices(IServiceCollection services)
         {
             services.AddSingleton<IExchangeRateService, ExchangeRateService>();
-            services.AddHttpClient<IExchangeRatesApiClient, ExchangeRatesApiClient>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<ICreditCardService, CreditCardService>();
             services.AddScoped<ICurrencyService, CurrencyService>();

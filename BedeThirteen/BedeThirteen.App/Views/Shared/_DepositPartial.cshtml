@@ -1,135 +1,29 @@
-﻿<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <div id="modal-title" class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading"> <h4>Deposit</h4></div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label>Credit Card</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
-                                    </div>
-                                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                    <select class="form-control" id="creditCardsDdl"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Amount</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-                                    </div>
-                                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                    <input type="text" id="depositAmount" class="form-control">
-                                </div>
-                            </div>
-                            <a class="btn btn-primary btn-block" id="depositBtn">Deposit</a>
-                        </div>
+﻿<div class="panel panel-primary">
+    <div class="panel-heading"> <h4>Deposit</h4></div>
+    <div class="panel-body">
+        <form method="post" >
+            <div class="form-group">
+                <label>Credit Card</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                     </div>
-                </div>
-                <button type="button" id="closeBtn" class="close" hidden="hidden" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1">Add new card</a>
-                            </h6>
-                        </div>
-                        <div id="collapse1" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="cardNumber">Card number</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
-                                        </div>
-                                        @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                        <input type="text" id="cardNumber" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <div class="form-group">
-                                            <label><span class="hidden-xs">Expiration</span> </label>
-                                            <div class="form-inline">
-                                                <select class="form-control" id="expirationMonth" style="width:45%">
-                                                    @for (int i = 1; i <= 12; i++)
-                                                    {
-                                                        <option>@i</option>
-                                                    }
-                                                </select>
-                                                <span style="width:10%; text-align: center"> / </span>
-                                                <select class="form-control" id="expirationYear" style="width:45%">
-                                                    @for (int i = 0; i < 9; i++)
-                                                    {
-                                                        <option>@DateTime.UtcNow.AddYears(i).Year</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                                            @*<span asp-validation-for="CardCVV" class="text-danger"></span>*@
-                                            <input class="form-control" id="cvv" required="" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
-                                <a class="subscribe btn btn-primary btn-block" id="addCardBtn" data-toggle="collapse" href="#collapse1">Add</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h6 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse2">Withdraw</a>
-                            </h6>
-                        </div>
-                        <div id="collapse2" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
-                            <div class="panel-body">
-
-                                <div class="form-group">
-                                    <label>Credit Card</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
-                                        </div>
-                                        @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                        <select id="cardsWithdrawDdl" class="form-control"></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Amount</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
-                                        </div>
-                                        @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                                        <input type="text" id="withdrawAmount" class="form-control">
-                                    </div>
-                                </div>
-                                @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
-                                <a class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawBtn" data-toggle="collapse" href="#collapse2">Withdraw</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-
+                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+                    <select class="form-control" id="creditCardsDdl"></select>
                 </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+                    </div>
+                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+                    <input type="text" id="depositAmount" class="form-control">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" id="depositBtn">Deposit</button>
+        </form>
     </div>
 </div>

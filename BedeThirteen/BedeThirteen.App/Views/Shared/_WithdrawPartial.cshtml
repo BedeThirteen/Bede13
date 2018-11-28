@@ -1,0 +1,25 @@
+﻿<form method="post">
+    <div class="form-group">
+        <label>Credit Card</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+            </div>
+            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+            <select id="cardsWithdrawDdl" class="form-control"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
+            </div>
+            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+            <input type="text" id="withdrawAmount" class="form-control">
+        </div>
+    </div>
+    @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
+    <button class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawBtn" data-toggle="collapse" href="#collapse2">Withdraw</button>
+</form>
