@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BedeThirteen.Games\BedeThirteen.Games.csproj" />
     <ProjectReference Include="..\BedeThirteen.Services\BedeThirteen.Services.csproj" />
   </ItemGroup>
 
@@ -30,6 +31,10 @@
     <Content Update="Areas\Administration\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\GamesModels\" />
   </ItemGroup>
 
 </Project>

@@ -13,5 +13,6 @@ namespace BedeThirteen.Games.Games
             : base(4, 3, new DefaultTokenGenerator(), new DefaultGameEvaluator())
         {
         }
+
     }
 }

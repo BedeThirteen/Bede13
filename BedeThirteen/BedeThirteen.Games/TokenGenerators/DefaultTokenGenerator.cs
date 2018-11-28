@@ -8,17 +8,18 @@ namespace BedeThirteen.Games.TokenGenerators
 {
     public class DefaultTokenGenerator : ITokenGenerator
     {
-        private RNGCryptoServiceProvider _RNGProvider;
+         
 
         public DefaultTokenGenerator()
         {
-            RNGCryptoServiceProvider _RNGProvider = new RNGCryptoServiceProvider();
         }
 
         public Token GenerateToken()
         {
+            RNGCryptoServiceProvider  RNGProvider = new RNGCryptoServiceProvider();
+
             var byteArray = new byte[4];
-            _RNGProvider.GetBytes(byteArray);
+            RNGProvider.GetBytes(byteArray);
 
             //convert 4 bytes to an integer value between 0 and 100
             var randomInteger = BitConverter.ToUInt32(byteArray, 0) % 100;
