@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BedeThirteen.Games.Games;
+using BedeThirteen.Games;
+using BedeThirteen.Games.Abstract;
 using Microsoft.AspNetCore.Mvc;
+ 
 
 namespace BedeThirteen.App.Controllers
 {
     public class GamesController : Controller
     {
-        private readonly FourByThreeGame fourByThreeGame;
-       
+        private readonly IGameManager gameManager;
 
-        public GamesController(FourByThreeGame fourByThreeGame  )
+        public GamesController(IGameManager gameManager  )
         {
-            this.fourByThreeGame = fourByThreeGame;
-          
+            this.gameManager = gameManager;
         }
 
         public IActionResult Index()
@@ -26,8 +26,9 @@ namespace BedeThirteen.App.Controllers
         [Authenticate]
         public IActionResult GameOne()
         {
-             
-            return View(this.fourByThreeGame.GenerateGameCombiantion());
+            var game = this.gameManager.GetGame(AvailableGames.GameOne);
+
+            return View(game.GenerateGameCombiantion());
 
         }
         [HttpPost]
@@ -35,8 +36,9 @@ namespace BedeThirteen.App.Controllers
         [Authenticate]
         public IActionResult GameOne(decimal stakeAmount)
         {
-             
-            var result = this.fourByThreeGame.GenerateGameCombiantion();
+
+            var game = this.gameManager.GetGame(AvailableGames.GameOne);
+            var result = game.GenerateGameCombiantion();
 
             //TODO 
             //Use Transaction service to bet stakeAmount, and if winningsCoef bigger than 0 then a winnings transacion is made            // 
@@ -45,6 +47,24 @@ namespace BedeThirteen.App.Controllers
 
         }
 
+        [HttpGet]
+        [Authenticate]
+        public IActionResult GameTwo()
+        {
+            var game = this.gameManager.GetGame(AvailableGames.GameTwo);
 
+            return View(game.GenerateGameCombiantion());
+
+        }
+
+        [HttpGet]
+        [Authenticate]
+        public IActionResult GameThree()
+        {
+            var game = this.gameManager.GetGame(AvailableGames.GameThree);
+
+            return View(game.GenerateGameCombiantion());
+
+        }
     }
 }
