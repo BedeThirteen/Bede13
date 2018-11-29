@@ -28,7 +28,10 @@ namespace BedeThirteen.App.ViewComponents
         {
             if (this.signInManager.IsSignedIn(HttpContext.User))
             {
-                var user = await this.userManager.GetUserAsync(HttpContext.User);
+                var user = await this.userManager.GetUserAsync(HttpContext.User); 
+
+                if (!await userManager.IsInRoleAsync(user, "Admin"))
+                {
 
                 var userCurrency = (await currencyService.FindCurrencyAsync(user.CurrencyId)).Name;
                 var rate = (await this.exchangeRateService.GetRatesAsync())[userCurrency];
@@ -36,14 +39,7 @@ namespace BedeThirteen.App.ViewComponents
                 {
                     Balance = Math.Round(user.Balance * rate, 2),
                     Currency = user.Currency.Name
-                };
-                if (asTextOnly)
-                {
-
-                    return View("AsText", balanceVm);
-                }
-                else if (!await userManager.IsInRoleAsync(user, "Admin"))
-                { 
+                }; 
 
                         return View("BalanceStatus", balanceVm);                    
                 }

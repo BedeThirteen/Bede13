@@ -12,3 +12,8 @@
         // Add result to bet history       
     });
 });
+
+$(function () {
+
+    $("#gameBalanceAccount").text($("#navBarAccountBalance").text());
+});
