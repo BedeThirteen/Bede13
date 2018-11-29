@@ -55,8 +55,8 @@ $("#depositBtn").click(function (e) {
         function (data) {
             var balanceValue = $("#balanceValue");
             balanceValue.text(data.result);
-            let gameBalanceElement = $(gameBalanceAccount);
-            if (gameBalanceElement) {
+            var gameBalanceElement = $("#gameBalanceAccount");
+            if (gameBalanceElement.length) {
                 gameBalanceElement.text(data.result);
             }
             $("#closeBtn").click();
