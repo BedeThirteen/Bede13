@@ -24,28 +24,23 @@ namespace BedeThirteen.App.ViewComponents
             this.userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(bool asTextOnly)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             if (this.signInManager.IsSignedIn(HttpContext.User))
             {
                 var user = await this.userManager.GetUserAsync(HttpContext.User);
 
-                var userCurrency = (await currencyService.FindCurrencyAsync(user.CurrencyId)).Name;
-                var rate = (await this.exchangeRateService.GetRatesAsync())[userCurrency];
-                var balanceVm = new BalanceViewModel()
+                if (!await userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    Balance = Math.Round(user.Balance * rate, 2),
-                    Currency = user.Currency.Name
-                };
-                if (asTextOnly)
-                {
+                    var userCurrency = (await currencyService.FindCurrencyAsync(user.CurrencyId)).Name;
+                    var rate = (await this.exchangeRateService.GetRatesAsync())[userCurrency];
+                    var balanceVm = new BalanceViewModel()
+                    {
+                        Balance = Math.Round(user.Balance * rate, 2),
+                        Currency = user.Currency.Name
+                    };
 
-                    return View("AsText", balanceVm);
-                }
-                else if (!await userManager.IsInRoleAsync(user, "Admin"))
-                { 
-
-                        return View("BalanceStatus", balanceVm);                    
+                    return View("BalanceStatus", balanceVm);
                 }
             }
 

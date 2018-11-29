@@ -38,11 +38,11 @@
 
             </ul>
             <div id="modalButtton" data-toggle="modal" data-target="#myModal">
-
-
                 @await Component.InvokeAsync("Balance")
             </div>
+
             @await Html.PartialAsync("_LoginPartial")
+
         </div>
     </nav>
     <div class="body-content">
@@ -73,14 +73,6 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
-    @*@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
-        @functions{
-            public string GetAntiXsrfRequestToken()
-            {
-                return Xsrf.GetAndStoreTokens(Context).RequestToken;
-            }
-        }*@
 
     @RenderSection("Scripts", required: false)
 
