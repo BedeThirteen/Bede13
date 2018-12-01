@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BedeThirteen.Games;
+﻿using BedeThirteen.Games;
 using BedeThirteen.Games.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
- 
 
 namespace BedeThirteen.App.Controllers
 {
@@ -23,17 +19,16 @@ namespace BedeThirteen.App.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        [Authenticate]
+        [Authorize]
         public IActionResult GameOne()
         {
             var game = this.gameManager.GetGame(AvailableGames.GameOne);
 
             return View(game.GenerateGameCombiantion());
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authenticate]
+        [Authorize]
         public IActionResult GameOne(decimal stakeAmount)
         {
 
@@ -48,7 +43,7 @@ namespace BedeThirteen.App.Controllers
         }
 
         [HttpGet]
-        [Authenticate]
+        [Authorize]
         public IActionResult GameTwo()
         {
             var game = this.gameManager.GetGame(AvailableGames.GameTwo);
@@ -58,7 +53,7 @@ namespace BedeThirteen.App.Controllers
         }
 
         [HttpGet]
-        [Authenticate]
+        [Authorize]
         public IActionResult GameThree()
         {
             var game = this.gameManager.GetGame(AvailableGames.GameThree);

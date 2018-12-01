@@ -1,6 +1,11 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    /*opacity: 0.70;
+    filter: alpha(opacity=70);*/
 }
 
 /* Wrapping element */
@@ -32,4 +37,63 @@
     .carousel-caption {
         display: none;
     }
+}
+
+#myModal {
+    opacity: 0.90;
+    filter: alpha(opacity=90);
+}
+
+.bg-primary {
+    background-color: #b72727 !important;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #b72727;
+    border-color: #b72727;
+}
+
+    .btn-primary:hover {
+        color: black;
+        background-color: white;
+        border-color: #b72727;
+    }
+
+    .btn-primary:active {
+        color: black !important;
+        background-color: white !important;
+        border-color: #b72727;
+    }
+
+.dropdown-item:active {
+    color: black;
+    background-color: white;
+}
+
+a {
+    color: #b72727;
+}
+
+    a:hover {
+        color: #b72727;
+    }
+
+p, h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
+label {
+    color: white;
+}
+/*.btn-red {
+    color: white;
+}*/
+
+opition:hover {
+    background-color: #b72727;
+}
+
+.text-black {
+    color: black;
 }
