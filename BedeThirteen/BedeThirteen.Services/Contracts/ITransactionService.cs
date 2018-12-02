@@ -7,7 +7,8 @@
 
     public interface ITransactionService
     {
-        Task<IEnumerable<Transaction>> GetLastNTransactions(int pageLength, int pagesToSkip = 0);
+        // Task<IEnumerable<Transaction>> GetLastNTransactionsAsync(int pageLength, int pagesToSkip = 0);
+        Task<IEnumerable<Transaction>> GetTransactionsAsync(string sortOrder);
 
         Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId);
 

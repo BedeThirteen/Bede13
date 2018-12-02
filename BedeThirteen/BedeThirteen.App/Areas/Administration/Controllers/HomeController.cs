@@ -17,41 +17,46 @@ namespace BedeThirteen.App.Areas.Administration.Controllers
         {
             this.transactionService = transactionService;
         }
-        
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public async Task<IActionResult> Transactions()
+        public async Task<IActionResult> GetTransactions(string sortOrder)
         {
+            var result = await GetTransactionListAsync(sortOrder);
 
-            var results = await this.transactionService.GetLastNTransactions(10);
+            return PartialView("_TransactionsResultPartial", result);
+        }
 
-            if (results == null)
-            {
-                return View(new List<TransactionViewModel>());
-               
-            }
-            else
-            {
-                var viewModel = new List<TransactionViewModel>();
-                foreach(var transaction in results)
-                {
-                    viewModel.Add(new TransactionViewModel()
-                    {
-                        Amount = transaction.Amount,
-                        Date = transaction.Date,
-                        Id = transaction.Id.ToString(),
-                        User = transaction.User.UserName,
-                        Type = transaction.TransactionType.Name,
-                        Description = transaction.Description
 
-                    });
 
-                };
-                return View(viewModel);
-            }
+        public async Task<IActionResult> Transactions(string sortOrder = "")
+        {
+            //ViewData["AmountSortParm"] = string.IsNullOrEmpty(sortOrder) ? "amount_desc" : "";
+            //ViewData["DateSortParm"] = sortOrder == "date" ? "date_desc" : "date";
+
+            var result = await GetTransactionListAsync(sortOrder);
+
+            return View(result);
+        }
+        private async Task<List<TransactionViewModel>> GetTransactionListAsync(string sortOrder)
+        {
+            var transactions = await this.transactionService.GetTransactionsAsync(sortOrder);
+
+            var result = transactions
+              .Select(t => new TransactionViewModel
+              {
+                  Id = t.Id.ToString(),
+                  Amount = t.Amount,
+                  Date = t.Date,
+                  Description = t.Description,
+                  Type = t.TransactionType.Name,
+                  User = t.User.UserName
+              })
+              .ToList();
+            return result;
         }
     }
 }

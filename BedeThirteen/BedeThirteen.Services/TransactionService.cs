@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
@@ -18,12 +19,43 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<Transaction>> GetLastNTransactions(int pageLength, int pagesToSkip = 0)
+        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string sortOrder)
         {
-            return await this.context.Transactions.Include(t => t.TransactionType)
-                 .Include(t => t.User).OrderByDescending(t => t.Date)
-                 .Skip(pagesToSkip * pageLength).Take(pageLength)
-                 .ToListAsync();
+
+            var sortDictionary = new Dictionary<string, Expression<Func<Transaction, object>>>()
+            {
+                { "date", t => t.Date },
+                { "date_desc", t => t.Date },
+                { "amount", t => t.Amount },
+                { "amount_desc", t => t.Amount }
+            };
+
+            var transactions = this.context.Transactions
+                .Where(t => t.IsDeleted == false);
+
+            // filter
+
+            // totalCount
+            var count = transactions.Count();
+
+            // sorting
+            if (!string.IsNullOrEmpty(sortOrder))
+            {
+                transactions = sortOrder.Contains("desc")
+                               ? transactions.OrderByDescending(sortDictionary[sortOrder])
+                               : transactions.OrderBy(sortDictionary[sortOrder]);
+            }
+
+            // paging
+
+            // return await this.context.TransactionsOrderByDescending(t => t.Date)
+            //     .Skip(pagesToSkip * pageLength).Take(pageLength)
+            //     .ToListAsync();
+
+            return await transactions
+                .Include(t => t.TransactionType)
+                .Include(t => t.User)
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId)
