@@ -9,7 +9,7 @@
         type: request_method,
         data: form_data
     }).done(function (data) {
-        UpdateBalance(data.newBalance);
+        UpdateBalance(data.newBalance, data.currencyName);
         UpdateSlots(data.rolledValues);
         AddToGameLog(data.logHistory);
 
@@ -17,15 +17,23 @@
     });
 });
 
-function UpdateBalance(number) {
-    $("#gameBalanceAccount").text(number);
-    $("#balanceValue").text(number);
+function UpdateBalance(number, currency) {
+    let amountAndCurrency = `${number} ${currency}`;
+    // Updates Visualized balance
+    $("#gameBalanceAccount").text(amountAndCurrency);
+    $("#balanceValue").text(amountAndCurrency);
+
+    //Sets form's maximum betable amount
+    $("#gameStakeForm > input").first("input").attr("max", number); 
 }
 
 
 $(function () {
+    
     $("#gameBalanceAccount").text($("#balanceValue").text());
-});
+
+    $("#gameStakeForm > input").first("input").attr("max", $("#balanceValue").text().split(" ")[0]); 
+})
 
 function AddToGameLog(rolledValues) {
 
