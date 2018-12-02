@@ -5,7 +5,7 @@
 
         <!--Slot -->
         <div class="col-9">
-            <div class="container  container-fluid">
+            <div class="container  container-fluid" id="gameSlotsValues">
 
                 @foreach (var slotLine in Model.RolledValues)
                 {
@@ -20,13 +20,12 @@
             </div>
         </div>
         <!--Bet Histroy -->
-        <div class="col-2">
+        <div id="gameBetHistory" class="col-2">
             Bet History
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-3">
-
             <span id="gameBalanceAccount"></span>
         </div>
         <div class="col-4">
