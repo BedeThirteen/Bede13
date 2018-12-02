@@ -13,5 +13,9 @@
         Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId);
 
         Task<decimal> WithdrawAsync(string userId, decimal amount, Guid cardId);
+
+        Task<decimal> StakeAsync(string userId, decimal amount, string gameName);
+        Task<decimal> WinAsync(string userId, decimal amount,  string gameName);
+
     }
 }

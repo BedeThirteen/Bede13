@@ -129,5 +129,65 @@
 
             return user.Balance;
         }
+
+        public async Task<decimal> StakeAsync(string userId, decimal amount, string gameName)
+        {
+            if (string.IsNullOrEmpty(userId) || amount <= 0)
+            {
+                throw new ServiceException("Invalid parameters!");
+            }
+
+            var user = await this.context.Users.FindAsync(userId);
+            if (user.Balance < amount)
+            {
+                throw new ServiceException("Invalid amount!");
+            }
+
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
+
+            var stake = new Transaction()
+            {
+                Date = DateTime.UtcNow,
+                Amount = amount,
+                Description = $"Stake on game {gameName}",
+                UserId = userId,
+                TransactionTypeId = type.Id
+            };
+
+            this.context.Transactions.Add(stake);
+            user.Balance -= stake.Amount;
+
+            await this.context.SaveChangesAsync();
+
+            return user.Balance;
+        }
+
+        public async Task<decimal> WinAsync(string userId, decimal amount, string gameName)
+        {
+            if (string.IsNullOrEmpty(userId) || amount <= 0)
+            {
+                throw new ServiceException("Invalid parameters!");
+            }
+
+            var user = await this.context.Users.FindAsync(userId);
+
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
+
+            var win = new Transaction()
+            {
+                Date = DateTime.UtcNow,
+                Amount = amount,
+                Description = $"Win on game {gameName}",
+                UserId = userId,
+                TransactionTypeId = type.Id
+            };
+
+            this.context.Transactions.Add(win);
+            user.Balance += win.Amount;
+
+            await this.context.SaveChangesAsync();
+
+            return user.Balance;
+        }
     }
 }

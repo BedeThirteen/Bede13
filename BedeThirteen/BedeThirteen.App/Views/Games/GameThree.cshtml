@@ -1,11 +1,11 @@
 ﻿@model GameResult
 
-<div class="container container-fluid">
+<div class="container container-fluid pt-3 mt-3 text-light rounded-top">
     <div class="row justify-content-center">
 
         <!--Slot -->
         <div class="col-9">
-            <div class="container  container-fluid">
+            <div class="container  container-fluid" id="gameSlotsValues">
 
                 @foreach (var slotLine in Model.RolledValues)
                 {
@@ -20,7 +20,7 @@
             </div>
         </div>
         <!--Bet Histroy -->
-        <div class="col-2">
+        <div id="gameBetHistory" class="col-2">
             Bet History
         </div>
     </div>
@@ -30,13 +30,17 @@
         </div>
         <div class="col-4">
             <form id="gameStakeForm" asp-area="" asp-controller="Games" asp-action="GameThree" method="post">
-                <input type="text" name="stakeAmount" placeholder="Your Stake" />
+
+                <input type="text" name="stakeAmount" min="0.10" number data-val="true" data-val-required="Enter amount to bet." placeholder="Your Stake" />
                 <button type="submit">BET</button>
+
+                <span class="text-danger field-validation-valid text-center"
+                      data-valmsg-for="stakeAmount" data-valmsg-replace="true"></span>
+                <br />
+
             </form>
         </div>
-        <div class="col-3">
-            Coef: @Model.WinCoefficient
-        </div>
+
 
     </div>
     <div class="col-12">
