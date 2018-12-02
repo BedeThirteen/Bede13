@@ -11,7 +11,6 @@ using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
- 
 
 namespace BedeThirteen.App.Controllers
 {
@@ -42,7 +41,6 @@ namespace BedeThirteen.App.Controllers
             var game = this.gameManager.GetGame(AvailableGames.GameOne);
 
             return View(game.GenerateGameCombiantion());
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

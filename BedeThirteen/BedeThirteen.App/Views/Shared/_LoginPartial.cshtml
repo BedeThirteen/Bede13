@@ -14,7 +14,7 @@
                     <span class="fas fa-hand-peace"></span> Hello @UserManager.GetUserName(User)!
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><span class="fas fa-home mr-2"></span> Your Profile</a>
+                    <button class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><span class="fas fa-home mr-2"></span> Your Profile</button>
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="dropdown-divider"></div>

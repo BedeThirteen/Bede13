@@ -8,8 +8,8 @@
         creditCardsDdl.empty();
         cardsWithdrawDdl.empty();
         data.forEach(function (currentElement) {
-            creditCardsDdl.append($("<option />").val(currentElement.id).text(currentElement.number));
-            cardsWithdrawDdl.append($("<option />").val(currentElement.id).text(currentElement.number));
+            creditCardsDdl.append($("<option />").val(currentElement.id).text(currentElement.number).addClass("dropdown-item"));
+            cardsWithdrawDdl.append($("<option />").val(currentElement.id).text(currentElement.number).addClass("dropdown-item"));
         });
     });
 });
