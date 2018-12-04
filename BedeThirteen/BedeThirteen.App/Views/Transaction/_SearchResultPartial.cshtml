@@ -1,0 +1,47 @@
+﻿@model TransactionsResultViewModel
+
+<div class="table">
+    <div class="row text-red ">
+        <div class="col-lg-2">Date</div>
+        <div class="col-lg-2">Amount in USD</div>
+        <div class="col-lg-1">Type</div>
+        <div class="col-lg-4">Description</div>
+        <div class="col-lg-3">User</div>
+    </div>
+    <div id="resultsDiv" class="text-white">
+        @foreach (var item in Model.Transactions)
+        {
+            <div class="row">
+                <div class="col-lg-2">
+                    @item.Date
+                </div>
+                <div class="col-lg-2">
+                    @item.Amount
+                </div>
+                <div class="col-lg-1">
+                    @item.Type
+                </div>
+                <div class="col-lg-4">
+                    @item.Description
+                </div>
+                <div class="col-lg-3">
+                    @item.User
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="paginationList">
+        <ul class="pagination">
+            @{
+                for (int i = 0; i < Model.NumberOfPages; i++)
+                {
+                    <li class="page-item">
+                        <button id="pageNumberBtn" class="page-link" value="@i">@(i + 1)</button>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+

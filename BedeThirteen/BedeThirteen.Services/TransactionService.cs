@@ -7,6 +7,8 @@
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.CompositeModels;
+    using BedeThirteen.Services.Contracts;
     using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
 
@@ -19,9 +21,9 @@
             this.context = context;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsAsync(string sortOrder)
+        public async Task<TransactionsResult> GetTransactionsAsync(
+            string filterBy, string filterCriteria, int pageSize, int pageNumber, string sortBy)
         {
-
             var sortDictionary = new Dictionary<string, Expression<Func<Transaction, object>>>()
             {
                 { "date", t => t.Date },
@@ -30,32 +32,43 @@
                 { "amount_desc", t => t.Amount }
             };
 
-            var transactions = this.context.Transactions
-                .Where(t => t.IsDeleted == false);
+            var transactions = this.context.Transactions.Where(t => t.IsDeleted == false);
 
             // filter
+            if (filterBy != "all")
+            {
+                var filterByDictionary = new Dictionary<string, Expression<Func<Transaction, bool>>>()
+                {
+                    { "date", t => t.Date.Date == DateTime.Parse(filterCriteria).Date },
+                    { "amount", t => t.Amount == decimal.Parse(filterCriteria) },
+                    { "type", t => t.TransactionType.Name == filterCriteria },
+                    { "user", t => t.User.UserName.Contains(filterCriteria) }
+                };
+
+                var filter = filterByDictionary[filterBy];
+                transactions = transactions.Where(filter);
+            }
 
             // totalCount
             var count = transactions.Count();
 
             // sorting
-            if (!string.IsNullOrEmpty(sortOrder))
+            if (!string.IsNullOrEmpty(sortBy))
             {
-                transactions = sortOrder.Contains("desc")
-                               ? transactions.OrderByDescending(sortDictionary[sortOrder])
-                               : transactions.OrderBy(sortDictionary[sortOrder]);
+                transactions = sortBy.Contains("desc")
+                               ? transactions.OrderByDescending(sortDictionary[sortBy])
+                               : transactions.OrderBy(sortDictionary[sortBy]);
             }
 
             // paging
-
-            // return await this.context.TransactionsOrderByDescending(t => t.Date)
-            //     .Skip(pagesToSkip * pageLength).Take(pageLength)
-            //     .ToListAsync();
-
-            return await transactions
+            var result = await transactions
                 .Include(t => t.TransactionType)
                 .Include(t => t.User)
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize)
                 .AsNoTracking().ToListAsync();
+
+            return new TransactionsResult() { Transactions = result, TotalCount = count };
         }
 
         public async Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId)

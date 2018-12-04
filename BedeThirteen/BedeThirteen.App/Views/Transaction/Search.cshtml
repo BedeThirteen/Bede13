@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Transaction";
+}
+
+<h2>Transactions</h2>
+<body>
+    <div class="row">
+        <div class="col-lg-2">
+            <label for="pageSizeDdl">Page size</label>
+            <select id="pageSizeDdl" class="custom-select">
+                <option value="5">5</option>
+                <option selected value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+            </select>
+        </div>
+
+
+        <div class="col-lg-2">
+            <label for="sortByDdl">Sort by</label>
+            <select id="sortByDdl" class="custom-select">
+                <option value="date">Date Ascending</option>
+                <option selected value="date_desc">Date Descenging</option>
+                <option value="amount">Amount Ascending</option>
+                <option value="amount_desc">Amount Descending</option>
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="filterByDdl">Filter by</label>
+            <select id="filterByDdl" class="custom-select">
+                <option selected value="all">All</option>
+                <option value="date">Date</option>
+                <option value="amount">Amount</option>
+                <option value="type">Type</option>
+                <option value="user">User</option>
+            </select>
+        </div>
+
+        <div id="output" class="col-lg-3">
+            <div class="col-lg-10">
+                <label>Criteria</label>
+
+                <select id="type" class="custom-select criteria type" style="display: none;">
+                    <option selected value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                    <option value="stake">Stake</option>
+                    <option value="win">Win</option>
+                </select>
+
+                <input id="date" type='date' class="form-control criteria date" style="display: none;" />
+
+                <input id="amount" class="form-control criteria amount" style="display: none;" />
+
+                <input id="user" class="form-control criteria user" style="display: none;" />
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <button id="searchBtn" class="btn btn-info">
+                Search
+            </button>
+        </div>
+    </div>
+    <div id="searchResult" class="row">
+
+    </div>
+</body>
