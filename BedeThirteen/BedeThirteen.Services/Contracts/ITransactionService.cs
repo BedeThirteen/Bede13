@@ -15,6 +15,6 @@
 
         Task<decimal> WinAsync(string userId, decimal amount, string gameName);
 
-        Task<TransactionsResult> GetTransactionsAsync(string filterBy, string filterCriteria, int pageSize, int pageNumber, string sortBy);
+        Task<TransactionsResult> GetTransactionsAsync(string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy);
     }
 }

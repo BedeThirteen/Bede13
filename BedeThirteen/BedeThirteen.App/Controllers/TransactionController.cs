@@ -23,19 +23,19 @@ namespace BedeThirteen.App.Controllers
             // var model = await GetTransactionListAsync(filterBy, filterCriteria, pageSize, pageNumber, sortBy);
             return View();
         }
-        public async Task<IActionResult> GetSearchResultsAsync(string filterBy, string filterCriteria, int pageSize, int pageNumber, string sortBy)
+        public async Task<IActionResult> GetSearchResultsAsync(
+            string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
         {
-
-            var model = await GetTransactionListAsync(filterBy, filterCriteria, pageSize, pageNumber, sortBy);
+            var model = await GetTransactionListAsync(filterBy, filterCriteria, aditionalCriteria, pageSize, pageNumber, sortBy);
 
             return PartialView("_SearchResultPartial", model);
         }
 
         private async Task<TransactionsResultViewModel> GetTransactionListAsync
-           (string filterBy, string filterCriteria, int pageSize, int pageNumber, string sortBy)
+           (string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
         {
             var transactionsResult = await this.transactionService
-                .GetTransactionsAsync(filterBy, filterCriteria, pageSize, pageNumber, sortBy);
+                .GetTransactionsAsync(filterBy, filterCriteria, aditionalCriteria, pageSize, pageNumber, sortBy);
 
             return new TransactionsResultViewModel()
             {

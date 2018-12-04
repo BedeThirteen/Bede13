@@ -5,7 +5,7 @@
 <h2>Transactions</h2>
 <body>
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-1">
             <label for="pageSizeDdl">Page size</label>
             <select id="pageSizeDdl" class="custom-select">
                 <option value="5">5</option>
@@ -38,23 +38,25 @@
             </select>
         </div>
 
-        <div id="output" class="col-lg-3">
-            <div class="col-lg-10">
-                <label>Criteria</label>
+        <div id="output" class="col-lg-5">
+            <label>Criteria</label>
 
-                <select id="type" class="custom-select criteria type" style="display: none;">
-                    <option selected value="deposit">Deposit</option>
-                    <option value="withdraw">Withdraw</option>
-                    <option value="stake">Stake</option>
-                    <option value="win">Win</option>
-                </select>
 
-                <input id="date" type='date' class="form-control criteria date" style="display: none;" />
-
-                <input id="amount" class="form-control criteria amount" style="display: none;" />
-
-                <input id="user" class="form-control criteria user" style="display: none;" />
+            <div class="row col-lg-12">
+                <input id="date" placeholder="From" type='date' class="form-control criteria date col-lg-6" style="display: none;" />
+                <input id="dateA" placeholder="To" type='date' class="form-control criteria date col-lg-6" style="display: none;" />
             </div>
+            <div class="row col-lg-12">
+                <input id="amount" placeholder="From" class="form-control criteria amount col-lg-6" style="display: none;" />
+                <input id="amountA" placeholder="To" class="form-control criteria amount col-lg-6" style="display: none;" />
+            </div>
+            <input id="user" placeholder="Name" class="form-control criteria user col-lg-6" style="display: none;" />
+            <select id="type" class="custom-select form-control criteria col-lg-6" style="display: none;">
+                <option selected value="deposit">Deposit</option>
+                <option value="withdraw">Withdraw</option>
+                <option value="stake">Stake</option>
+                <option value="win">Win</option>
+            </select>
         </div>
         <div class="col-lg-1">
             <button id="searchBtn" class="btn btn-info">

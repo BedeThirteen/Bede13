@@ -22,7 +22,7 @@
         }
 
         public async Task<TransactionsResult> GetTransactionsAsync(
-            string filterBy, string filterCriteria, int pageSize, int pageNumber, string sortBy)
+            string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
         {
             var sortDictionary = new Dictionary<string, Expression<Func<Transaction, object>>>()
             {
@@ -40,10 +40,20 @@
                 var filterByDictionary = new Dictionary<string, Expression<Func<Transaction, bool>>>()
                 {
                     { "date", t => t.Date.Date == DateTime.Parse(filterCriteria).Date },
+                    {
+                      "dateAditional", t => t.Date.Date >= DateTime.Parse(filterCriteria).Date
+                                         && t.Date.Date <= DateTime.Parse(aditionalCriteria).Date
+                    },
                     { "amount", t => t.Amount == decimal.Parse(filterCriteria) },
+                    {
+                      "amountAditional", t => t.Amount >= decimal.Parse(filterCriteria)
+                                         && t.Amount <= decimal.Parse(aditionalCriteria)
+                    },
                     { "type", t => t.TransactionType.Name == filterCriteria },
                     { "user", t => t.User.UserName.Contains(filterCriteria) }
                 };
+
+                if (!string.IsNullOrEmpty(aditionalCriteria)) { filterBy += "Aditional"; }
 
                 var filter = filterByDictionary[filterBy];
                 transactions = transactions.Where(filter);
@@ -56,8 +66,8 @@
             if (!string.IsNullOrEmpty(sortBy))
             {
                 transactions = sortBy.Contains("desc")
-                               ? transactions.OrderByDescending(sortDictionary[sortBy])
-                               : transactions.OrderBy(sortDictionary[sortBy]);
+                ? transactions.OrderByDescending(sortDictionary[sortBy])
+                : transactions.OrderBy(sortDictionary[sortBy]);
             }
 
             // paging
