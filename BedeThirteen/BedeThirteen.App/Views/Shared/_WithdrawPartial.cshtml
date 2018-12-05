@@ -17,8 +17,10 @@
                 <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
             </div>
             @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-            <input type="text" id="withdrawAmount" class="form-control">
+            <input type="text" name="withdrawAmount"  id="withdrawAmount" data-val="true" required number min="0.10" class="form-control">
         </div>
+        <span class="text-danger field-validation-valid text-center"
+              data-valmsg-for="withdrawAmount" data-valmsg-replace="true"></span>
     </div>
     @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
     <button class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawBtn" data-toggle="collapse" href="#collapse2">Withdraw</button>

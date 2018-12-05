@@ -8,9 +8,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                     </div>
-                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                    <select class="form-control" id="creditCardsDdl"></select>
+                    <span data-validation-for="CardNumber" class="text-danger"></span>
+                    <select name="creditCardsDdl" class="form-control" required id="creditCardsDdl"></select>
                 </div>
+                <span class="text-danger field-validation-valid text-center"
+                      data-valmsg-for="name" data-valmsg-replace="true"></span>
             </div>
 
             <div class="form-group">
@@ -19,9 +21,12 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                    <input type="text" id="depositAmount" class="form-control">
+                    <input type="text" id="depositAmount" required name="depositAmount" data-val="true" number min="0.10" placeholder="Enter Amount" class="form-control">
+
                 </div>
+                <span class="text-danger field-validation-valid text-center"
+                      data-valmsg-for="depositAmount" data-valmsg-replace="true"></span>
+
             </div>
             <button class="btn btn-primary btn-block" id="depositBtn">Deposit</button>
         </form>

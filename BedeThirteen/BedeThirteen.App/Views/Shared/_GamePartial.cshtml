@@ -1,0 +1,78 @@
+﻿@model GamesViewModel
+
+
+<div class="container container-fluid pt-3 mt-3 text-light rounded-top">
+    <div class="row justify-content-center">
+
+        <!--Slot -->
+        <div class="col-9">
+            <div class="container bg-light rounded container-fluid" id="gameSlotsValues">
+
+                @foreach (var slotLine in Model.Results.RolledValues)
+                {
+                    <div class="row justify-content-center">
+                        @foreach (var token in slotLine)
+                        {
+
+                            string imageName;
+                            switch (token.Type)
+                            {
+                                case 0:
+                                    imageName = "wildcard";
+                                    break;
+                                case 1:
+                                    imageName = "apple";
+                                    break;
+                                case 2:
+                                    imageName = "watermelon";
+                                    break;
+                                case 3:
+                                    imageName = "seven";
+                                    break;
+                                default:
+                                    imageName = "error";
+                                    break;
+                            }
+
+
+                            <div class="col-2 text-center">
+                                <img src="~/images/slot/@(imageName).png"class="img-fluid w-50 "  alt="@token.Type" />
+                            </div>
+                        }
+                        
+                    </div>
+
+                }
+            </div>
+        </div>
+        <!--Bet Histroy -->
+        <div id="gameBetHistory" class="col-2">
+            Bet History
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <span id="gameBalanceAccount"></span>
+        </div>
+        <div class="col-4">
+            <form id="gameStakeForm" asp-area="" asp-controller="Games" asp-action="@Model.GameName" method="post">
+
+                <input type="text" name="stakeAmount" min="0.10" number data-val="true" data-val-required="Enter amount to bet." placeholder="Your Stake" />
+                <button type="submit">BET</button>
+
+                <span class="text-danger field-validation-valid text-center"
+                      data-valmsg-for="stakeAmount" data-valmsg-replace="true"></span>
+                <br />
+
+            </form>
+
+        </div>
+
+
+    </div>
+    <div class="col-12">
+
+        The RULES AND OR BET History
+    </div>
+
+</div>
