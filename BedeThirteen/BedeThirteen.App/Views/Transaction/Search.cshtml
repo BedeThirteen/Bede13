@@ -34,7 +34,10 @@
                 <option value="date">Date</option>
                 <option value="amount">Amount</option>
                 <option value="type">Type</option>
-                <option value="user">User</option>
+                @if (User.IsInRole("Admin"))
+                {
+                    <option value="user">User</option>
+                }
             </select>
         </div>
 

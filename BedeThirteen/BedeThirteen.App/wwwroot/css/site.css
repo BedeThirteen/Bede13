@@ -3,7 +3,9 @@
     padding-bottom: 20px;
     background-image: url('../images/background.jpg');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    /*background-size: 100% 100%;*/
+    background-size: cover;
+
     /*opacity: 0.70;
     filter: alpha(opacity=70);*/
 }

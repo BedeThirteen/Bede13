@@ -92,7 +92,6 @@ namespace BedeThirteen.App
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IGameManager,GameManager>(); 
-
         }
 
         private void RegisterAuthentication(IServiceCollection services)
