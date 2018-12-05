@@ -238,18 +238,16 @@
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
-                //if (model.CurrencyId != null/* && await _currencyService.CurrencyIsValidAsync(model.Currency)*/)
-                //{
-                    user.Currency = await _currencyService.FindCurrencyAsync(model.CurrencyId);
-                //}
-                //else
-                //{
-                //    user.CurrencyId = new Guid(_configuration.GetSection("CurrencySettings")["DefaultCurrencyId"]);
-                //}
+
+                user.Currency = await _currencyService.FindCurrencyAsync(model.CurrencyId);
+
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var currentUser = _userManager.FindByNameAsync(user.UserName).Result;
+                    var roleresult = await _userManager.AddToRoleAsync(currentUser, "User");
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -464,7 +462,7 @@
             return View();
         }
 
-        
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)

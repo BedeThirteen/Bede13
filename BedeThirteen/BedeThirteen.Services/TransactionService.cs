@@ -22,7 +22,13 @@
         }
 
         public async Task<TransactionsResult> GetTransactionsAsync(
-            string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
+            string filterBy,
+            string filterCriteria,
+            string aditionalCriteria,
+            int pageSize,
+            int pageNumber,
+            string sortBy,
+            string userId)
         {
             var sortDictionary = new Dictionary<string, Expression<Func<Transaction, object>>>()
             {
@@ -33,6 +39,10 @@
             };
 
             var transactions = this.context.Transactions.Where(t => t.IsDeleted == false);
+            if (userId != string.Empty)
+            {
+                transactions = this.context.Transactions.Where(t => t.UserId == userId);
+            }
 
             // filter
             if (filterBy != "all")
@@ -70,10 +80,14 @@
                 : transactions.OrderBy(sortDictionary[sortBy]);
             }
 
+            if (userId == string.Empty)
+            {
+                transactions = transactions.Include(t => t.User);
+            }
+
             // paging
             var result = await transactions
                 .Include(t => t.TransactionType)
-                .Include(t => t.User)
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
                 .AsNoTracking().ToListAsync();

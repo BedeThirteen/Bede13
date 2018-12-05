@@ -25,14 +25,21 @@ $("#searchBtn").click(function () {
 
 $(document).on("click", "#pageNumberBtn", function () {
     var filterBy = $("#filterByDdl").val();
-    var filterCriteria = $("#" + $("#filterByDdl").val()).val();
+    var filterCriteria = "";
+    if (filterBy !== "all") { filterCriteria = $("#" + $("#filterByDdl").val()).val(); }
     var pageSize = $("#pageSizeDdl").val();
     var sortBy = $("#sortByDdl").val();
     var pageN = $(this).val();
+    var aditionalCriteria = "";
     if (filterBy === "date" || filterBy === "amount") {
         aditionalCriteria = $("#" + filterBy + "A").val();
     }
-    var url = "/Transaction/GetSearchResultsAsync?filterBy=" + filterBy + "&filterCriteria=" + filterCriteria + "&aditionalCriteria=" + aditionalCriteria + "&pageSize=" + pageSize + "&pageNumber=" + pageN + "&sortBy=" + sortBy;
+    var url = "/Transaction/GetSearchResultsAsync?filterBy=" + filterBy
+        + "&filterCriteria=" + filterCriteria
+        + "&aditionalCriteria=" + aditionalCriteria
+        + "&pageSize=" + pageSize
+        + "&pageNumber=" + pageN
+        + "&sortBy=" + sortBy;
     $.get({
         url: url
     }).done(function (response) {

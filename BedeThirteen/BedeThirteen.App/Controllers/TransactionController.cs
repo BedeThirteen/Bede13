@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BedeThirteen.App.Models;
+using BedeThirteen.Services.CompositeModels;
 using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,20 +26,22 @@ namespace BedeThirteen.App.Controllers
             return View();
         }
         public async Task<IActionResult> GetSearchResultsAsync(
-            string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
+            string filterBy,
+            string filterCriteria,
+            string aditionalCriteria,
+            int pageSize,
+            int pageNumber,
+            string sortBy)
         {
-            var model = await GetTransactionListAsync(filterBy, filterCriteria, aditionalCriteria, pageSize, pageNumber, sortBy);
 
-            return PartialView("_SearchResultPartial", model);
-        }
+            var userId = "";
+            if (this.User.IsInRole("User"))
+            { userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); }
 
-        private async Task<TransactionsResultViewModel> GetTransactionListAsync
-           (string filterBy, string filterCriteria, string aditionalCriteria, int pageSize, int pageNumber, string sortBy)
-        {
             var transactionsResult = await this.transactionService
-                .GetTransactionsAsync(filterBy, filterCriteria, aditionalCriteria, pageSize, pageNumber, sortBy);
+              .GetTransactionsAsync(filterBy, filterCriteria, aditionalCriteria, pageSize, pageNumber, sortBy, userId);
 
-            return new TransactionsResultViewModel()
+            var model = new TransactionsResultViewModel()
             {
                 Transactions = transactionsResult.Transactions
                           .Select(t => new TransactionViewModel
@@ -47,7 +51,7 @@ namespace BedeThirteen.App.Controllers
                               Date = t.Date,
                               Description = t.Description,
                               Type = t.TransactionType.Name,
-                              User = t.User.UserName
+                              User = userId == "" ? t.User.UserName : ""
                           }).ToList(),
 
                 NumberOfPages = transactionsResult.TotalCount % pageSize != 0
@@ -55,6 +59,8 @@ namespace BedeThirteen.App.Controllers
                 : transactionsResult.TotalCount / pageSize,
                 CurrentPage = pageNumber,
             };
+
+            return PartialView("_SearchResultPartial", model);
         }
     }
 }
