@@ -6,7 +6,10 @@
         <div class="col-lg-2">Amount in USD</div>
         <div class="col-lg-1">Type</div>
         <div class="col-lg-4">Description</div>
-        <div class="col-lg-3">User</div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-lg-3">User</div>
+        }
     </div>
     <div id="resultsDiv" class="text-white">
         @foreach (var item in Model.Transactions)
@@ -24,9 +27,12 @@
                 <div class="col-lg-4">
                     @item.Description
                 </div>
-                <div class="col-lg-3">
-                    @item.User
-                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="col-lg-3">
+                        @item.User
+                    </div>
+                }
             </div>
         }
     </div>

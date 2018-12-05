@@ -46,8 +46,7 @@ namespace BedeThirteen.App.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> GameOne(decimal stakeAmount)
-        {
-           
+        {      
             string gameName = "Game One";
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.userService.GetUserAsync(userId);
