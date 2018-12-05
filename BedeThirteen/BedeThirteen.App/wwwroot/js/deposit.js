@@ -60,6 +60,13 @@ $("#depositBtn").click(function (e) {
             if (gameBalanceElement.length) {
                 gameBalanceElement.text(data.result);
             }
+
+            var betInputField = $("#gameStakeForm > input");
+            if (betInputField.length) {
+                //Sets form's maximum betable amount
+                $("#gameStakeForm > input").first("input").attr("max", data.result);
+            }
+
             $("#closeBtn").click();
         });
 });
@@ -83,6 +90,13 @@ $("#withdrawBtn").click(function (e) {
             var gameBalanceElement = $("#gameBalanceAccount");
             if (gameBalanceElement.length) {
                 gameBalanceElement.text(data.result);
+            }
+
+
+            var betInputField = $("#gameStakeForm > input");
+            if (betInputField.length) {
+                //Sets form's maximum betable amount
+                $("#gameStakeForm > input").first("input").attr("max", data.result);
             }
             $("#closeBtn").click();
         });

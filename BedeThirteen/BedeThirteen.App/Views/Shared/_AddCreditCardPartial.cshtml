@@ -5,9 +5,12 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
             </div>
-            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-            <input type="text" id="cardNumber" class="form-control" placeholder="">
+
+           
+            <input type="text" name="cardNumber" id="cardNumber" data-val="true" required digits class="form-control">
         </div>
+        <span class="text-danger field-validation-valid text-center"
+              data-valmsg-for="cardNumber" data-valmsg-replace="true"></span>
     </div>
     <div class="row">
         <div class="col-sm-8">
@@ -34,8 +37,10 @@
             <div class="form-group">
                 <label class="text-black" data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
                 @*<span asp-validation-for="CardCVV" class="text-danger"></span>*@
-                <input class="form-control" id="cvv" required="" type="text">
+                <input class="form-control" name="cvv" id="cvv" required digits   maxlength="3"  minlenght="3"data-val="true" type="text" placeholder="CVV">
             </div>
+            <span class="text-danger field-validation-valid text-center"
+                  data-valmsg-for="cvv" data-valmsg-replace="true"></span>
         </div>
     </div>
     @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@

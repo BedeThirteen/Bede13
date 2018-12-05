@@ -1,8 +1,9 @@
-﻿
-<div class="container pt-3">
-    <div class="row">
+﻿@model HomeViewModel
+<div class="card container pt-3">
+    
+    <div class="row card-header">
         <div class="col  ">
-            <a asp-controller="Home" asp-action="Transactions" class=" pt-2 btn btn-success">Transactions </a>
+            <a asp-area="" asp-controller="Transaction" asp-action="Search" class=" pt-2 btn btn-success">Transactions </a>
 
         </div>
         <div class="col ">
@@ -10,5 +11,16 @@
 
         </div>
     </div>
-     
-</div>
+
+    <div class="row ">
+        <div class="col-6  ">
+            <canvas id="adminMoneyInSystemChart" 
+                    data-deposit="@Model.DepositeSum" data-withdraw="@Model.WithdrawSum"></canvas>
+        </div>
+        <br />  
+        <div class="col-6  ">
+            <canvas id="adminMoneyPlayedInSystemChart" 
+                    data-win="@Model.WinSum" data-stake="@Model.StakeSum"></canvas>
+        </div>
+       
+    </div>
