@@ -1,5 +1,6 @@
 ﻿namespace BedeThirteen.Services.Contracts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using BedeThirteen.Data.Models;
 
@@ -8,5 +9,9 @@
         Task<User> GetUserAsync(string userId);
 
         Task<string> GetUserBalanceAsync(string userId);
+
+        Task<IEnumerable<string>> GetAllEmailsAsync();
+
+        Task<User> PromoteUserAsync(string email);
     }
 }

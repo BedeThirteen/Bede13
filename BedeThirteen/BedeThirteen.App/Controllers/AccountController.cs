@@ -247,7 +247,6 @@
                 {
                     var currentUser = _userManager.FindByNameAsync(user.UserName).Result;
                     var roleresult = await _userManager.AddToRoleAsync(currentUser, "User");
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

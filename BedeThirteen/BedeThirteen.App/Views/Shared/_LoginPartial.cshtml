@@ -15,10 +15,11 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <button class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><span class="fas fa-home mr-2"></span> Your Profile</button>
 
-
-
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-controller="Transaction" asp-action="Search" title="Transactions Panel"><span class="fas fa-unlock mr-2"></span>Transactions</a>
+                    @if (User.IsInRole("User"))
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-controller="Transaction" asp-action="Search" title="Transactions Panel"><span class="fas fa-unlock mr-2"></span>Transactions</a>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="dropdown-divider"></div>

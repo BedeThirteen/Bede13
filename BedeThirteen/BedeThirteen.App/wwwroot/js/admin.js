@@ -17,7 +17,7 @@ var chartMoneyInSystem = new Chart(ctxMoneyInSystem, {
     data: {
         labels: ["Deposited", "Withdrawn", "Difference"],
         datasets: [{
-          
+
             backgroundColor: ['rgb(0, 255, 0)', 'rgb(255, 0, 0)', 'rgb(255, 255, 0)'],
             borderColor: 'rgb(255, 99, 132)',
             data: [deposit, -withdraw, deposit - withdraw],
@@ -56,7 +56,7 @@ var chartMoneyPlayedInSystem = new Chart(ctxMoneyPlayedInSystem, {
     data: {
         labels: ["Staked", "Won", "Difference"],
         datasets: [{
-           
+
             backgroundColor: ['rgb(00, 255, 0)', 'rgb(255, 0, 0)', 'rgb(255, 255, 0)'],
             borderColor: 'rgb(255, 99, 132)',
             data: [stake, -win, stake - win],

@@ -3,18 +3,13 @@
     padding-bottom: 20px;
     background-image: url('../images/background.jpg');
     background-repeat: no-repeat;
-    /*background-size: 100% 100%;*/
     background-size: cover;
-
-    /*opacity: 0.70;
-    filter: alpha(opacity=70);*/
 }
+
 html, body {
-    height: 100%;
+    height: calc(100vh - 70px);
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -53,19 +48,39 @@ html, body {
     background-color: #b72727 !important;
 }
 
-.btn-primary {
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #b72727 !important;
+    color: black !important;
+    background-color: white !important;
+}
+
+
+.nav-item {
+    color: white !important;
+    background-color: #b72727 !important;
+}
+
+    .nav-item:hover > a {
+        color: black !important;
+    }
+
+    .nav-item:active > a {
+        color: black !important;
+    }
+
+.btn-primary, nav-link {
     color: white;
     background-color: #b72727;
     border-color: #b72727;
 }
 
-    .btn-primary:hover {
+    .btn-primary:hover, .nav-link:hover {
         color: black;
         background-color: white;
         border-color: #b72727;
     }
 
-    .btn-primary:active {
+    .btn-primary:active, .nav-link:active {
         color: black !important;
         background-color: white !important;
         border-color: #b72727;
@@ -75,6 +90,7 @@ html, body {
     color: black;
     background-color: white;
 }
+
 
 a {
     color: #b72727;
@@ -88,12 +104,9 @@ p, h1, h2, h3, h4, h5, h6 {
     color: white;
 }
 
-label {
+label, #navAnchor {
     color: white;
 }
-/*.btn-red {
-    color: white;
-}*/
 
 opition:hover {
     background-color: #b72727;
@@ -107,7 +120,12 @@ opition:hover {
     color: #b72727;
 }
 
-.button-link {
+/*.nav-link {
+    color:white;
+    background-color: #b72727!important;
+}*/
+
+/*.button-link {
     background: none !important;
     color: #b72727;
     border: none;
@@ -115,9 +133,13 @@ opition:hover {
     font: inherit;
     border-bottom: 1px solid #444;
     cursor: pointer;
-}
+}*/
 
 #searchBtn {
     position: absolute;
     bottom: 0;
+}
+
+.alert {
+    margin-bottom: 0em;
 }

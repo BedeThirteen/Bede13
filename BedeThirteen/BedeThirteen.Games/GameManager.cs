@@ -24,13 +24,10 @@ namespace BedeThirteen.Games
             {
                 case AvailableGames.GameOne:
                     return new FourByThreeGame();
-                    break;
                 case AvailableGames.GameTwo:
                     return new FiveByFiveGame();
-                    break;
                 case AvailableGames.GameThree:
                     return new EighthByFiveGame();
-                    break;
                 default:
                     throw new ArgumentException("Oops!");    
             }
