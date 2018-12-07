@@ -8,7 +8,7 @@ namespace BedeThirteen.App.Models
         [Required]
         public Guid CardId { get; set; }
 
-        [Range(0, double.MaxValue)]
+        [Range(0, double.MaxValue, ErrorMessage= "Amount must be a positive number.")]         
         public decimal Amount { get; set; }
     }
 }

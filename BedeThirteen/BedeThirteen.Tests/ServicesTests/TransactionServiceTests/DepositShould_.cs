@@ -55,10 +55,10 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
             Assert.AreEqual(balanceToHaveStr, result.ToString());
 
         }
-        [TestMethod]         
-        [DataRow("0")]
+
+        [TestMethod]   
         [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_When_AmountZero(string balanceToHaveStr)
+        public async Task ThrowServerExceptio_When_AmountZero()
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
@@ -85,7 +85,7 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.DepositAsync(userToAdd.Id, decimal.Parse(balanceToHaveStr), mockCreditCard.Id);
+                result = await sut.DepositAsync(userToAdd.Id, 0, mockCreditCard.Id);
             }
           
 
@@ -116,14 +116,16 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.CreditCards.Add(mockCreditCard);
                 context.SaveChanges();
             }
+
             //Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.DepositAsync((new Guid()).ToString(), 10m, mockCreditCard.Id);
+                result = await sut.DepositAsync((new Guid()).ToString(), 1, mockCreditCard.Id);
+
             }
-             
+
 
         }
 
@@ -152,16 +154,17 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.SaveChanges();
             }
             //Act
-            decimal result;
+           
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.DepositAsync(null, 10m, mockCreditCard.Id);
+                await sut.DepositAsync(null, 1, mockCreditCard.Id);
             }
 
 
         }
 
+        [TestMethod]
         [DataRow("-1")]
         [DataRow("-2.14")]
         [DataRow("-111.45")]
