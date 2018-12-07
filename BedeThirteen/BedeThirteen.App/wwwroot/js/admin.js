@@ -20,7 +20,7 @@ var chartMoneyInSystem = new Chart(ctxMoneyInSystem, {
 
             backgroundColor: ['rgb(0, 255, 0)', 'rgb(255, 0, 0)', 'rgb(255, 255, 0)'],
             borderColor: 'rgb(255, 99, 132)',
-            data: [deposit, -withdraw, deposit - withdraw],
+            data: [Math.round(deposit), Math.round( -withdraw), Math.round( deposit - withdraw)],
         }]
     },
 
@@ -59,7 +59,7 @@ var chartMoneyPlayedInSystem = new Chart(ctxMoneyPlayedInSystem, {
 
             backgroundColor: ['rgb(00, 255, 0)', 'rgb(255, 0, 0)', 'rgb(255, 255, 0)'],
             borderColor: 'rgb(255, 99, 132)',
-            data: [stake, -win, stake - win],
+            data: [Math.round(stake), Math.round(-win), Math.round(stake - win)],
         }]
     },
 

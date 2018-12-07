@@ -28,7 +28,7 @@
                              .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        public async Task<string> GetUserBalanceAsync(string userId)
+        public async Task<string> GetUserBalanceWithCurrencyAsync(string userId)
         {
             var user = await this.context.Users.Include(u => u.Currency).FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)

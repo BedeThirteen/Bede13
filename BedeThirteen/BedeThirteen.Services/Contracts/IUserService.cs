@@ -8,7 +8,7 @@
     {
         Task<User> GetUserAsync(string userId);
 
-        Task<string> GetUserBalanceAsync(string userId);
+        Task<string> GetUserBalanceWithCurrencyAsync(string userId);
 
         Task<IEnumerable<string>> FetchEmailsAsync(string fetch);
 
