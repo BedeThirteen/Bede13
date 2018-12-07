@@ -33,6 +33,11 @@ namespace BedeThirteen.App.Controllers
         public async Task<JsonResult> GetUserCreditCardsAsync()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var cards = await this.creditCardService.GetUserCardsAsync(userId);
+            var model = cards.Select(c => new { c.Id, Number = this.Mask(c.Number) })
+                                    .ToList();
+
             return Json((await this.creditCardService.GetUserCardsAsync(userId))
                                     .Select(c => new { c.Id, Number = this.Mask(c.Number) })
                                     .ToList());
@@ -58,28 +63,31 @@ namespace BedeThirteen.App.Controllers
 
         [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<JsonResult> DepositAmountAsync(DepositViewModel model)
+        [ValidateAntiForgeryToken] 
+        public async Task<IActionResult> DepositAmountAsync(MoneyAmountViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{ //Todo:
-            //}
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!ModelState.IsValid)
+            {
+                  return View(ModelState);
+            }
+
+           var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.userService.GetUserAsync(userId);
             var rates = await this.exchangeRateService.GetRatesAsync();
             var userCurrency = user.Currency.Name.ToUpper();
             var userRate = rates[userCurrency];
             var amount = model.Amount / userRate;
             var result = await this.transactionService.DepositAsync(user.Id, amount, model.CardId);
-
             return Json(new { result = string.Concat(Math.Round(result * userRate, 2), $" {user.Currency.Name.ToUpper()}") });
+             
+            
         }
 
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> WithdrawAmountAsync(DepositViewModel model)
+        public async Task<JsonResult> WithdrawAmountAsync(MoneyAmountViewModel model)
         {
             //if (!ModelState.IsValid)
             //{ //Todo:

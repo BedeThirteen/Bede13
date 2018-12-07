@@ -1,4 +1,5 @@
-﻿<div class="panel panel-primary">
+﻿@model MoneyAmountViewModel
+<div class="panel panel-primary">
     <div class="panel-heading"> <h4>Deposit</h4></div>
     <div class="panel-body">
         <form method="post" >
@@ -11,8 +12,7 @@
                     <span data-validation-for="CardNumber" class="text-danger"></span>
                     <select name="creditCardsDdl" class="form-control" required id="creditCardsDdl"></select>
                 </div>
-                <span class="text-danger field-validation-valid text-center"
-                      data-valmsg-for="name" data-valmsg-replace="true"></span>
+                 
             </div>
 
             <div class="form-group">
@@ -21,12 +21,12 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    <input type="text" id="depositAmount" required name="depositAmount" data-val="true" number min="0.10" placeholder="Enter Amount" class="form-control">
+                    <input id="depositAmount" asp-for="Amount" placeholder="Enter Amount" class="form-control">
 
                 </div>
-                <span class="text-danger field-validation-valid text-center"
-                      data-valmsg-for="depositAmount" data-valmsg-replace="true"></span>
-
+                <span asp-validation-for="Amount"
+                      class="text-danger"></span>
+                 
             </div>
             <button class="btn btn-primary btn-block" id="depositBtn">Deposit</button>
         </form>
