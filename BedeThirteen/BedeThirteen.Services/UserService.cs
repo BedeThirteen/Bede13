@@ -1,5 +1,6 @@
 ﻿namespace BedeThirteen.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -38,9 +39,14 @@
             return string.Concat(user.Balance, " ", user.Currency.Name);
         }
 
-        public async Task<IEnumerable<string>> GetAllEmailsAsync()
+        public async Task<IEnumerable<string>> FetchEmailsAsync(string fetch)
         {
-            return await this.context.Users.Select(u => u.Email).ToListAsync();
+            var normalized = fetch.ToUpper();
+            return await this.context.Users
+                              .Where(u => u.NormalizedEmail
+                                            .StartsWith(normalized, StringComparison.CurrentCultureIgnoreCase))
+                              .Select(u => u.Email).ToListAsync();
+
         }
 
         public async Task<User> PromoteUserAsync(string email)

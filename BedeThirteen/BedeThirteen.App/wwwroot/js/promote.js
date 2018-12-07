@@ -40,10 +40,79 @@ modalConfirm(function (confirm) {
                 alert.show();
                 alert.fadeOut(6000);
             });
-
-
     }
 });
+
+
+
+
+$(function () {
+    var getData = function (request, response) {
+        $.getJSON(
+            "/Administration/Home/AutoCompleteAsync/?term=" + request.term,
+            function (data) {
+                response(data);
+            });
+    };
+
+    var selectItem = function (event, ui) {
+        $("#emailInput").val(ui.item.value);
+        return false;
+    }
+
+    $("#emailInput").autocomplete({
+        source: getData,
+        select: selectItem,
+        minLength: 4,
+        change: function () {
+            $("#emailInput").val("").css("display", 2);
+        }
+    });
+});
+
+
+
+
+//$("input#search-textbox").autocomplete({
+//    source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+//});
+
+//$(document).ready(function () {
+//    $("#emailInput").autocomplete({
+//        source: function (request, response) {
+//            $.ajax({
+//                url: '/Administration/Home/AutoCompleteAsync',
+//                type: 'GET',
+//                cache: false,
+//                data: request,
+//                dataType: 'json',
+//                success: function (data) {
+//                    response($.map(data, function (item) {
+//                        return {
+//                            label: item,
+//                            value: item + ""
+//                        };
+//                    }));
+//                }
+//            });
+//        },
+//        minLength: 2
+//    });
+//});
+
+
+//$("#emailInput").on('focusout', function () {
+//    $.ajax({
+//        url: "/Administration/Home/AutoComplete",
+//        type: "GET",
+//        dataType: "json",
+//        data: { fetch: $(this).val() },
+//        success: function (query) {
+//            $("#searchProvinceOfBirth").val(query[0]);
+//        },
+//    });
+//});
+
 
 
 //$("#userName").autocomplete({

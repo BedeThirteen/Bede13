@@ -3,6 +3,7 @@ using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BedeThirteen.App.Areas.Administration.Controllers
@@ -53,14 +54,11 @@ namespace BedeThirteen.App.Areas.Administration.Controllers
             return Ok();
         }
 
-        //[HttpPost]
-        //public async Task<JsonResult> AutoComplete(string prefix)
-        //{
-
-        //    var data = await this.userService.GetAllEmailsAsync();
-        //    return base.Json((from E in data
-        //                      where E.StartsWith(prefix)
-        //                      select new { Email = E }).ToArray());
-        //}
+        [HttpPost]
+        public async Task<JsonResult> AutoCompleteAsync(string term)
+        {
+            return base.Json((await this.userService.FetchEmailsAsync(term))
+                                        .Select(e => new { Email = e }).ToList());
+        }
     }
 }
