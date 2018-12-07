@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BedeThirteen.Tests.ServicesTests.UserServiceTests
 {
     [TestClass]
-    public class GetUserBalance_Should
+    public class GetUserBalanceWithCurrency_Should
     {
         [TestMethod]
         [DataRow("1")]
@@ -23,7 +23,7 @@ namespace BedeThirteen.Tests.ServicesTests.UserServiceTests
         [DataRow("-1")]
         [DataRow("-2")]
         [DataRow("-111")]
-        [DataRow("-0")]
+        [DataRow("2312321213210")]
         [DataRow("-54541")]
         [DataRow("-11002565987")]
         public async Task ReturnBalance_WhenUser_IsFound(string balanceToHaveStr)
@@ -46,11 +46,11 @@ namespace BedeThirteen.Tests.ServicesTests.UserServiceTests
             string result;
             using (var context = new BedeThirteenContext(options))
             {
-                var sut = new UserService(context);
-                result = await sut.GetUserBalanceAsync(userToAdd.Id);
+                var sut = new UserService(context,null);
+                result = await sut.GetUserBalanceWithCurrencyAsync(userToAdd.Id);
             }
             //Assert
-            Assert.AreEqual(balanceToHaveStr, result);
+            Assert.AreEqual($"{balanceToHaveStr} {someCurrency.Name}", result);
 
         }
     }

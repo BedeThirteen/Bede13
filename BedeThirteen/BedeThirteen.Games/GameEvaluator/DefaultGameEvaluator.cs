@@ -16,6 +16,7 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
                 bool curLineIsDirty = false;
                 Token lastTolen = tokens[y][0];
                 decimal curLineCoef = lastTolen.Coefficient;
+                List<int> winningLines = new List<int>();
 
                 for (int x = 1; x < tokens[0].Length; x++)
                 {
@@ -37,6 +38,11 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
 
                 if (!curLineIsDirty)
                 {
+                    if (curLineCoef != 0)
+                    {
+                        winningLines.Add(y);
+
+                    }
                     curCoef += curLineCoef;
                 }
             }
