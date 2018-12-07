@@ -10,7 +10,7 @@
 
         Task<string> GetUserBalanceWithCurrencyAsync(string userId);
 
-        Task<IEnumerable<string>> GetAllEmailsAsync();
+        Task<IEnumerable<string>> FetchEmailsAsync(string fetch);
 
         Task<User> PromoteUserAsync(string email);
     }
