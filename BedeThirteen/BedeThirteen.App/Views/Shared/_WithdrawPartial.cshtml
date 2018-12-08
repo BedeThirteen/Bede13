@@ -1,11 +1,12 @@
-﻿<form method="post">
+﻿@model MoneyAmountViewModel
+<form method="post">
     <div class="form-group">
         <label class="text-black">Credit Card</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
             </div>
-            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
+             
             <select id="cardsWithdrawDdl" class="form-control"></select>
         </div>
     </div>
@@ -16,12 +17,11 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
             </div>
-            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-            <input type="text" name="withdrawAmount"  id="withdrawAmount" data-val="true" required number min="0.10" class="form-control">
+
+            <input asp-for="Amount" id="withdrawAmount" class="form-control">
         </div>
-        <span class="text-danger field-validation-valid text-center"
-              data-valmsg-for="withdrawAmount" data-valmsg-replace="true"></span>
+         <span asp-validation-for="Amount" class="text-danger"></span> 
     </div>
-    @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
+    
     <button class="subscribe btn btn-primary btn-block" data-parent="#accordion" id="withdrawBtn" data-toggle="collapse" href="#collapse2">Withdraw</button>
 </form>

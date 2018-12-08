@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <div id="modal-title" class="col-lg-12">
 
-                    <partial name="_DepositPartial" />
+                    <partial name="_DepositPartial" model="new MoneyAmountViewModel()" />
 
                 </div>
                 <button type="button" id="closeBtn" class="close" hidden="hidden" data-dismiss="modal">&times;</button>
@@ -21,7 +21,7 @@
                         </div>
                         <div id="collapse1" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
                             <div class="panel-body">
-                                <partial name="_AddCreditCardPartial" />
+                                <partial name="_AddCreditCardPartial"  />
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,8 @@
                         </div>
                         <div id="collapse2" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
                             <div class="panel-body">
-                                <partial name="_WithdrawPartial" />
+                                <partial name="_WithdrawPartial"  model="new MoneyAmountViewModel()"/>
+                                
                             </div>
                         </div>
                     </div>
