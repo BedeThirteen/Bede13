@@ -47,6 +47,12 @@ namespace BedeThirteen.App.Controllers
             //{
             //    throw new ArgumentException("Invalid parameters!");
             //}
+
+            if (model.Month < DateTime.Now.Month && model.Year < DateTime.Now.Year)
+            {
+                throw new ArgumentException("Invalid expiration date!");
+            }
+
             var date = new DateTime(model.Year, model.Month, 1);
             var card = await this.creditCardService.AddCreditCardAsync(
                    model.CardNumber, model.Cvv, date, this.User.FindFirstValue(ClaimTypes.NameIdentifier));

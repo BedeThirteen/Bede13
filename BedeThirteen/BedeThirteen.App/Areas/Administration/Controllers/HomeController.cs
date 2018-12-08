@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 namespace BedeThirteen.App.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin")]
+
     public class HomeController : Controller
     {
         private readonly IDataAggregationService dataAggregationService;
@@ -54,7 +56,7 @@ namespace BedeThirteen.App.Areas.Administration.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<JsonResult> AutoCompleteAsync(string term)
         {
             return base.Json((await this.userService.FetchEmailsAsync(term))

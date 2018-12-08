@@ -51,21 +51,22 @@ $(function () {
         $.getJSON(
             "/Administration/Home/AutoCompleteAsync/?term=" + request.term,
             function (data) {
-                response(data);
+                console.log('gyz');
+                response(data.map(x => x.email));
             });
     };
 
     var selectItem = function (event, ui) {
         $("#emailInput").val(ui.item.value);
         return false;
-    }
+    };
 
     $("#emailInput").autocomplete({
         source: getData,
         select: selectItem,
-        minLength: 4,
+        minLength: 3,
         change: function () {
-            $("#emailInput").val("").css("display", 2);
+            $("#emailInput").val("").css("display");
         }
     });
 });

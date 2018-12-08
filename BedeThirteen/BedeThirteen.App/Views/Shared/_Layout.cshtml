@@ -37,7 +37,27 @@
                     <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
 
+                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                {
+                    <li class="btn-group">
+                        <button type="button" class="btn dropdown-toggle btn-outline-light" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-hand-peace"></span> Games
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameOne"><span class="fas fa-dice"></span> 4x3</a>
+                            <div class="dropdown-divider"></div>
+                                                                                                            
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameTwo"><span class="fas fa-dice"></span>5x5</a>
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameThree"><span class="fas fa-dice"></span>5x8</a>
+                        </div>
+                    </li>
+                }
+
             </ul>
+
             <div id="modalButtton" data-toggle="modal" data-target="#myModal">
                 @await Component.InvokeAsync("Balance")
             </div>
@@ -60,6 +80,7 @@
 
     <environment include="Development">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="~/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
