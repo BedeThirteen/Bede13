@@ -26,6 +26,11 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
+            if (await this.context.Users.FindAsync(userId) == null)
+            {
+                throw new ServiceException($"No user found with Id {userId}.");
+            }
+
             var card = new CreditCard() { Number = number, Cvv = cvv, Expiry = expiry, UserId = userId };
             await this.context.CreditCards.AddAsync(card);
             await this.context.SaveChangesAsync();
@@ -35,6 +40,11 @@
 
         public async Task<ICollection<CreditCard>> GetUserCardsAsync(string id)
         {
+            if (await this.context.Users.FindAsync(id) == null)
+            {
+                throw new ServiceException($"No user found with Id {id}.");
+            }
+
             return await this.context.CreditCards.Where(c => c.UserId == id).ToListAsync();
         }
     }
