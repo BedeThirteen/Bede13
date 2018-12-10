@@ -76,7 +76,7 @@ namespace BedeThirteen.Tests.ServicesTests.CreditCardServiceTests
         public async Task ThrowException_WhenUser_DoesNotExist()
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase("ThrowException_WhenUser_DoesNotExist").Options;
+                .UseInMemoryDatabase("ThrowException_WhenUser_DoesNotExist" ).Options;
 
             var CardToAdd = new CreditCard()
             {
