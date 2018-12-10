@@ -1,14 +1,13 @@
 ﻿@model TransactionsResultViewModel
-
-<div class="table">
+@*<div class="table">
     <div class="row text-red ">
-        <div class="col-lg-2">Date</div>
-        <div class="col-lg-2">Amount in USD</div>
-        <div class="col-lg-1">Type</div>
-        <div class="col-lg-4">Description</div>
+        <div class="col-lg-2"><label>Date</label></div>
+        <div class="col-lg-2"><label>Amount in USD</label></div>
+        <div class="col-lg-1"><label>Type</label></div>
+        <div class="col-lg-4"><label>Description</label></div>
         @if (User.IsInRole("Admin"))
         {
-            <div class="col-lg-3">User</div>
+            <div class="col-lg-3"><label>User</label></div>
         }
     </div>
     <div id="resultsDiv" class="text-white">
@@ -16,40 +15,83 @@
         {
             <div class="row">
                 <div class="col-lg-2">
-                    @item.Date
+                    <label>@item.Date</label>
                 </div>
                 <div class="col-lg-2">
-                    @item.Amount
+                    <label>@item.Amount</label>
                 </div>
                 <div class="col-lg-1">
-                    @item.Type
+                    <label>@item.Type</label>
                 </div>
                 <div class="col-lg-4">
-                    @item.Description
+                    <label>@item.Description</label>
                 </div>
                 @if (User.IsInRole("Admin"))
                 {
                     <div class="col-lg-3">
-                        @item.User
+                        <label>@item.User</label>
                     </div>
                 }
             </div>
         }
-    </div>
+    </div>*@
 
-    <nav aria-label="Page navigation">
-        <div id="paginationList">
-            <ul class="pagination">
-                @{
-                    for (int i = 0; i < Model.NumberOfPages; i++)
-                    {
-                        <li class="page-item">
-                            <button id="pageNumberBtn" class="page-link" value="@i">@(i + 1)</button>
-                        </li>
-                    }
+
+<table class="table table-sm table-bordered table-striped table-hover text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Amount in USD</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th scope="col">User</th>
+            }
+        </tr>
+    </thead>
+    <tbody class="text-white">
+        @foreach (var item in Model.Transactions)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Amount</td>
+                <td>@item.Type</td>
+                <td>@item.Description</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>@item.User</th>
                 }
-            </ul>
-        </div>
-    </nav>
-</div>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <div id="paginationList">
+        <ul class="pagination">
+            @{
+                //if (Model.NumberOfPages > 34)
+                //{
+                //    var lines = Model.NumberOfPages % 34 != 0 ?
+                //        (Model.NumberOfPages / 34) + 1 : Model.NumberOfPages / 34;
+
+                //    while (lines <= 0)
+                //    {
+                for (int i = 0; i < Model.NumberOfPages; i++)
+                {
+                    <li class="page-item">
+                        <button id="pageNumberBtn" class="page-link" value="@i">@(i + 1)</button>
+                    </li>
+                }
+
+                //lines -= 34;
+                //}
+                //}
+
+            }
+        </ul>
+    </div>
+</nav>
+@*</div>*@
 

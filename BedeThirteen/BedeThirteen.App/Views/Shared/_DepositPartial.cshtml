@@ -1,8 +1,8 @@
 ﻿@model MoneyAmountViewModel
 <div class="panel panel-primary">
-    <div class="panel-heading"> <h4>Deposit</h4></div>
+    <div class="panel-heading"></div>
     <div class="panel-body">
-        <form method="post" >
+        <form method="post">
             <div class="form-group">
                 <label class="text-black">Credit Card</label>
                 <div class="input-group">
@@ -12,7 +12,6 @@
                     <span data-validation-for="CardNumber" class="text-danger"></span>
                     <select name="creditCardsDdl" class="form-control" required id="creditCardsDdl"></select>
                 </div>
-                 
             </div>
 
             <div class="form-group">
@@ -26,9 +25,9 @@
                 </div>
                 <span asp-validation-for="Amount"
                       class="text-danger"></span>
-                 
+
             </div>
-            <button class="btn btn-primary btn-block" id="depositBtn">Deposit</button>
+            <button class="btn btn-primary btn-block mb-3" id="depositBtn">Deposit</button>
         </form>
     </div>
 </div>

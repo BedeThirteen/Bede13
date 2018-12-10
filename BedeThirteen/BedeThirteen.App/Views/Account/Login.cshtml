@@ -13,7 +13,6 @@
 <h2>@ViewData["Title"]</h2>
 
 
-<div class="row align-items-center h-100">
     <form class="form-signin col-4 mx-auto" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
         <h1 class="h3 mb-3 font-weight-normal text-center text-white">Please sign in</h1>
@@ -48,9 +47,6 @@
             </p>
         </div>
     </form>
-
-</div>
-
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

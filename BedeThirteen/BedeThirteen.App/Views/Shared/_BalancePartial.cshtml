@@ -5,8 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div id="modal-title" class="col-lg-12">
-
-                    <partial name="_DepositPartial" model="new MoneyAmountViewModel()" />
+                    <h4 class="text-red">Balance Pannel</h4>
 
                 </div>
                 <button type="button" id="closeBtn" class="close" hidden="hidden" data-dismiss="modal">&times;</button>
@@ -14,14 +13,30 @@
             <div class="modal-body">
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
+
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">
+                                    <a class="btn btn-outline-danger btn-sm" id="expandDepositAnchor" data-toggle="collapse" href="#collapse3">Deposit</a>
+                                </h6>
+                            </div>
+                            <div id="collapse3" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <partial name="_DepositPartial" model="new MoneyAmountViewModel()" />
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="panel-heading">
                             <h6 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1">Add new card</a>
+                                <a class="btn btn-outline-danger btn-sm" data-toggle="collapse" href="#collapse1">Add new card</a>
                             </h6>
                         </div>
                         <div id="collapse1" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
                             <div class="panel-body">
-                                <partial name="_AddCreditCardPartial"  />
+                                <partial name="_AddCreditCardPartial" />
                             </div>
                         </div>
                     </div>
@@ -29,13 +44,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h6 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse2">Withdraw</a>
+                                <a class="btn btn-outline-danger btn-sm" data-toggle="collapse" href="#collapse2">Withdraw</a>
                             </h6>
                         </div>
                         <div id="collapse2" data-parent="#accordion" class="col-lg-12 panel-collapse collapse in">
                             <div class="panel-body">
-                                <partial name="_WithdrawPartial"  model="new MoneyAmountViewModel()"/>
-                                
+                                <partial name="_WithdrawPartial" model="new MoneyAmountViewModel()" />
+
                             </div>
                         </div>
                     </div>

@@ -16,27 +16,33 @@
 
 $("#addCardBtn").click(function (e) {
     e.preventDefault();
-    var cardNumber = $("#cardNumber").val();
-    var month = $("#expirationMonth").val();
-    var year = $("#expirationYear").val();
-    var cvv = $("#cvv").val();
-    var token = $("input[name='__RequestVerificationToken']").val();
-    var url = "/User/AddCreditCardAsync";
-    $.post(url,
-        {
-            cardNumber: cardNumber,
-            month: month,
-            year: year,
-            cvv: cvv,
-            "__RequestVerificationToken": token
-        },
-        function (data) {
-            var creditCardsDdl = $("#creditCardsDdl");
-            var cardsWithdrawDdl = $("#cardsWithdrawDdl");
-            creditCardsDdl.append($("<option />").val(data.id).text(data.number));
-            cardsWithdrawDdl.append($("<option />").val(data.id).text(data.number));
-            creditCardsDdl.val(data.id);
-        });
+    if (validateDate()) {
+        $("#dateError").hide();
+        var cardNumber = $("#cardNumber").val();
+        var month = $("#expirationMonth").val();
+        var year = $("#expirationYear").val();
+        var cvv = $("#cvv").val();
+
+        var token = $("input[name='__RequestVerificationToken']").val();
+        var url = "/User/AddCreditCardAsync";
+        $.post(url,
+            {
+                cardNumber: cardNumber,
+                month: month,
+                year: year,
+                cvv: cvv,
+                "__RequestVerificationToken": token
+            },
+            function (data) {
+                var creditCardsDdl = $("#creditCardsDdl");
+                var cardsWithdrawDdl = $("#cardsWithdrawDdl");
+                creditCardsDdl.append($("<option />").val(data.id).text(data.number));
+                cardsWithdrawDdl.append($("<option />").val(data.id).text(data.number));
+                creditCardsDdl.val(data.id);
+                $("#expandDepositAnchor").click();
+            });
+    }
+    else { $("#dateError").show(); }
 });
 
 
@@ -101,3 +107,22 @@ $("#withdrawBtn").click(function (e) {
             $("#closeBtn").click();
         });
 });
+
+$("#expirationYear").change(function () {
+    if (validateDate()) { $("#dateError").hide(); }
+    else { $("#dateError").show(); }
+});
+
+$("#expirationMonth").change(function () {
+    if (validateDate()) { $("#dateError").hide(); }
+    else { $("#dateError").show(); }
+});
+
+function validateDate() {
+    var date = new Date();
+    if (Number($("#expirationYear").val()) === date.getFullYear()
+        && Number($("#expirationMonth").val()) <= date.getMonth() + 1) {
+        return false;
+    }
+    else { return true; }
+}

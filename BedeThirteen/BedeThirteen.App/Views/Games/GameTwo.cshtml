@@ -1,4 +1,7 @@
 ﻿@model GameResult
 
-
 @{await Html.RenderPartialAsync("_GamePartial", new GamesViewModel("GameTwo", Model));}
+
+@section Scripts {
+    <script src="~/js/game.js"></script>
+}

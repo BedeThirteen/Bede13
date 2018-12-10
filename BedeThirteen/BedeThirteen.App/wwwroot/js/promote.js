@@ -51,7 +51,6 @@ $(function () {
         $.getJSON(
             "/Administration/Home/AutoCompleteAsync/?term=" + request.term,
             function (data) {
-                console.log('gyz');
                 response(data.map(x => x.email));
             });
     };
@@ -70,87 +69,3 @@ $(function () {
         }
     });
 });
-
-
-
-
-//$("input#search-textbox").autocomplete({
-//    source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
-//});
-
-//$(document).ready(function () {
-//    $("#emailInput").autocomplete({
-//        source: function (request, response) {
-//            $.ajax({
-//                url: '/Administration/Home/AutoCompleteAsync',
-//                type: 'GET',
-//                cache: false,
-//                data: request,
-//                dataType: 'json',
-//                success: function (data) {
-//                    response($.map(data, function (item) {
-//                        return {
-//                            label: item,
-//                            value: item + ""
-//                        };
-//                    }));
-//                }
-//            });
-//        },
-//        minLength: 2
-//    });
-//});
-
-
-//$("#emailInput").on('focusout', function () {
-//    $.ajax({
-//        url: "/Administration/Home/AutoComplete",
-//        type: "GET",
-//        dataType: "json",
-//        data: { fetch: $(this).val() },
-//        success: function (query) {
-//            $("#searchProvinceOfBirth").val(query[0]);
-//        },
-//    });
-//});
-
-
-
-//$("#userName").autocomplete({
-//    source: function (request, response) {
-//        $.ajax({
-//            url: '/Administration/Home/AutoComplete',
-//            type: "POST",
-//            dataType: "json",
-//            data: { prefix: request.term },
-//            //         contentType: "application/json; charset=utf-8",
-//            success: function (data) {
-//                response($.map(data, function (item) {
-//                    $("#userNameAuto").val(item.email);
-//                    //return { label: item.Email, value: item.Email };
-//                }));
-//            }
-//        });
-//    }
-//});
-
-//$(function () {
-//       $("#birds").autocomplete({
-//        source: function (request, response) {
-//            $.ajax({
-//                url: "search.php",
-//                dataType: "jsonp",
-//                data: {
-//                    term: request.term
-//                },
-//                success: function (data) {
-//                    response(data);
-//                }
-//            });
-//        },
-//        minLength: 2,
-//        select: function (event, ui) {
-//            log("Selected: " + ui.item.value + " aka " + ui.item.id);
-//        }
-//    });
-//});

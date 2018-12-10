@@ -1,12 +1,10 @@
-﻿<form method="post">
+﻿<form id="addCreditCardForm" method="post">
     <div class="form-group">
         <label class="text-black" for="cardNumber">Card number</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
             </div>
-
-           
             <input type="text" name="cardNumber" id="cardNumber" data-val="true" required digits class="form-control">
         </div>
         <span class="text-danger field-validation-valid text-center"
@@ -30,6 +28,7 @@
                             <option>@DateTime.UtcNow.AddYears(i).Year</option>
                         }
                     </select>
+                    <span id="dateError" style="display:none" class="text-danger">Invalid date!</span>
                 </div>
             </div>
         </div>
@@ -37,12 +36,11 @@
             <div class="form-group">
                 <label class="text-black" data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
                 @*<span asp-validation-for="CardCVV" class="text-danger"></span>*@
-                <input class="form-control" name="cvv" id="cvv" required digits   maxlength="3"  minlenght="3"data-val="true" type="text" placeholder="CVV">
+                <input class="form-control" name="cvv" id="cvv" required digits   maxlength="4"  minlenght="3"data-val="true" type="text" placeholder="CVV">
             </div>
             <span class="text-danger field-validation-valid text-center"
                   data-valmsg-for="cvv" data-valmsg-replace="true"></span>
         </div>
     </div>
-    @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
-    <button class="subscribe btn btn-primary btn-block" id="addCardBtn" data-toggle="collapse" href="#collapse1">Add</button>
+    <button class="subscribe btn btn-primary btn-block mb-3" id="addCardBtn" >Add</button>
 </form>

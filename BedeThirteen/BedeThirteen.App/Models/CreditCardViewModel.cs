@@ -5,7 +5,7 @@ namespace BedeThirteen.App.Models
     public class CreditCardViewModel
     {
         [Required(ErrorMessage = "Required")]
-        [CreditCard]
+     //   [CreditCard]
         public string CardNumber { get; set; }
 
         [Range(0, 12)]

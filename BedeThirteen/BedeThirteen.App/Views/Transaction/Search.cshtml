@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TransactionsResultViewModel
+@{
     ViewData["Title"] = "Search";
 }
 
@@ -26,7 +27,7 @@
             </select>
         </div>
 
-        <div class="col-lg-2">
+        <div class="col-lg-2 mr-3">
             <label for="filterByDdl">Filter by</label>
             <select id="filterByDdl" class="custom-select">
                 <option selected value="all">All</option>
@@ -40,33 +41,46 @@
             </select>
         </div>
 
-        <div id="output" class="col-lg-5">
+        <div id="output" class="col-lg-6">
             <label>Criteria</label>
-
-
-            <div class="row col-lg-12">
-                <input id="date" placeholder="From" type='date' class="form-control criteria date col-lg-6" style="display: none;" />
-                <input id="dateA" placeholder="To" type='date' class="form-control criteria date col-lg-6" style="display: none;" />
+            <div class="row">
+                <input id="all" placeholder="All data" class="form-control criteria all col-lg-6" disabled />
             </div>
-            <div class="row col-lg-12">
-                <input id="amount" placeholder="From" class="form-control criteria amount col-lg-6" style="display: none;" />
-                <input id="amountA" placeholder="To" class="form-control criteria amount col-lg-6" style="display: none;" />
+
+            <div class="row">
+                <input id="date" placeholder="From" type='date' class="form-control criteria date col-lg-5 mr-4" style="display: none;" />
+                <input id="dateA" placeholder="To" type='date' class="form-control criteria date col-lg-5" style="display: none;" />
             </div>
-            <input id="user" placeholder="Name" class="form-control criteria user col-lg-6" style="display: none;" />
-            <select id="type" class="custom-select form-control criteria col-lg-6" style="display: none;">
-                <option selected value="deposit">Deposit</option>
-                <option value="withdraw">Withdraw</option>
-                <option value="stake">Stake</option>
-                <option value="win">Win</option>
-            </select>
+            <div class="row">
+                <input id="amount" placeholder="From" class="form-control criteria amount col-lg-5 mr-4" style="display: none;" />
+                <input id="amountA" placeholder="To" class="form-control criteria amount col-lg-5" style="display: none;" />
+            </div>
+            <div class="row">
+
+                <input id="user" placeholder="Name" class="form-control criteria user col-lg-6" style="display: none;" />
+            </div>
+            <div class="row">
+
+                <select id="type" class="custom-select form-control criteria col-lg-6" style="display: none;">
+                    <option selected value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                    <option value="stake">Stake</option>
+                    <option value="win">Win</option>
+                </select>
+            </div>
+            <div class="offset-lg-11">
+                <button id="searchBtn" class="btn btn-info ml-2">
+                    Search
+                </button>
+            </div>
         </div>
-        <div class="col-lg-1">
-            <button id="searchBtn" class="btn btn-info">
-                Search
-            </button>
-        </div>
+
     </div>
     <div id="searchResult" class="row">
-
+        <partial name="_SearchResultPartial" model="@Model">
     </div>
 </body>
+
+@section Scripts {
+    <script src="~/js/search.js"></script>
+}

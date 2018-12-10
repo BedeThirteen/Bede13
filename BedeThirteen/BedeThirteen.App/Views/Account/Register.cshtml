@@ -5,7 +5,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div class="row align-items-center h-100">
 
     <form class="col-4 mx-auto" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
@@ -40,7 +39,6 @@
         </div>
     </form>
 
-</div>
 @section Scripts {
     <script src="~/js/register.js"></script>
     @await Html.PartialAsync("_ValidationScriptsPartial")

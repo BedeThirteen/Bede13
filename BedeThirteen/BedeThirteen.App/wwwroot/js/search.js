@@ -7,42 +7,37 @@
 });
 
 $("#searchBtn").click(function () {
-    var filterBy = $("#filterByDdl").val();
-    var filterCriteria = $("#" + $("#filterByDdl").val()).val();
-    var aditionalCriteria = "";
-    if (filterBy === "date" || filterBy === "amount") {
-        aditionalCriteria = $("#" + filterBy + "A").val();
-    }
-    var pageSize = $("#pageSizeDdl").val();
-    var sortBy = $("#sortByDdl").val();
-    var url = "/Transaction/GetSearchResultsAsync?filterBy=" + filterBy + "&filterCriteria=" + filterCriteria + "&aditionalCriteria=" + aditionalCriteria + "&pageSize=" + pageSize + "&pageNumber=" + "0" + "&sortBy=" + sortBy;
-    $.get({
-        url: url
-    }).done(function (response) {
-        $("#searchResult").html(response);
-    });
+    var pageN = 0;
+    GetSearchResult(pageN);
 });
 
 $(document).on("click", "#pageNumberBtn", function () {
-    var filterBy = $("#filterByDdl").val();
-    var filterCriteria = "";
-    if (filterBy !== "all") { filterCriteria = $("#" + $("#filterByDdl").val()).val(); }
-    var pageSize = $("#pageSizeDdl").val();
-    var sortBy = $("#sortByDdl").val();
     var pageN = $(this).val();
+    GetSearchResult(pageN);
+});
+
+function GetSearchResult(pageNum) {
+    var filterBy = $("#filterByDdl").val();
+    var filterCriteria = $("#" + $("#filterByDdl").val()).val();
+    var pageSize = $("#pageSizeDdl").val();
     var aditionalCriteria = "";
+    var sortBy = $("#sortByDdl").val();
+
     if (filterBy === "date" || filterBy === "amount") {
         aditionalCriteria = $("#" + filterBy + "A").val();
     }
-    var url = "/Transaction/GetSearchResultsAsync?filterBy=" + filterBy
-        + "&filterCriteria=" + filterCriteria
-        + "&aditionalCriteria=" + aditionalCriteria
-        + "&pageSize=" + pageSize
-        + "&pageNumber=" + pageN
-        + "&sortBy=" + sortBy;
+    var url = "/Transaction/GetSearchResultsAsync";
     $.get({
-        url: url
+        url: url,
+        data: {
+            filterBy: filterBy,
+            filterCriteria: filterCriteria,
+            aditionalCriteria: aditionalCriteria,
+            pageSize: pageSize,
+            pageNumber: pageNum,
+            sortBy: sortBy
+        }
     }).done(function (response) {
         $("#searchResult").html(response);
     });
-});
+}

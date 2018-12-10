@@ -1,5 +1,4 @@
-﻿
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -47,7 +46,7 @@
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameOne"><span class="fas fa-dice"></span> 4x3</a>
                             <div class="dropdown-divider"></div>
-                                                                                                            
+
                             <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameTwo"><span class="fas fa-dice"></span>5x5</a>
                             <div class="dropdown-divider"></div>
 
@@ -73,9 +72,9 @@
         <hr />
 
     </div>
-    <footer class="text-center">
-        <p>&copy; 2018 - Bede</p>
-    </footer>
+    @*<footer class="text-center">
+            <p>&copy; 2018 - Bede</p>
+        </footer>*@
 
 
     <environment include="Development">
@@ -101,24 +100,14 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
 
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> develop
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 
     <script src="~/js/deposit.js"></script>
-    <script src="~/js/game.js"></script>
-    <script src="~/js/transaction.js"></script>
-    <script src="~/js/search.js"></script>
-    <script src="~/js/admin.js"></script>
-    <script src="~/js/promote.js"></script>
+
+    @RenderSection("Scripts", required: false)
 
 </body>
 </html>

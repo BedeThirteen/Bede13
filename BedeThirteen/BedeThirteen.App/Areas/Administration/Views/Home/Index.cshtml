@@ -1,32 +1,4 @@
 ﻿@model HomeViewModel
-@*<div class="card container pt-3">*@
-
-@*<div class="row card-header">
-        <div class="col  ">
-            <a asp-area="" asp-controller="Transaction" asp-action="Search" class=" pt-2 btn btn-success">Transactions </a>
-
-        </div>
-        <div class="col ">
-            <a asp-controller="Home" asp-action="Transactions" class="  pt-2 btn btn-dark">Admin Privileges</a>
-
-        </div>
-    </div>*@
-
-@*<div class="row ">
-        <div class="col-6  ">
-            <canvas id="adminMoneyInSystemChart"
-                    data-deposit="@Model.DepositeSum" data-withdraw="@Model.WithdrawSum"></canvas>
-        </div>
-        <br />
-        <div class="col-6  ">
-            <canvas id="adminMoneyPlayedInSystemChart"
-                    data-win="@Model.WinSum" data-stake="@Model.StakeSum"></canvas>
-        </div>
-
-    </div>*@
-@*</div>*@
-
-
 
 <div class="nav-wrapper">
     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -64,11 +36,8 @@
                     <div class="row">
                         <div class="col-md-3 offset-md-4">
                             <div class="form-group">
-                                    <input type="email" class="form-control" id="emailInput"  placeholder="name@example.com">
-                                </div>
-
-                            
-
+                                <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                            </div>
                         </div>
 
                         <div class="col-md-1">
@@ -114,9 +83,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </form>
 
@@ -125,3 +91,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/admin.js"></script>
+    <script src="~/js/promote.js"></script>
+}
