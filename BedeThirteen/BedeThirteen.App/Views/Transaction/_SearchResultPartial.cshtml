@@ -1,41 +1,4 @@
 ﻿@model TransactionsResultViewModel
-@*<div class="table">
-    <div class="row text-red ">
-        <div class="col-lg-2"><label>Date</label></div>
-        <div class="col-lg-2"><label>Amount in USD</label></div>
-        <div class="col-lg-1"><label>Type</label></div>
-        <div class="col-lg-4"><label>Description</label></div>
-        @if (User.IsInRole("Admin"))
-        {
-            <div class="col-lg-3"><label>User</label></div>
-        }
-    </div>
-    <div id="resultsDiv" class="text-white">
-        @foreach (var item in Model.Transactions)
-        {
-            <div class="row">
-                <div class="col-lg-2">
-                    <label>@item.Date</label>
-                </div>
-                <div class="col-lg-2">
-                    <label>@item.Amount</label>
-                </div>
-                <div class="col-lg-1">
-                    <label>@item.Type</label>
-                </div>
-                <div class="col-lg-4">
-                    <label>@item.Description</label>
-                </div>
-                @if (User.IsInRole("Admin"))
-                {
-                    <div class="col-lg-3">
-                        <label>@item.User</label>
-                    </div>
-                }
-            </div>
-        }
-    </div>*@
-
 
 <table class="table table-sm table-bordered table-striped table-hover text-center">
     <thead class="thead-dark">
@@ -71,24 +34,12 @@
     <div id="paginationList">
         <ul class="pagination">
             @{
-                //if (Model.NumberOfPages > 34)
-                //{
-                //    var lines = Model.NumberOfPages % 34 != 0 ?
-                //        (Model.NumberOfPages / 34) + 1 : Model.NumberOfPages / 34;
-
-                //    while (lines <= 0)
-                //    {
                 for (int i = 0; i < Model.NumberOfPages; i++)
                 {
                     <li class="page-item">
                         <button id="pageNumberBtn" class="page-link" value="@i">@(i + 1)</button>
                     </li>
                 }
-
-                //lines -= 34;
-                //}
-                //}
-
             }
         </ul>
     </div>
