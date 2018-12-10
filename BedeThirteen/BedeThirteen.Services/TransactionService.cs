@@ -1,16 +1,16 @@
 ﻿namespace BedeThirteen.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
     using BedeThirteen.Services.CompositeModels;
     using BedeThirteen.Services.Contracts;
     using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
 
     public class TransactionService : ITransactionService
     {
@@ -38,10 +38,10 @@
                 { "amount_desc", t => t.Amount }
             };
 
-            var transactions = context.Transactions.Where(t => t.IsDeleted == false);
+            var transactions = this.context.Transactions.Where(t => t.IsDeleted == false);
             if (userId != string.Empty)
             {
-                transactions = context.Transactions.Where(t => t.UserId == userId);
+                transactions = this.context.Transactions.Where(t => t.UserId == userId);
             }
 
             // filter
@@ -63,7 +63,10 @@
                     { "user", t => t.User.UserName.Contains(filterCriteria) }
                 };
 
-                if (!string.IsNullOrEmpty(aditionalCriteria)) { filterBy += "Aditional"; }
+                if (!string.IsNullOrEmpty(aditionalCriteria))
+                {
+                    filterBy += "Aditional";
+                }
 
                 var filter = filterByDictionary[filterBy];
                 transactions = transactions.Where(filter);
@@ -102,17 +105,15 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await context.Users.FindAsync(userId);
+            var user = await this.context.Users.FindAsync(userId);
 
-
-
-            var card = await context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
+            var card = await this.context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
             if (card == null)
             {
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
 
             var deposit = new Transaction()
             {
@@ -123,10 +124,10 @@
                 TransactionTypeId = type.Id
             };
 
-            context.Transactions.Add(deposit);
+            this.context.Transactions.Add(deposit);
             user.Balance += deposit.Amount;
 
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -138,7 +139,7 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await context.Users.FindAsync(userId);
+            var user = await this.context.Users.FindAsync(userId);
 
             if (user == null)
             {
@@ -150,13 +151,13 @@
                 throw new ServiceException("Invalid amount!");
             }
 
-            var card = await context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
+            var card = await this.context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
             if (card == null)
             {
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Withdraw");
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Withdraw");
 
             var withdraw = new Transaction()
             {
@@ -167,10 +168,10 @@
                 TransactionTypeId = type.Id
             };
 
-            context.Transactions.Add(withdraw);
+            this.context.Transactions.Add(withdraw);
             user.Balance -= withdraw.Amount;
 
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -182,7 +183,7 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await context.Users.FindAsync(userId);
+            var user = await this.context.Users.FindAsync(userId);
 
             if (user == null)
             {
@@ -194,7 +195,7 @@
                 throw new ServiceException("Invalid amount!");
             }
 
-            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
 
             var stake = new Transaction()
             {
@@ -205,10 +206,10 @@
                 TransactionTypeId = type.Id
             };
 
-            context.Transactions.Add(stake);
+            this.context.Transactions.Add(stake);
             user.Balance -= stake.Amount;
 
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -220,14 +221,14 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await context.Users.FindAsync(userId);
+            var user = await this.context.Users.FindAsync(userId);
 
             if (user == null)
             {
                 throw new ServiceException("User not found.");
             }
 
-            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
 
             var win = new Transaction()
             {
@@ -238,10 +239,10 @@
                 TransactionTypeId = type.Id
             };
 
-            context.Transactions.Add(win);
+            this.context.Transactions.Add(win);
             user.Balance += win.Amount;
 
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
 
             return user.Balance;
         }

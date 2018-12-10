@@ -43,9 +43,6 @@ modalConfirm(function (confirm) {
     }
 });
 
-
-
-
 $(function () {
     var getData = function (request, response) {
         $.getJSON(
