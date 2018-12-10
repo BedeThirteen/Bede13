@@ -1,16 +1,16 @@
 ﻿namespace BedeThirteen.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
     using BedeThirteen.Services.CompositeModels;
     using BedeThirteen.Services.Contracts;
     using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     public class TransactionService : ITransactionService
     {
@@ -38,10 +38,10 @@
                 { "amount_desc", t => t.Amount }
             };
 
-            var transactions = this.context.Transactions.Where(t => t.IsDeleted == false);
+            var transactions = context.Transactions.Where(t => t.IsDeleted == false);
             if (userId != string.Empty)
             {
-                transactions = this.context.Transactions.Where(t => t.UserId == userId);
+                transactions = context.Transactions.Where(t => t.UserId == userId);
             }
 
             // filter
@@ -102,15 +102,17 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await this.context.Users.FindAsync(userId);
+            var user = await context.Users.FindAsync(userId);
 
-            var card = await this.context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
+
+
+            var card = await context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
             if (card == null)
             {
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
+            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
 
             var deposit = new Transaction()
             {
@@ -121,10 +123,10 @@
                 TransactionTypeId = type.Id
             };
 
-            this.context.Transactions.Add(deposit);
+            context.Transactions.Add(deposit);
             user.Balance += deposit.Amount;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -136,19 +138,25 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await this.context.Users.FindAsync(userId);
+            var user = await context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                throw new ServiceException("User not found.");
+            }
+
             if (user.Balance < amount)
             {
                 throw new ServiceException("Invalid amount!");
             }
 
-            var card = await this.context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
+            var card = await context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
             if (card == null)
             {
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Withdraw");
+            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Withdraw");
 
             var withdraw = new Transaction()
             {
@@ -159,10 +167,10 @@
                 TransactionTypeId = type.Id
             };
 
-            this.context.Transactions.Add(withdraw);
+            context.Transactions.Add(withdraw);
             user.Balance -= withdraw.Amount;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -174,13 +182,19 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await this.context.Users.FindAsync(userId);
+            var user = await context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                throw new ServiceException("User not found.");
+            }
+
             if (user.Balance < amount)
             {
                 throw new ServiceException("Invalid amount!");
             }
 
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
+            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
 
             var stake = new Transaction()
             {
@@ -191,10 +205,10 @@
                 TransactionTypeId = type.Id
             };
 
-            this.context.Transactions.Add(stake);
+            context.Transactions.Add(stake);
             user.Balance -= stake.Amount;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return user.Balance;
         }
@@ -206,9 +220,14 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await this.context.Users.FindAsync(userId);
+            var user = await context.Users.FindAsync(userId);
 
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
+            if (user == null)
+            {
+                throw new ServiceException("User not found.");
+            }
+
+            var type = await context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
 
             var win = new Transaction()
             {
@@ -219,10 +238,10 @@
                 TransactionTypeId = type.Id
             };
 
-            this.context.Transactions.Add(win);
+            context.Transactions.Add(win);
             user.Balance += win.Amount;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return user.Balance;
         }
