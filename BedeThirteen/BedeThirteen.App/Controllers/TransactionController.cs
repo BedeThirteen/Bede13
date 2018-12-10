@@ -26,7 +26,7 @@ namespace BedeThirteen.App.Controllers
                 {
                     FilterBy = "all",
                     PageNumber = 0,
-                    PageSize = 15,
+                    PageSize = 10,
                     SortBy = "date_desc",
                     FilterCriteria = "",
                     AditionalCriteria = ""

@@ -42,11 +42,11 @@
         <tr>
             <th scope="col">Date</th>
             <th scope="col">Amount in USD</th>
-            <th scope="col">Type</th>
-            <th scope="col">Description</th>
+            <th scope="col" class="w-10">Type</th>
+            <th scope="col" class="w-40">Description</th>
             @if (User.IsInRole("Admin"))
             {
-                <th scope="col">User</th>
+                <th scope="col" class="w-20">User</th>
             }
         </tr>
     </thead>
@@ -56,11 +56,11 @@
             <tr>
                 <td>@item.Date</td>
                 <td>@item.Amount</td>
-                <td>@item.Type</td>
-                <td>@item.Description</td>
+                <td class="w-10">@item.Type</td>
+                <td class="w-40">@item.Description</td>
                 @if (User.IsInRole("Admin"))
                 {
-                    <th>@item.User</th>
+                    <th class="w-20">@item.User</th>
                 }
             </tr>
         }

@@ -13,9 +13,9 @@
     border-radius: 30px;
 }
 
-html, body {
+/*html, body {
     height: calc(100vh - 70px);
-}
+}*/
 
 .body-content {
     padding-left: 15px;
@@ -155,7 +155,31 @@ opition:hover {
     width: 21% !important;
 }
 
-#slotImg {    
-    width:100%;
-    height:auto;
+#slotImg {
+    width: 100%;
+    height: auto;
+}
+
+.pagination {
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.page-item:last-child, .page-item:first-child, .page-link {
+    border-top-left-radius: 2rem !important;
+    border-bottom-left-radius: 2rem !important;
+    border-top-right-radius: 2rem !important;
+    border-bottom-right-radius: 2rem !important;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-40 {
+    width: 40%;
 }

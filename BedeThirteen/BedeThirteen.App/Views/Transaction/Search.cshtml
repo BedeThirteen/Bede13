@@ -5,11 +5,10 @@
 
 <h2>Transactions</h2>
 <body>
-    <div class="row">
+    <div class="row text-center">
         <div class="col-lg-1">
             <label for="pageSizeDdl">Page size</label>
             <select id="pageSizeDdl" class="custom-select">
-                <option value="5">5</option>
                 <option selected value="10">10</option>
                 <option value="15">15</option>
                 <option value="20">20</option>
@@ -27,7 +26,7 @@
             </select>
         </div>
 
-        <div class="col-lg-2 mr-3">
+        <div class="col-lg-2">
             <label for="filterByDdl">Filter by</label>
             <select id="filterByDdl" class="custom-select">
                 <option selected value="all">All</option>
@@ -41,41 +40,36 @@
             </select>
         </div>
 
-        <div id="output" class="col-lg-6">
+        <div id="output" class="col-lg-4">
             <label>Criteria</label>
-            <div class="row">
-                <input id="all" placeholder="All data" class="form-control criteria all col-lg-6" disabled />
+            <input id="all" placeholder="All data" class="form-control criteria all" disabled />
+            <div class="input-group">
+                <input id="date" placeholder="From" type='date' class="form-control criteria date" style="display: none;" />
+                <input id="dateA" placeholder="To" type='date' class="form-control criteria date" style="display: none;" />
             </div>
+            <div class="input-group">
+                <input id="amount" placeholder="From" class="form-control criteria amount" style="display: none;" />
+                <input id="amountA" placeholder="To" class="form-control criteria amount" style="display: none;" />
+            </div>
+            <input id="user" placeholder="Name" class="form-control criteria user" style="display: none;" />
 
-            <div class="row">
-                <input id="date" placeholder="From" type='date' class="form-control criteria date col-lg-5 mr-4" style="display: none;" />
-                <input id="dateA" placeholder="To" type='date' class="form-control criteria date col-lg-5" style="display: none;" />
-            </div>
-            <div class="row">
-                <input id="amount" placeholder="From" class="form-control criteria amount col-lg-5 mr-4" style="display: none;" />
-                <input id="amountA" placeholder="To" class="form-control criteria amount col-lg-5" style="display: none;" />
-            </div>
-            <div class="row">
-
-                <input id="user" placeholder="Name" class="form-control criteria user col-lg-6" style="display: none;" />
-            </div>
-            <div class="row">
-
-                <select id="type" class="custom-select form-control criteria col-lg-6" style="display: none;">
-                    <option selected value="deposit">Deposit</option>
-                    <option value="withdraw">Withdraw</option>
-                    <option value="stake">Stake</option>
-                    <option value="win">Win</option>
-                </select>
-            </div>
-            <div class="offset-lg-11">
-                <button id="searchBtn" class="btn btn-info ml-2">
-                    Search
-                </button>
-            </div>
+            <select id="type" class="custom-select form-control criteria" style="display: none;">
+                <option selected value="deposit">Deposit</option>
+                <option value="withdraw">Withdraw</option>
+                <option value="stake">Stake</option>
+                <option value="win">Win</option>
+            </select>
+        </div>
+        <div class="col-lg-1">
+            <button id="searchBtn" class="btn btn-info">
+                Search
+            </button>
         </div>
 
     </div>
+
+
+
     <div id="searchResult" class="row">
         <partial name="_SearchResultPartial" model="@Model">
     </div>
