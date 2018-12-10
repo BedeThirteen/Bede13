@@ -16,7 +16,7 @@ $("#searchBtn").click(function () {
     var pageN = 0;
     var isValid = true;
     var value = $("#amount").val();
-    if (!$.isNumeric(value)) {
+    if (!/^\+?\d+$/.test(value)) {
         isValid = false;
         $("#amount").popover();
         $("#amount").popover('show');
@@ -27,7 +27,7 @@ $("#searchBtn").click(function () {
     }
 
     var valueA = $("#amountA").val();
-    if (!$.isNumeric(valueA)) {
+    if (!/^\+?\d+$/.test(valueA)) {
         isValid = false;
         $("#amountA").popover();
         $("#amountA").popover('show');
