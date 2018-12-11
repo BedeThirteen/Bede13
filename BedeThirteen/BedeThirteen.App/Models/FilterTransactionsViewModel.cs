@@ -19,5 +19,8 @@ namespace BedeThirteen.App.Models
 
         [Required]
         public string SortBy { get; set; }
+
+        [Required]
+        public int ArchiveKey { get; set; }
     }
 }

@@ -6,14 +6,83 @@
     }
 });
 
+$("#archiveRangeModal").on("hidden.bs.modal", function () {
+    //$("#archivedOptionInput").prop("checked", true);
+    //   $("#").addClass('className');
+    $("#archivedOptionLabel").click();
+});
+
+$("#archivedOptionLabel").click(function () {
+
+    $("#filterByDdl").val("all");
+    $("#sortByDdl").val("date_desc");
+    $("#pageSizeDdl").val(10);
+
+    $("#searchBtn").click();
 
 
+});
 
 
+$("#transactionOptionLabel").click(function () {
 
+    $("#filterByDdl").val("all");
+    $("#sortByDdl").val("date_desc");
+    $("#pageSizeDdl").val(10);
+
+    $("#searchBtn").click();
+});
+
+
+$("#addToArchiveBtn").click(function () {
+    var from = $("#archiveFrom").val();
+    var to = $("#archiveTo").val();
+    var token = $("input[name='__RequestVerificationToken']").val();
+
+    var url = "/Transaction/AddToArchiveAsync";
+    $.post(url,
+        {
+            from: from,
+            to: to,
+            "__RequestVerificationToken": token
+        },
+        function (data) {
+            var alert = $("#successAlert");
+            $("#successMsg").text("Archived " + data.numberOfRecords + " transactions!");
+            alert.show();
+            alert.fadeOut(4000);
+
+        }).fail(function () {
+            var alert = $("#failAlert");
+            $("#failMsg").text("Unsuccessful archivation!");
+            alert.show();
+            alert.fadeOut(6000);
+        });
+});
 
 $("#searchBtn").click(function () {
     var pageN = 0;
+    var filterBy = $("#filterByDdl").val();
+    if (filterBy === "amount") {
+        var isValid = validateAmounts();
+
+        if (isValid === true) {
+            getSearchResult(pageN);
+        }
+    }
+    else {
+        getSearchResult(pageN);
+    }
+});
+
+function performCleanSearch() {
+    $("#filterByDdl").val("all");
+    $("#sortByDdl").val("date_desc");
+    $("#pageSizeDdl").val(10);
+    getSearchResult(0);
+}
+
+function validateAmounts() {
     var isValid = true;
     var value = $("#amount").val();
     if (!/^\+?\d+$/.test(value)) {
@@ -23,9 +92,7 @@ $("#searchBtn").click(function () {
         setTimeout(function () {
             $("#amount").popover('hide');
         }, 2000);
-
     }
-
     var valueA = $("#amountA").val();
     if (!/^\+?\d+$/.test(valueA)) {
         isValid = false;
@@ -34,26 +101,29 @@ $("#searchBtn").click(function () {
         setTimeout(function () {
             $("#amountA").popover('hide');
         }, 2000);
-
     }
-
-    if (isValid === true) {
-        GetSearchResult(pageN);
-    }
-});
+    return isValid;
+}
 
 $(document).on("click", "#pageNumberBtn", function () {
     var pageN = $(this).val();
-    GetSearchResult(pageN);
+    getSearchResult(pageN);
 });
 
 
-function GetSearchResult(pageNum) {
+
+
+function getSearchResult(pageNum) {
     var filterBy = $("#filterByDdl").val();
     var filterCriteria = $("#" + $("#filterByDdl").val()).val();
     var pageSize = $("#pageSizeDdl").val();
     var aditionalCriteria = "";
     var sortBy = $("#sortByDdl").val();
+    var archiveKey = 0;
+    if ($('#archivedOptionInput').is(':checked')) {
+        archiveKey = 1;
+    }
+
 
     if (filterBy === "date") {
         aditionalCriteria = $("#dateA").val();
@@ -82,7 +152,8 @@ function GetSearchResult(pageNum) {
             aditionalCriteria: aditionalCriteria,
             pageSize: pageSize,
             pageNumber: pageNum,
-            sortBy: sortBy
+            sortBy: sortBy,
+            archiveKey: archiveKey
         }
     }).done(function (response) {
         $("#searchResult").html(response);
@@ -109,7 +180,7 @@ $(function () {
         select: selectItem,
         minLength: 3,
         change: function () {
-            $("#user").val("").css("display");
+            $("#user").css("display");
         }
     });
 });

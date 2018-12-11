@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BedeThirteen.App.Models;
@@ -29,10 +30,27 @@ namespace BedeThirteen.App.Controllers
                     PageSize = 10,
                     SortBy = "date_desc",
                     FilterCriteria = "",
-                    AditionalCriteria = ""
+                    AditionalCriteria = "",
+                    ArchiveKey = 0
                 }
                 );
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToArchiveAsync(string from, string to)
+        {
+            if (DateTime.TryParse(from, out DateTime dateFrom) && DateTime.TryParse(to, out DateTime dateTo))
+            {
+                int numberOfRecords = await this.transactionService.ArchiveTransactionsAsync(dateFrom, dateTo);
+                return Json(new { numberOfRecords });
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         public async Task<IActionResult> GetSearchResultsAsync(FilterTransactionsViewModel model)
@@ -60,7 +78,7 @@ namespace BedeThirteen.App.Controllers
 
             var transactionsResult = await this.transactionService
               .GetTransactionsAsync(model.FilterBy, model.FilterCriteria, model.AditionalCriteria,
-                                    model.PageSize, model.PageNumber, model.SortBy, userId);
+                                    model.PageSize, model.PageNumber, model.SortBy, model.ArchiveKey, userId);
 
             var resultModel = new TransactionsResultViewModel()
             {
