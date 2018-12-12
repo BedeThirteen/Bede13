@@ -60,9 +60,16 @@ $("#searchBtn").click(function () {
     var pageN = 0;
     var filterBy = $("#filterByDdl").val();
     if (filterBy === "amount") {
-        var isValid = validateAmounts();
+        var isValidAmount = validateAmounts();
 
-        if (isValid === true) {
+        if (isValidAmount === true) {
+            getSearchResult(pageN);
+        }
+    }
+    else if (filterBy === "date") {
+        var isValidDate = validateDates();
+
+        if (isValidDate === true) {
             getSearchResult(pageN);
         }
     }
@@ -71,6 +78,28 @@ $("#searchBtn").click(function () {
     }
 });
 
+function validateDates() {
+    var isValid = true;
+    var value = $("#date").val();
+    if (value.length === 0) {
+        isValid = false;
+        $("#date").popover();
+        $("#date").popover('show');
+        setTimeout(function () {
+            $("#date").popover('hide');
+        }, 2000);
+    }
+    var valueA = $("#dateA").val();
+    if (valueA.length === 0) {
+        isValid = false;
+        $("#dateA").popover();
+        $("#dateA").popover('show');
+        setTimeout(function () {
+            $("#dateA").popover('hide');
+        }, 2000);
+    }
+    return isValid;
+}
 
 
 function validateAmounts() {
