@@ -57,7 +57,7 @@
                 <form id="gameStakeForm" asp-area="" asp-controller="Games" asp-action="@Model.GameName" method="post">
 
                     <input class="form-control" type="text" name="stakeAmount" min="0.10" number data-val="true" data-val-required="Enter amount to bet." placeholder="Your Stake" />
-                    <button class="btn" type="submit">BET</button>
+                    <button id="gameBetButton" class="btn" type="submit">BET</button>
 
                     <span class="text-danger field-validation-valid text-center"
                           data-valmsg-for="stakeAmount" data-valmsg-replace="true"></span>

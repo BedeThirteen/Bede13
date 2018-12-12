@@ -6,9 +6,10 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
 {
     public class DefaultGameEvaluator : IGameEvaluator
     {
-        public decimal CalculateCoefficient(Token[][] tokens)
+        public (decimal,IEnumerable<int>) CalculateCoefficientAndLines(Token[][] tokens)
         {
             decimal curCoef = 0;
+            List<int> winningLines = new List<int>();
 
             //Checks Line by Line
             for (int y = 0; y < tokens.Length; y++)
@@ -16,7 +17,7 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
                 bool curLineIsDirty = false;
                 Token lastTolen = tokens[y][0];
                 decimal curLineCoef = lastTolen.Coefficient;
-                List<int> winningLines = new List<int>();
+                
 
                 for (int x = 1; x < tokens[0].Length; x++)
                 {
@@ -46,7 +47,7 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
                     curCoef += curLineCoef;
                 }
             }
-            return curCoef;
+            return (curCoef,winningLines);
         }
     }
 }

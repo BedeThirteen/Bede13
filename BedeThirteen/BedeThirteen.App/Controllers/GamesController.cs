@@ -75,7 +75,7 @@ namespace BedeThirteen.App.Controllers
             var balanceInUserCurrency = string.Concat(Math.Round(currentBalance * userRate, 2));
 
 
-            return Json(new { newBalance = balanceInUserCurrency, currencyName = userCurrency, logHistory = log , rolledValues = currentResults.RolledValues});
+            return Json(new { newBalance = balanceInUserCurrency, currencyName = userCurrency, logHistory = log , rolledValues = currentResults.RolledValues,winningLines = currentResults.WinningLines});
 
         }
 
