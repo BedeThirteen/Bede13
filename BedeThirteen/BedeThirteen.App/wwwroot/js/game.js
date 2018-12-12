@@ -39,7 +39,7 @@ function AddToGameLog(rolledValues) {
 
 
     rolledValues.forEach(function (msg) {
-        $("#gameBetHistory").append(`<label>${msg}</label>`);
+        $("#gameBetHistory").append(`<p class="text-black">${msg}</p>`);
     });
 
     let numberOfLogs = $(log).children().length;
