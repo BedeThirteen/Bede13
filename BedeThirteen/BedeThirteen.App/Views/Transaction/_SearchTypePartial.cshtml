@@ -1,0 +1,64 @@
+﻿@if (User.IsInRole("Admin"))
+{
+
+    <div class="modal fade" id="archiveRangeModal" tabindex="-1" role="dialog" aria-labelledby="archiveRangeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-black" id="archiveRangeModalLabel">Archive transactions between:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="input-group col-lg-11">
+                            <input id="archiveFrom" type='date' value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+                            <input id="archiveTo" type='date' value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div id="successAlert" style="display: none;" class="col-md-10">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+                                <span id="successMsg" class="alert-inner--text"></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="failAlert" style="display: none;" class="col-md-2">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+                                <span id="failMsg" class="alert-inner--text"></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button id="addToArchiveBtn" type="button" class="btn btn-primary">Archive</button>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="offset-lg-8 row mb-4">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-lg btn-secondary active" id="transactionOptionLabel">
+                <input type="radio" name="options" id="transactionOptionInput" autocomplete="off" checked> Transactions
+            </label>
+            <label class="btn btn-lg btn-secondary" id="archivedOptionLabel">
+                <input type="radio" name="options" id="archivedOptionInput" autocomplete="off"> Archived
+            </label>
+            <label class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#archiveRangeModal" id="addToArchiveOptionLabel">
+                <input type="radio" name="options" id="option3" autocomplete="off"> Add to Archive
+            </label>
+        </div>
+    </div>
+}

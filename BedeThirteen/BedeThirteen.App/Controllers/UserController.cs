@@ -39,8 +39,6 @@ namespace BedeThirteen.App.Controllers
 
             return Json((await this.creditCardService.GetUserCardsAsync(userId))
                                     .Select(c => new { c.Id, Number = this.Mask(c.Number) }).ToList());
-
-
         }
 
         [HttpPost]

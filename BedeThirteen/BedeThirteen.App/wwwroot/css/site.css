@@ -6,6 +6,10 @@
     background-size: cover;
 }
 
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
 #gameBackgroundContainer {
     background-image: url('../images/slot/slotBg.jpg');
     background-repeat: no-repeat;
@@ -127,26 +131,6 @@ opition:hover {
     color: #b72727;
 }
 
-/*.nav-link {
-    color:white;
-    background-color: #b72727!important;
-}*/
-
-/*.button-link {
-    background: none !important;
-    color: #b72727;
-    border: none;
-    padding: 0 !important;
-    font: inherit;
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-}*/
-
-/*#searchBtn {
-    position: absolute;
-    bottom: 0;
-}*/
-
 .alert {
     margin-bottom: 0em;
 }
@@ -182,4 +166,10 @@ opition:hover {
 
 .w-40 {
     width: 40%;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+    background-color: #212529;
 }

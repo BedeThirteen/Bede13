@@ -28,6 +28,7 @@
             int pageSize,
             int pageNumber,
             string sortBy,
+            int archiveKey,
             string userId)
         {
             var sortDictionary = new Dictionary<string, Expression<Func<Transaction, object>>>()
@@ -38,7 +39,11 @@
                 { "amount_desc", t => t.Amount }
             };
 
-            var transactions = this.context.Transactions.Where(t => t.IsDeleted == false);
+            var transactions = this.context.Transactions.AsQueryable();
+            transactions = archiveKey == 0
+                            ? transactions.Where(t => t.IsDeleted == false)
+                            : transactions.Where(t => t.IsDeleted == true);
+
             if (userId != string.Empty)
             {
                 transactions = this.context.Transactions.Where(t => t.UserId == userId);
@@ -49,15 +54,15 @@
             {
                 var filterByDictionary = new Dictionary<string, Expression<Func<Transaction, bool>>>()
                 {
-                    { "date", t => t.Date.Date == DateTime.Parse(filterCriteria).Date },
+                    { "date", t => t.Date.Date == this.TryParseDate(filterCriteria).Date },
                     {
-                      "dateAditional", t => t.Date.Date >= DateTime.Parse(filterCriteria).Date
-                                         && t.Date.Date <= DateTime.Parse(aditionalCriteria).Date
+                      "dateAditional", t => t.Date.Date >= this.TryParseDate(filterCriteria)
+                                         && t.Date.Date <= this.TryParseDate(aditionalCriteria).Date
                     },
-                    { "amount", t => t.Amount == decimal.Parse(filterCriteria) },
+                    { "amount", t => t.Amount == this.TryParseAmount(filterCriteria) },
                     {
-                      "amountAditional", t => t.Amount >= decimal.Parse(filterCriteria)
-                                         && t.Amount <= decimal.Parse(aditionalCriteria)
+                      "amountAditional", t => t.Amount >= this.TryParseAmount(filterCriteria)
+                                         && t.Amount <= this.TryParseAmount(aditionalCriteria)
                     },
                     { "type", t => t.TransactionType.Name == filterCriteria },
                     { "user", t => t.User.UserName.Contains(filterCriteria) }
@@ -119,7 +124,7 @@
             {
                 Date = DateTime.UtcNow,
                 Amount = amount,
-                Description = $"Deposit with card {card.Number}",
+                Description = $"Deposit with card {this.Mask(card.Number)}",
                 UserId = userId,
                 TransactionTypeId = type.Id
             };
@@ -163,7 +168,7 @@
             {
                 Date = DateTime.UtcNow,
                 Amount = amount,
-                Description = $"Withdraw to card {card.Number}",
+                Description = $"Withdraw to card {this.Mask(card.Number)}",
                 UserId = userId,
                 TransactionTypeId = type.Id
             };
@@ -245,6 +250,63 @@
             await this.context.SaveChangesAsync();
 
             return user.Balance;
+        }
+
+        public async Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo)
+        {
+            //var type = new TransactionType() { Id = new Guid(), IsDeleted = false, Name = "type" };
+            //var temp = new Transaction()
+            //{
+            //    Id = new Guid(),
+            //    Date = DateTime.Now,
+            //    Amount = 100,
+            //    Description = "test",
+            //    IsDeleted = false,
+            //    TransactionType = type,
+            //    TransactionTypeId = type.Id,
+            //    UserId = "797a2535-7761-4c15-a5bc-a5ea271b329a"
+            //};
+            //if (temp.Date.)
+            //{
+
+            //}
+
+            var transactions = await this.context.Transactions
+                .Where(t => t.Date.Date >= dateFrom.Date && t.Date.Date <= dateTo.Date).ToListAsync();
+
+            foreach (var transaction in transactions)
+            {
+                transaction.IsDeleted = true;
+                transaction.DeletedOn = DateTime.UtcNow;
+            }
+
+            await this.context.SaveChangesAsync();
+            return transactions.Count;
+        }
+
+        private string Mask(string number)
+        {
+            return new string('\u2022', number.Length - 4) + number.Substring(number.Length - 4);
+        }
+
+        private DateTime TryParseDate(string filterCriteria)
+        {
+            if (DateTime.TryParse(filterCriteria, out DateTime temp))
+            {
+                return temp;
+            }
+
+            throw new ServiceException("Invalid Date format.");
+        }
+
+        private decimal TryParseAmount(string filterCriteria)
+        {
+            if (decimal.TryParse(filterCriteria, out decimal temp))
+            {
+                return temp;
+            }
+
+            throw new ServiceException("Invalid Amount format.");
         }
     }
 }

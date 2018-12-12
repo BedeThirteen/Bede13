@@ -22,6 +22,9 @@
             int pageSize,
             int pageNumber,
             string sortBy,
+            int archiveKey,
             string userId);
+
+        Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo);
     }
 }

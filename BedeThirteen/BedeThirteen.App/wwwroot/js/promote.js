@@ -62,7 +62,7 @@ $(function () {
         select: selectItem,
         minLength: 3,
         change: function () {
-            $("#emailInput").val("").css("display");
+            $("#emailInput").val().css("display");
         }
     });
 });
