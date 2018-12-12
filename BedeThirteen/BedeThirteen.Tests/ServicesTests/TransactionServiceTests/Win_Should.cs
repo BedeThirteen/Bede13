@@ -153,7 +153,7 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
             }
 
 
-        } 
+        }
 
         [TestMethod]
         [DataRow("-1")]

@@ -254,25 +254,13 @@
 
         public async Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo)
         {
-            //var type = new TransactionType() { Id = new Guid(), IsDeleted = false, Name = "type" };
-            //var temp = new Transaction()
-            //{
-            //    Id = new Guid(),
-            //    Date = DateTime.Now,
-            //    Amount = 100,
-            //    Description = "test",
-            //    IsDeleted = false,
-            //    TransactionType = type,
-            //    TransactionTypeId = type.Id,
-            //    UserId = "797a2535-7761-4c15-a5bc-a5ea271b329a"
-            //};
-            //if (temp.Date.)
-            //{
+            var transactions = await this.context.Transactions.Where(
+              t => t.Date.Date >= dateFrom.Date && t.Date.Date <= dateTo.Date && t.IsDeleted == false).ToListAsync();
 
-            //}
-
-            var transactions = await this.context.Transactions
-                .Where(t => t.Date.Date >= dateFrom.Date && t.Date.Date <= dateTo.Date).ToListAsync();
+            if (transactions.Count == 0)
+            {
+                throw new ServiceException("No transactions found!");
+            }
 
             foreach (var transaction in transactions)
             {

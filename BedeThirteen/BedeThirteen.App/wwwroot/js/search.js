@@ -7,30 +7,26 @@
 });
 
 $("#archiveRangeModal").on("hidden.bs.modal", function () {
-    //$("#archivedOptionInput").prop("checked", true);
-    //   $("#").addClass('className');
     $("#archivedOptionLabel").click();
+
 });
 
 $("#archivedOptionLabel").click(function () {
 
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
+    $("#archivedOptionLabel").addClass('active');
+    $("#transactionOptionLabel").removeClass('active');
+    $("#addToArchiveOptionLabel").removeClass('active');
 
-    $("#searchBtn").click();
-
-
+    performCleanSearch();
 });
 
 
 $("#transactionOptionLabel").click(function () {
 
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
-
-    $("#searchBtn").click();
+    $("#archivedOptionLabel").removeClass('active');
+    $("#addToArchiveOptionLabel").removeClass('active');
+    $("#transactionOptionLabel").addClass('active');
+    performCleanSearch();
 });
 
 
@@ -75,12 +71,7 @@ $("#searchBtn").click(function () {
     }
 });
 
-function performCleanSearch() {
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
-    getSearchResult(0);
-}
+
 
 function validateAmounts() {
     var isValid = true;
@@ -111,7 +102,12 @@ $(document).on("click", "#pageNumberBtn", function () {
 });
 
 
-
+function performCleanSearch() {
+    $("#filterByDdl").val("all");
+    $("#sortByDdl").val("date_desc");
+    $("#pageSizeDdl").val(10);
+    getSearchResult(0);
+}
 
 function getSearchResult(pageNum) {
     var filterBy = $("#filterByDdl").val();
@@ -120,7 +116,9 @@ function getSearchResult(pageNum) {
     var aditionalCriteria = "";
     var sortBy = $("#sortByDdl").val();
     var archiveKey = 0;
-    if ($('#archivedOptionInput').is(':checked')) {
+    //if ($('#archivedOptionInput').is(':checked')) {
+    if ($("#archivedOptionLabel").is(".active")) {
+
         archiveKey = 1;
     }
 
