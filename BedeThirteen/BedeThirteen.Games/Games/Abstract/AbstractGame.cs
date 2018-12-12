@@ -38,9 +38,9 @@ namespace BedeThirteen.Games.Games.Abstract
                     slots[y][x] = _tokenGenerator.GenerateToken();
                 }
             }
+            (decimal winCoefficient, IEnumerable<int> winningLines) = _gameEvaluator.CalculateCoefficientAndLines(slots);
 
-            var curGameResult = new GameResult(){ RolledValues = slots ,
-                WinCoefficient = _gameEvaluator.CalculateCoefficient(slots) };
+            var curGameResult = new GameResult(){ RolledValues = slots ,WinCoefficient = winCoefficient,WinningLines =winningLines};
             return curGameResult;
         }
     }

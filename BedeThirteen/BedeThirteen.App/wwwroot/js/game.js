@@ -9,9 +9,9 @@
         type: request_method,
         data: form_data
     }).done(function (data) {
-
+        $("#gameBetButton").prop("disabled", true);
         RunSlotMachine(0, 16, UpdateSiteData, data);
-          
+      
     });
 });
 
@@ -39,7 +39,7 @@ function AddToGameLog(rolledValues) {
 
 
     rolledValues.forEach(function (msg) {
-        $("#gameBetHistory").append(`<label>${msg}</label>`);
+        $("#gameBetHistory").append(`<p class="text-dark">${msg}</p>`);
     });
 
     let numberOfLogs = $(log).children().length;
@@ -73,9 +73,15 @@ function UpdateSlotsImages(values) {
 
 function UpdateSiteData(data)
 {
+    $("#gameBetButton").prop("disabled", false);
+
     UpdateBalance(data.newBalance, data.currencyName);
     UpdateSlotsImages(data.rolledValues);
+    
     AddToGameLog(data.logHistory);
+    FlashWinningLines(data.winningLines)
+    
+
 }
 function RunSlotMachine(currentSteps, stepsToGo, functionOnEnd, data) {
     if (currentSteps < stepsToGo) {
@@ -100,13 +106,30 @@ function RandomizeSlots() {
     var tokenToImage = { 0: "wildcard", 1: "apple", 2: "watermelon", 3: "seven" }
 
     let rols = $("#gameSlotsValues").children();
-    for (let y = 0; y < rols.length; y++) {
-        let foo = $(rols[y]);
-        let line = foo.children();
+    for (let y = 0; y < rols.length; y++) { 
+
+        let line = $(rols[y]).children();
         for (let x = 0; x < line.length; x++) {
-            let foo = $(line[x]).children();
-            let s = foo.first("a");
+             
+            let s = $(line[x]).children().first("a");
             s.attr("src", `/images/slot/${tokenToImage[Math.floor((Math.random() * 4))]}.png`);
         }
     }
 }
+
+function FlashWinningLines(winningRows) {
+
+    let rows = $("#gameSlotsValues").children();
+    for (var i = 0; i < winningRows.length; i++) {
+        let el = $(rows[winningRows[i]]);
+        el.css("background-color", "green");
+        setTimeout(function () {
+           
+            el.css("background-color", "white");
+
+        }, 2000);
+       
+    }
+}
+
+ 

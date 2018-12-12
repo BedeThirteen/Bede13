@@ -126,3 +126,18 @@ function validateDate() {
     }
     else { return true; }
 }
+ 
+$("#addCreditCardForm").validate({
+    rules: {
+        cardNumber: {
+            required: true,
+            creditcard: true           
+        },
+        cvv: {
+            required: true,
+            digits: true,
+            minlength: 4,
+            maxlength: 4
+        }
+    }
+});

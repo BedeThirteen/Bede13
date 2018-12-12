@@ -1,7 +1,9 @@
-﻿namespace BedeThirteen.Games.GameEvaluator.Abstract
+﻿using System.Collections.Generic;
+
+namespace BedeThirteen.Games.GameEvaluator.Abstract
 {
     public interface IGameEvaluator
     {
-        decimal CalculateCoefficient(Token[][] tokens);
+        (decimal, IEnumerable<int>) CalculateCoefficientAndLines(Token[][] tokens);
     }
 }
