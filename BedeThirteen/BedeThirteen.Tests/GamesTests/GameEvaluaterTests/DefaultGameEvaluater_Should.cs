@@ -23,7 +23,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res,var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 3);
         }
@@ -37,7 +37,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -51,7 +51,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -65,7 +65,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -77,7 +77,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == 0);
         }
@@ -102,7 +102,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 3 * numberOfRows);
         }

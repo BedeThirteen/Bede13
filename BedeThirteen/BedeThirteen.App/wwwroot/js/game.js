@@ -132,7 +132,7 @@ function FlashWinningLines(winningRows) {
 
         setTimeout(function () {
 
-            el.css("background-color", "white");
+            el.css("background-color", "");
 
         }, 1000);
         setTimeout(function () {
@@ -142,7 +142,7 @@ function FlashWinningLines(winningRows) {
         }, 1700);
         setTimeout(function () {
            
-            el.css("background-color", "white");
+            el.css("background-color", "");
 
         }, 2200);
         setTimeout(function () {
@@ -152,7 +152,7 @@ function FlashWinningLines(winningRows) {
         }, 2500);
         setTimeout(function () {
 
-            el.css("background-color", "white");
+            el.css("background-color", "");
 
         }, 2800);
     }

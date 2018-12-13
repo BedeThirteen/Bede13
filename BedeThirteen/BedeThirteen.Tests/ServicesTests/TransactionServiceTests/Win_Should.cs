@@ -79,7 +79,7 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                var foo = sut.WinAsync(userToAdd.Id, 0, "Foo Game");
+                var foo = await sut.WinAsync(userToAdd.Id, 0, "Foo Game");
 
             }
 

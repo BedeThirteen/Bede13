@@ -6,7 +6,8 @@ namespace BedeThirteen.Games.GameEvaluator.Abstract
 {
     public class DefaultGameEvaluator : IGameEvaluator
     {
-        public (decimal,IEnumerable<int>) CalculateCoefficientAndLines(Token[][] tokens)
+
+        public (decimal ,IEnumerable<int>) CalculateCoefficientAndLines(Token[][] tokens)
         {
             decimal curCoef = 0;
             List<int> winningLines = new List<int>();
