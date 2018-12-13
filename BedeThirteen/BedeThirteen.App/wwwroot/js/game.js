@@ -35,7 +35,7 @@ function UpdateBalance(number, currency) {
     $("#balanceValue").text(amountAndCurrency);
 
     //Sets form's maximum betable amount
-    $("#gameStakeForm > input").first("input").attr("max", number);
+    $("#stakeAmount").attr("max", number);
 }
 
 
@@ -43,7 +43,8 @@ $(function () {
 
     $("#gameBalanceAccount").text($("#balanceValue").text());
 
-    $("#gameStakeForm > input").first("input").attr("max", $("#balanceValue").text().split(" ")[0]);
+     //Sets form's maximum betable amount
+    $("#stakeAmount").attr("max", $("#balanceValue").text().split(" ")[0]);
 })
 
 function AddToGameLog(rolledValues) {
@@ -52,7 +53,7 @@ function AddToGameLog(rolledValues) {
 
 
     rolledValues.forEach(function (msg) {
-        $("#gameBetHistory").append(`<p class="text-dark">${msg}</p>`);
+        $("#gameBetHistory").append(`<p class="text-dark h4">${msg}</p>`);
     });
 
     let numberOfLogs = $(log).children().length;
@@ -128,12 +129,32 @@ function FlashWinningLines(winningRows) {
     for (var i = 0; i < winningRows.length; i++) {
         let el = $(rows[winningRows[i]]);
         el.css("background-color", "green");
+
+        setTimeout(function () {
+
+            el.css("background-color", "white");
+
+        }, 1000);
+        setTimeout(function () {
+
+            el.css("background-color", "green");
+
+        }, 1700);
         setTimeout(function () {
            
             el.css("background-color", "white");
 
-        }, 2000);
-       
+        }, 2200);
+        setTimeout(function () {
+
+            el.css("background-color", "green");
+
+        }, 2500);
+        setTimeout(function () {
+
+            el.css("background-color", "white");
+
+        }, 2800);
     }
 }
 

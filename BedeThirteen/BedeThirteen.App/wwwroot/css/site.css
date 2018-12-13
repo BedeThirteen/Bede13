@@ -139,9 +139,10 @@ opition:hover {
     width: 21% !important;
 }
 
-#slotImg {
-    width: 100%;
-    height: auto;
+.slotImg {
+    
+    background-color: transparent;
+    border: none;
 }
 
 .pagination {
