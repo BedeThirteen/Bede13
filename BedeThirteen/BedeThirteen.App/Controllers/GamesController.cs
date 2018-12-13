@@ -63,19 +63,24 @@ namespace BedeThirteen.App.Controllers
             var game = this.gameManager.GetGame(AvailableGames.GameOne);
             var currentResults = game.GenerateGameCombiantion();
 
-            if (currentResults.WinCoefficient >0)
+            var winnings = currentResults.WinCoefficient * stakedInUSD;
+            if (winnings > 0)
             {
 
-                currentBalance = await this.transactionService.WinAsync(userId, currentResults.WinCoefficient * stakedInUSD, gameName);
+                currentBalance = await this.transactionService.WinAsync(userId, winnings, gameName);
 
-                log.Add($"Won {stakeAmount * currentResults.WinCoefficient} {userCurrency}.");
+                log.Add($"Won {string.Concat(Math.Round(winnings* userRate, 2))} {userCurrency}.");
 
             }
 
             var balanceInUserCurrency = string.Concat(Math.Round(currentBalance * userRate, 2));
 
 
-            return Json(new { newBalance = balanceInUserCurrency, currencyName = userCurrency, logHistory = log , rolledValues = currentResults.RolledValues,winningLines = currentResults.WinningLines});
+            return Json(new { newBalance = balanceInUserCurrency, currencyName = userCurrency,
+                logHistory = log, rolledValues = currentResults.RolledValues,
+                winningLines = currentResults.WinningLines,
+                gameWinnings = string.Concat(Math.Round(winnings * userRate, 2))
+            });
 
         }
 

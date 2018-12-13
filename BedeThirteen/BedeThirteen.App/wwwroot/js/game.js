@@ -15,6 +15,19 @@
     });
 });
 
+function UpdateSiteData(data) {
+    $("#gameBetButton").prop("disabled", false);
+
+    UpdateBalance(data.newBalance, data.currencyName);
+    UpdateWinnings(data.gameWinnings, data.currencyName);
+    UpdateSlotsImages(data.rolledValues);
+
+    AddToGameLog(data.logHistory);
+    FlashWinningLines(data.winningLines)
+
+
+}
+
 function UpdateBalance(number, currency) {
     let amountAndCurrency = `${number} ${currency}`;
     // Updates Visualized balance
@@ -71,17 +84,9 @@ function UpdateSlotsImages(values) {
 }
 
 
-function UpdateSiteData(data)
-{
-    $("#gameBetButton").prop("disabled", false);
 
-    UpdateBalance(data.newBalance, data.currencyName);
-    UpdateSlotsImages(data.rolledValues);
-    
-    AddToGameLog(data.logHistory);
-    FlashWinningLines(data.winningLines)
-    
-
+function UpdateWinnings(amount,currency) {
+    $("#gameWinnings").text(`${amount} ${currency}`);
 }
 function RunSlotMachine(currentSteps, stepsToGo, functionOnEnd, data) {
     if (currentSteps < stepsToGo) {
