@@ -7,30 +7,26 @@
 });
 
 $("#archiveRangeModal").on("hidden.bs.modal", function () {
-    //$("#archivedOptionInput").prop("checked", true);
-    //   $("#").addClass('className');
     $("#archivedOptionLabel").click();
+
 });
 
 $("#archivedOptionLabel").click(function () {
 
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
+    $("#archivedOptionLabel").addClass('active');
+    $("#transactionOptionLabel").removeClass('active');
+    $("#addToArchiveOptionLabel").removeClass('active');
 
-    $("#searchBtn").click();
-
-
+    performCleanSearch();
 });
 
 
 $("#transactionOptionLabel").click(function () {
 
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
-
-    $("#searchBtn").click();
+    $("#archivedOptionLabel").removeClass('active');
+    $("#addToArchiveOptionLabel").removeClass('active');
+    $("#transactionOptionLabel").addClass('active');
+    performCleanSearch();
 });
 
 
@@ -64,9 +60,16 @@ $("#searchBtn").click(function () {
     var pageN = 0;
     var filterBy = $("#filterByDdl").val();
     if (filterBy === "amount") {
-        var isValid = validateAmounts();
+        var isValidAmount = validateAmounts();
 
-        if (isValid === true) {
+        if (isValidAmount === true) {
+            getSearchResult(pageN);
+        }
+    }
+    else if (filterBy === "date") {
+        var isValidDate = validateDates();
+
+        if (isValidDate === true) {
             getSearchResult(pageN);
         }
     }
@@ -75,12 +78,29 @@ $("#searchBtn").click(function () {
     }
 });
 
-function performCleanSearch() {
-    $("#filterByDdl").val("all");
-    $("#sortByDdl").val("date_desc");
-    $("#pageSizeDdl").val(10);
-    getSearchResult(0);
+function validateDates() {
+    var isValid = true;
+    var value = $("#date").val();
+    if (value.length === 0) {
+        isValid = false;
+        $("#date").popover();
+        $("#date").popover('show');
+        setTimeout(function () {
+            $("#date").popover('hide');
+        }, 2000);
+    }
+    var valueA = $("#dateA").val();
+    if (valueA.length === 0) {
+        isValid = false;
+        $("#dateA").popover();
+        $("#dateA").popover('show');
+        setTimeout(function () {
+            $("#dateA").popover('hide');
+        }, 2000);
+    }
+    return isValid;
 }
+
 
 function validateAmounts() {
     var isValid = true;
@@ -111,7 +131,12 @@ $(document).on("click", "#pageNumberBtn", function () {
 });
 
 
-
+function performCleanSearch() {
+    $("#filterByDdl").val("all");
+    $("#sortByDdl").val("date_desc");
+    $("#pageSizeDdl").val(10);
+    getSearchResult(0);
+}
 
 function getSearchResult(pageNum) {
     var filterBy = $("#filterByDdl").val();
@@ -120,7 +145,9 @@ function getSearchResult(pageNum) {
     var aditionalCriteria = "";
     var sortBy = $("#sortByDdl").val();
     var archiveKey = 0;
-    if ($('#archivedOptionInput').is(':checked')) {
+    //if ($('#archivedOptionInput').is(':checked')) {
+    if ($("#archivedOptionLabel").is(".active")) {
+
         archiveKey = 1;
     }
 

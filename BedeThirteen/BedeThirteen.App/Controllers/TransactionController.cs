@@ -44,8 +44,16 @@ namespace BedeThirteen.App.Controllers
         {
             if (DateTime.TryParse(from, out DateTime dateFrom) && DateTime.TryParse(to, out DateTime dateTo))
             {
-                int numberOfRecords = await this.transactionService.ArchiveTransactionsAsync(dateFrom, dateTo);
-                return Json(new { numberOfRecords });
+                try
+                {
+                    int numberOfRecords = await this.transactionService.ArchiveTransactionsAsync(dateFrom, dateTo);
+                    return Json(new { numberOfRecords });
+
+                }
+                catch (ServiceException)
+                {
+                    return BadRequest();
+                }
             }
             else
             {
