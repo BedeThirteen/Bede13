@@ -46,7 +46,7 @@
 
             if (userId != string.Empty)
             {
-                transactions = this.context.Transactions.Where(t => t.UserId == userId);
+                transactions = transactions.Where(t => t.UserId == userId);
             }
 
             // filter

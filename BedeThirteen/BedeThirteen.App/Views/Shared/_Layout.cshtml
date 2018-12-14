@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+        <link rel="icon" type="image/x-icon" href="~/images/ico/favicon.ico">
+
     </environment>
     <environment exclude="Development">
         <link href="~/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet" />
@@ -25,8 +27,13 @@
 <body>
     <partial name="_BalancePartial" />
     <nav class="navbar navbar-expand-md navbar-dark fixed-top  bg-primary">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bede13</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+
+            <img class="logoImg" src="~/images/logo/logo.png" title="logo" alt="Bede13" />
+
+
+        </a>
+        <button class="navbar-toggler" id="gamesBtn" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -105,10 +112,10 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 
-    
+
     <script src="~/js/deposit.js"></script>
 
     @RenderSection("Scripts", required: false)

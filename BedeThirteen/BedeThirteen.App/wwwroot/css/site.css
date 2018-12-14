@@ -140,7 +140,6 @@ opition:hover {
 }
 
 .slotImg {
-    
     background-color: transparent;
     border: none;
 }
@@ -161,8 +160,16 @@ opition:hover {
     width: 10%;
 }
 
+.w-15 {
+    width: 15%;
+}
+
 .w-20 {
     width: 20%;
+}
+
+.w-30 {
+    width: 30%;
 }
 
 .w-40 {
@@ -173,4 +180,18 @@ opition:hover {
 .btn-secondary:not(:disabled):not(.disabled):active,
 .show > .btn-secondary.dropdown-toggle {
     background-color: #212529;
+}
+
+.navbar-brand {
+    padding-bottom: 0%;
+    padding-top: 0%;
+    width: 5%;
+}
+
+.logoImg {
+    width: 100%;
+}
+
+#gamesBtn {
+    margin-left: 15%;
 }

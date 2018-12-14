@@ -69,7 +69,7 @@ namespace BedeThirteen.App.Controllers
             }
             try
             {
-                TransactionsResultViewModel resultModel = await GetResultModelAsync(model);
+                TransactionsResultViewModel resultModel = await this.GetResultModelAsync(model);
 
                 return PartialView("_SearchResultPartial", resultModel);
             }

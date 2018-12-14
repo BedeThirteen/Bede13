@@ -1,29 +1,29 @@
 ﻿@model TransactionsResultViewModel
 
-<table class="table table-sm table-bordered table-striped table-hover text-center card p-2 m-2">
+<table class="table table-sm table-bordered table-striped table-hover text-center text-white p-2 m-2">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Amount in USD</th>
+            <th scope="col" class="w-20">Date</th>
+            <th scope="col" class="w-20">Amount in USD</th>
             <th scope="col" class="w-10">Type</th>
-            <th scope="col" class="w-40">Description</th>
+            <th scope="col" class="w-30">Description</th>
             @if (User.IsInRole("Admin"))
             {
                 <th scope="col" class="w-20">User</th>
             }
         </tr>
     </thead>
-    <tbody  >
+    <tbody>
         @foreach (var item in Model.Transactions)
         {
             <tr>
-                <td>@item.Date</td>
-                <td>@item.Amount</td>
+                <td class="w-20">@item.Date</td>
+                <td class="w-15">@item.Amount</td>
                 <td class="w-10">@item.Type</td>
-                <td class="w-40">@item.Description</td>
+                <td class="w-30">@item.Description</td>
                 @if (User.IsInRole("Admin"))
                 {
-                    <th class="w-20">@item.User</th>
+                    <th class="w-25">@item.User</th>
                 }
             </tr>
         }
@@ -44,5 +44,4 @@
         </ul>
     </div>
 </nav>
-@*</div>*@
 

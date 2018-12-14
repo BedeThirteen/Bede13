@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BedeThirteen.App.Models;
@@ -57,9 +59,15 @@ namespace BedeThirteen.App.Controllers
                     return BadRequest(ModelState);
                 }
 
-                //if ((await this.userService.GetUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier))).CreditCards.Any())
+                //if ((await this.userService.GetUserAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier))).CreditCards
+                //    .Any(cc => cc.Number == model.CardNumber))
                 //{
+                //    return Json("The attached file is not supported", MediaTypeNames.Text.Plain);
+
                 //}
+
+
+
                 DateTime date;
                 try
                 {
