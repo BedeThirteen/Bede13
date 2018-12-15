@@ -130,7 +130,7 @@
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
 
-                user.Currency = await _currencyService.FindCurrencyAsync(model.CurrencyId);
+                user.Currency = await _currencyService.GetCurrencyAsync(model.CurrencyId);
 
 
                 var result = await _userManager.CreateAsync(user, model.Password);

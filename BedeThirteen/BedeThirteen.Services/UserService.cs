@@ -46,7 +46,6 @@
                               .Where(u => u.NormalizedEmail
                                             .StartsWith(normalized, StringComparison.CurrentCultureIgnoreCase))
                               .Select(u => u.Email).ToListAsync();
-
         }
 
         public async Task<User> PromoteUserAsync(string email)
@@ -63,21 +62,9 @@
                 throw new ServiceException("User is already an Admin!");
             }
 
-            var result = await this.userManager.RemoveFromRoleAsync(user, "User");
-            if (result.Succeeded)
-            {
-                var secondResult = await this.userManager.AddToRoleAsync(user, "Admin");
-                if (!secondResult.Succeeded)
-                {
-                    await this.userManager.AddToRoleAsync(user, "User");
-                }
-
-                return user;
-            }
-            else
-            {
-                throw new ServiceException("Role change failed!");
-            }
+            await this.userManager.RemoveFromRoleAsync(user, "User");
+            await this.userManager.AddToRoleAsync(user, "Admin");
+            return user;
         }
     }
 }

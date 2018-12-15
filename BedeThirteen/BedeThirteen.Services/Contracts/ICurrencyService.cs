@@ -11,7 +11,7 @@
 
         Task<Currency> GetCurrencyByNameAsync(string name);
 
-        Task<Currency> FindCurrencyAsync(Guid currencyId);
+        Task<Currency> GetCurrencyAsync(Guid currencyId);
 
         Task<IList<Currency>> GetAllCurrenciesAsync();
     }

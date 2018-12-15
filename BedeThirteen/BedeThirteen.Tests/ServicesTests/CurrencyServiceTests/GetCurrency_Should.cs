@@ -1,5 +1,6 @@
 ﻿namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
 {
+    using System;
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
@@ -9,41 +10,33 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class GetCurrencyByName_Should
+    public class GetCurrency_Should
     {
         [TestMethod]
-        [DataRow("GBP", "2")]
-        [DataRow("USD", "1")]
-        [DataRow("BGN", "5")]
-        [DataRow("YEN", "0.01")]
-        public async Task ReturnCurrency_WhenNameIsValid(string name, string conversionRate)
+        public async Task ReturnCurrency_WhenIdIsValid()
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ReturnCurrency_WhenNameIsValid-{name}").Options;
+                .UseInMemoryDatabase($"ReturnCurrency_WhenIdIsValid").Options;
 
-            var currenciesToSeedWith = new[] {
-                new Currency() { Name = "BGN" },
-                new Currency() { Name = "USD" },
-                new Currency() { Name = "GBP" },
-                new Currency() { Name = "YEN" }
+            var id = Guid.NewGuid();
+            var currency = new Currency()
+            {
+                Id = id,
+                Name = "test"
             };
 
             using (var context = new BedeThirteenContext(options))
             {
-                foreach (var currency in currenciesToSeedWith)
-                {
-                    context.Currencies.Add(currency);
-                }
-
+                context.Currencies.Add(currency);
                 context.SaveChanges();
             }
 
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new CurrencyService(context);
-                var result = await sut.GetCurrencyByNameAsync(name);
+                var result = await sut.GetCurrencyAsync(id);
 
-                Assert.IsTrue(result.Name == name);
+                Assert.IsTrue(result.Id == id);
             }
         }
 
@@ -58,8 +51,9 @@
             using (var context = new BedeThirteenContext(options))
             {
                 // Act
+                var guid = Guid.NewGuid();
                 var sut = new CurrencyService(context);
-                await sut.GetCurrencyByNameAsync("invalid");
+                await sut.GetCurrencyAsync(guid);
             }
         }
     }

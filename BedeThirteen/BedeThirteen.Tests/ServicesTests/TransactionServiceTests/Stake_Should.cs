@@ -1,21 +1,17 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services;
-using BedeThirteen.Services.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
+﻿namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
 {
-    
+    using System;
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services;
+    using BedeThirteen.Services.Exceptions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class Stake_Should
     {
-
         [TestMethod]
         [DataRow("1")]
         [DataRow("2.123")]
@@ -28,12 +24,11 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"Stake_AnyDecimal_Amount_{amountToStake}").Options;
 
-            //Arrange
+            // Arrange
             decimal startingBalance = 10000000;
             var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
-            
             var mockTransactionType = new TransactionType() { Name = "Stake" };
 
             using (var context = new BedeThirteenContext(options))
@@ -43,69 +38,31 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 userToAdd.CurrencyId = mockCurrency.Id;
 
                 context.Users.Add(userToAdd);
-                
+
                 context.SaveChanges();
             }
-            //Act
+
+            // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 result = await sut.StakeAsync(userToAdd.Id, decimal.Parse(amountToStake), "Foo Game");
             }
-            //Assert
+
+            // Assert
             Assert.AreEqual(startingBalance - decimal.Parse(amountToStake), result);
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_When_AmountZero()
+        public async Task ThrowException_WhenUserBalanceIsLessThanStaked()
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
+                .UseInMemoryDatabase($"ThrowException_WhenUserBalanceIsLessThanStaked").Options;
 
-            //Arrange
-            var startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
-            var userToAdd = new User() { Balance = startingBalance };
-
-           
-            var mockTransactionType = new TransactionType() { Name = "Stake" };
-
-            using (var context = new BedeThirteenContext(options))
-            {
-                context.TransactionTypes.Add(mockTransactionType);
-                context.Currencies.Add(mockCurrency);
-                userToAdd.CurrencyId = mockCurrency.Id;
-
-                context.Users.Add(userToAdd);
-                
-              
-                context.SaveChanges();
-            }
-            //Act
-            decimal result;
-            using (var context = new BedeThirteenContext(options))
-            {
-                var sut = new TransactionService(context);
-                result = await sut.StakeAsync(userToAdd.Id, 0, "Foo Game");
-            }
-
-
-        }
-
-
-        [TestMethod]
-        [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_WhenUser_DoesNotExitst()
-        {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
-
-            //Arrange
-            decimal startingBalance = 10000000;
-
+            // Arrange
+            decimal startingBalance = 50;
             var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
@@ -123,53 +80,60 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.SaveChanges();
             }
 
-            //Act
+            // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.StakeAsync(userToAdd.Id, 0, "Foo Game");
-
-
+                result = await sut.StakeAsync(userToAdd.Id, 100, "Foo Game");
             }
-
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_WhenUser_IsNull()
+        public async Task ThrowServerException_When_AmountZero()
+        {
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
+            // Act
+            decimal result;
+            using (var context = new BedeThirteenContext(options))
+            {
+                var sut = new TransactionService(context);
+                result = await sut.StakeAsync("valid", 0, "Foo Game");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public async Task ThrowServerException_WhenUser_DoesNotExitst()
+        {
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
+
+            // Act
+            using (var context = new BedeThirteenContext(options))
+            {
+                var sut = new TransactionService(context);
+                await sut.StakeAsync("invalidId", 100, "Foo Game");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public async Task ThrowServerException_WhenUser_IsNull()
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
 
-            //Arrange
-            decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
-            var userToAdd = new User() { Balance = startingBalance };
- 
-            var mockTransactionType = new TransactionType() { Name = "Withdraw" };
-
-            using (var context = new BedeThirteenContext(options))
-            {
-                context.TransactionTypes.Add(mockTransactionType);
-                context.Currencies.Add(mockCurrency);
-                userToAdd.CurrencyId = mockCurrency.Id;
-                context.Users.Add(userToAdd);
-                
-                context.SaveChanges();
-            }
-            //Act
-
+            // Act
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 await sut.StakeAsync(null, 1, "Foo Game");
             }
-
-
         }
- 
+
         [TestMethod]
         [DataRow("-1")]
         [DataRow("-2.14")]
@@ -178,38 +142,18 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
         [DataRow("-54541.4")]
         [DataRow("-11002565987.4")]
         [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_When_AmountIsNegative(string balanceToHaveStr)
+        public async Task ThrowServerException_When_AmountIsNegative(string amount)
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
 
-            //Arrange
-            decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
-            var userToAdd = new User() { Balance = startingBalance };
-
-           
-            var mockTransactionType = new TransactionType() { Name = "Stake" };
-
-            using (var context = new BedeThirteenContext(options))
-            {
-                context.TransactionTypes.Add(mockTransactionType);
-                context.Currencies.Add(mockCurrency);
-                userToAdd.CurrencyId = mockCurrency.Id;
-                context.Users.Add(userToAdd);
-                 
-                context.SaveChanges();
-            }
-            //Act
-            decimal result;
+            // Act
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                 
-               result = await sut.StakeAsync(userToAdd.Id, decimal.Parse(balanceToHaveStr), "Foo Game");
 
+                var result = await sut.StakeAsync("valid", decimal.Parse(amount), "Foo Game");
             }
-
         }
     }
 }

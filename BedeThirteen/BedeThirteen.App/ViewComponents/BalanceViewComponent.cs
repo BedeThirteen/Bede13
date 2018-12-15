@@ -32,7 +32,7 @@ namespace BedeThirteen.App.ViewComponents
                  
                 if (!await userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    var userCurrency = (await currencyService.FindCurrencyAsync(user.CurrencyId)).Name;
+                    var userCurrency = (await currencyService.GetCurrencyAsync(user.CurrencyId)).Name;
                     var rate = (await this.exchangeRateService.GetRatesAsync())[userCurrency];
                     var balanceVm = new BalanceViewModel()
                     {

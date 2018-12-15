@@ -255,7 +255,9 @@
         public async Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo)
         {
             var transactions = await this.context.Transactions.Where(
-              t => t.Date.Date >= dateFrom.Date && t.Date.Date <= dateTo.Date && t.IsDeleted == false).ToListAsync();
+              t => t.Date.Date >= dateFrom.Date
+              && t.Date.Date <= dateTo.Date && t.IsDeleted == false)
+              .ToListAsync();
 
             if (transactions.Count == 0)
             {
