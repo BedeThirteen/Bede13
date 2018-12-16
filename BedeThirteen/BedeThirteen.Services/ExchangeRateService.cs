@@ -33,7 +33,6 @@
 
                 if (jsonResult == null)
                 {
-                    // todo : inform user if api is unavailable
                     if (this.rates != null)
                     {
                         throw new ServiceException("Service unavailable!");

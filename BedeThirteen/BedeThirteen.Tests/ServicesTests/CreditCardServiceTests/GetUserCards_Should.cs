@@ -1,6 +1,7 @@
 ﻿namespace BedeThirteen.Tests.ServicesTests.CreditCardServiceTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using BedeThirteen.Data.Context;
@@ -16,6 +17,7 @@
         [TestMethod]
         public async Task GetCards_WhenInputs_AreValid()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase("GetCards_WhenInputs_AreValid").Options;
 
@@ -38,12 +40,6 @@
                   }
             };
 
-            var cardFromDiffrentUser = new CreditCard()
-            {
-                Number = "121110987654111",
-                Cvv = "321"
-            };
-
             var userToAdd = new User() { Id = "totalyaGuid" };
             var userDiffrentUser = new User();
 
@@ -53,24 +49,26 @@
                 context.Users.Add(userDiffrentUser);
                 await context.SaveChangesAsync();
 
-                // Act
-                var sut = new CreditCardService(context);
-
                 foreach (var card in cardToSeedWith)
                 {
-                    await sut.AddCreditCardAsync(card.Number, card.Cvv, DateTime.Now, userToAdd.Id);
+                    card.UserId = userToAdd.Id;
+                    context.CreditCards.Add(card);
                 }
 
-                await sut.AddCreditCardAsync(cardFromDiffrentUser.Number, cardFromDiffrentUser.Cvv, DateTime.Now, userDiffrentUser.Id);
+                await context.SaveChangesAsync();
+            }
+
+            // Act
+            ICollection<CreditCard> results;
+            using (var context = new BedeThirteenContext(options))
+            {
+                var sut = new CreditCardService(context);
+                results = await sut.GetUserCardsAsync(userToAdd.Id);
             }
 
             // Assert
-            using (var context = new BedeThirteenContext(options))
-            {
-                Assert.IsTrue(context.CreditCards.Any());
-                Assert.IsTrue(context.CreditCards.Count() == 4);
-                Assert.IsTrue(context.CreditCards.Count(cc => cc.UserId == userToAdd.Id) == 3);
-            }
+            Assert.IsTrue(results.Any());
+            Assert.IsTrue(results.Count() == 3);
         }
 
         [TestMethod]
