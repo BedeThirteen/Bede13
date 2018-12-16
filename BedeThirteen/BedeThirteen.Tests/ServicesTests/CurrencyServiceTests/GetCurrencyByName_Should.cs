@@ -22,7 +22,8 @@
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ReturnCurrency_WhenNameIsValid-{name}").Options;
 
-            var currenciesToSeedWith = new[] {
+            var currenciesToSeedWith = new[]
+            {
                 new Currency() { Name = "BGN" },
                 new Currency() { Name = "USD" },
                 new Currency() { Name = "GBP" },

@@ -1,18 +1,15 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Services
+﻿namespace BedeThirteen.Services
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.Contracts;
+    using Microsoft.EntityFrameworkCore;
+
     public class DataAggregationService : IDataAggregationService
     {
-
         private readonly BedeThirteenContext context;
 
         public DataAggregationService(BedeThirteenContext context)
@@ -55,6 +52,7 @@ namespace BedeThirteen.Services
                 Where(transaction => transaction.CreatedOn > startOfRange && transaction.CreatedOn < endOfRange)
                 .Select(transaction => transaction.Amount).SumAsync();
         }
+
         public async Task<decimal> DepositSum(DateTime startOfRange, DateTime endOfRange, string userId = null)
         {
             var transactioType = this.context.TransactionTypes.First(t => t.Name == "Deposit");
@@ -72,6 +70,7 @@ namespace BedeThirteen.Services
                 Where(transaction => transaction.CreatedOn > startOfRange && transaction.CreatedOn < endOfRange)
                 .Select(transaction => transaction.Amount).SumAsync();
         }
+
         public async Task<decimal> WithdrawSum(DateTime startOfRange, DateTime endOfRange, string userId = null)
         {
             var transactioType = this.context.TransactionTypes.First(t => t.Name == "Withdraw");
