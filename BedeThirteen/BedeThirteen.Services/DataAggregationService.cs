@@ -20,7 +20,7 @@ namespace BedeThirteen.Services
             this.context = context;
         }
 
-        public async Task<decimal> StakesSum(DateTime startOfRange, DateTime endOfRange ,string userId = null)
+        public async Task<decimal> StakesSum(DateTime startOfRange, DateTime endOfRange, string userId = null)
         {
             var transactioType = this.context.TransactionTypes.First(t => t.Name == "Stake");
             IQueryable<Transaction> aggregationQuery;
