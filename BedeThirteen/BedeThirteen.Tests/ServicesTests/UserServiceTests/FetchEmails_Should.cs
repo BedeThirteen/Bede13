@@ -20,10 +20,10 @@
         [TestMethod]
         public async Task ReturnListOfStrings_WhenEntitiesArePresent()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-             .UseInMemoryDatabase($"ReturnUser_WhenValidIdIsPassed").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                       .UseInMemoryDatabase($"ReturnUser_WhenValidIdIsPassed").Options;
+
             var idOne = Guid.NewGuid().ToString();
             User userOne = new User()
             {

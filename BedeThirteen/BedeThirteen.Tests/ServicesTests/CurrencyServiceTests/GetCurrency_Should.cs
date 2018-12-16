@@ -15,6 +15,7 @@
         [TestMethod]
         public async Task ReturnCurrency_WhenIdIsValid()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ReturnCurrency_WhenIdIsValid").Options;
 
@@ -31,6 +32,7 @@
                 context.SaveChanges();
             }
 
+            // Act && Assert
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new CurrencyService(context);

@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BedeThirteen.Tests.GamesTests.GameTests
+﻿namespace BedeThirteen.Tests.GamesTests.GameTests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     class EighthByFiveGameShould
     {
-         
+
     }
 }

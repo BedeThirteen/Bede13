@@ -20,10 +20,11 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowException_WhenInvalidEmailIsPassed()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-             .UseInMemoryDatabase($"ThrowException_WhenInvalidEmailIsPassed").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                        .UseInMemoryDatabase($"ThrowException_WhenInvalidEmailIsPassed")
+                        .Options;
+
             var id = Guid.NewGuid().ToString();
             User userToAdd = new User() { Email = "a@a.com", NormalizedEmail = "A@A.COM" };
 

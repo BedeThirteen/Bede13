@@ -1,6 +1,5 @@
 ﻿namespace BedeThirteen.Tests.ServicesTests.CreditCardServiceTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -77,7 +76,6 @@
         {
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase("ThrowException_WhenUser_DoesNotExist").Options;
-
 
             using (var context = new BedeThirteenContext(options))
             {

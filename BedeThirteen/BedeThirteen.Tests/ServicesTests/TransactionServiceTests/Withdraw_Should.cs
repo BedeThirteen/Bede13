@@ -21,12 +21,13 @@
         [DataRow("110025")]
         public async Task Withdraw_AnyDecimal_Amount(string amountToWithdraw)
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"Withdraw_AnyDecimal_Amount_{amountToWithdraw}").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                          .UseInMemoryDatabase($"Withdraw_AnyDecimal_Amount_{amountToWithdraw}")
+                          .Options;
+
             decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -53,20 +54,20 @@
                 result = await sut.WithdrawAsync(userToAdd.Id, decimal.Parse(amountToWithdraw), mockCreditCard.Id);
             }
 
+            // Assert
             Assert.AreEqual(startingBalance - decimal.Parse(amountToWithdraw), result);
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_When_AmountZero()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                        .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
+
             var startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -90,20 +91,19 @@
                 var sut = new TransactionService(context);
                 result = await sut.WithdrawAsync(userToAdd.Id, 0, mockCreditCard.Id);
             }
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_DoesNotExitst()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                          .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
+
             decimal startingBalance = 10000000;
 
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -125,21 +125,21 @@
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.WithdrawAsync((new Guid()).ToString(), 1, mockCreditCard.Id);
+                result = await sut.WithdrawAsync(Guid.NewGuid().ToString(), 1, mockCreditCard.Id);
             }
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_IsNull()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                           .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull")
+                           .Options;
+
             decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -168,12 +168,13 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                          .UseInMemoryDatabase($"ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser")
+                          .Options;
+
             decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -191,14 +192,13 @@
                 context.SaveChanges();
             }
 
-            var cardIdNotRegisteredToUser = new Guid();
+            var cardIdNotRegisteredToUser = Guid.NewGuid();
 
             // Act
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 await sut.WithdrawAsync(userToAdd.Id, 1m, cardIdNotRegisteredToUser);
-
             }
         }
 
@@ -212,12 +212,13 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_When_AmountIsNegative(string balanceToHaveStr)
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                           .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative")
+                           .Options;
+
             decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -247,12 +248,13 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenBalanceIsLessThanAmount()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenBalanceIsLessThanAmount").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                          .UseInMemoryDatabase($"ThrowServerExceptio_WhenBalanceIsLessThanAmount")
+                          .Options;
+
             decimal startingBalance = 50;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -277,6 +279,5 @@
                 result = await sut.WithdrawAsync(userToAdd.Id, 100, mockCreditCard.Id);
             }
         }
-
     }
 }

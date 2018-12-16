@@ -1,11 +1,8 @@
-﻿using BedeThirteen.Games;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BedeThirteen.Tests.GamesTests.TokenTests
+﻿namespace BedeThirteen.Tests.GamesTests.TokenTests
 {
+    using BedeThirteen.Games;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class WildCard_Should
     {
@@ -16,10 +13,11 @@ namespace BedeThirteen.Tests.GamesTests.TokenTests
         [DataRow(0)]
         public void Equal_AnyOtherToken(int otherTokenType)
         {
-            //Arrange
+            // Arrange
             var otherToken = new Token(otherTokenType);
             var sut = new Token(0);
-            //Act
+
+            // Act
             var res = sut.Equals(otherToken);
             Assert.IsTrue(res);
         }

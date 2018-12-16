@@ -18,6 +18,7 @@
         [DataRow("YEN", "0.01")]
         public async Task ReturnCurrency_WhenNameIsValid(string name, string conversionRate)
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ReturnCurrency_WhenNameIsValid-{name}").Options;
 
@@ -38,6 +39,7 @@
                 context.SaveChanges();
             }
 
+            // Act && Assert
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new CurrencyService(context);
@@ -55,9 +57,9 @@
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase("AddCard_WhenInputs_AreValid").Options;
 
+            // Act
             using (var context = new BedeThirteenContext(options))
             {
-                // Act
                 var sut = new CurrencyService(context);
                 await sut.GetCurrencyByNameAsync("invalid");
             }

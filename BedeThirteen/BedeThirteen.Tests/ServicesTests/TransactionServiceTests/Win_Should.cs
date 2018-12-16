@@ -21,11 +21,11 @@
         [DataRow("11002565987")]
         public async Task Win_AnyDecimal_Amount(string balanceToHaveStr)
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"Win_AnyDecimal_Amount_{balanceToHaveStr}").Options;
-
             // Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                           .UseInMemoryDatabase($"Win_AnyDecimal_Amount_{balanceToHaveStr}").Options;
+
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockTransactionType = new TransactionType() { Name = "Win" };
@@ -36,7 +36,6 @@
                 context.Currencies.Add(mockCurrency);
                 userToAdd.CurrencyId = mockCurrency.Id;
                 context.Users.Add(userToAdd);
-
                 context.SaveChanges();
             }
 
@@ -56,6 +55,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_When_AmountZero()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
 
@@ -71,6 +71,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_DoesNotExitst()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
 
@@ -79,7 +80,7 @@
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.WinAsync((new Guid()).ToString(), 1, "Foo Game");
+                result = await sut.WinAsync(Guid.NewGuid().ToString(), 1, "Foo Game");
             }
         }
 
@@ -87,11 +88,12 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_IsNull()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
-
             // Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                           .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull")
+                           .Options;
+
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockTransactionType = new TransactionType() { Name = "Deposit" };
@@ -118,6 +120,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerException_WhenUser_IsNull()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenWinningUser_IsNull").Options;
 
@@ -139,11 +142,12 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_When_AmountIsNegative(string balanceToHaveStr)
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
+                           .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative")
+                           .Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockTransactionType = new TransactionType() { Name = "Deposit" };
@@ -164,9 +168,7 @@
             {
                 var sut = new TransactionService(context);
                 result = await sut.WinAsync(userToAdd.Id, decimal.Parse(balanceToHaveStr), "Foo Game");
-
             }
-
         }
     }
 }

@@ -8,7 +8,6 @@
     using BedeThirteen.Data.Models;
     using BedeThirteen.Services;
     using BedeThirteen.Services.CompositeModels;
-    using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

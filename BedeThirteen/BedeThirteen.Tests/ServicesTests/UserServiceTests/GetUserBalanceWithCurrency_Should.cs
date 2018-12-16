@@ -27,10 +27,11 @@
         [DataRow("-11002565987")]
         public async Task ReturnBalance_WhenUser_IsFound(string balanceToHaveStr)
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ReturnBalance_WhenUser_IsFound_{balanceToHaveStr}").Options;
-      
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                           .UseInMemoryDatabase($"ReturnBalance_WhenUser_IsFound_{balanceToHaveStr}")
+                           .Options;
+
             var someCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = decimal.Parse(balanceToHaveStr) };
             using (var context = new BedeThirteenContext(options))
@@ -57,6 +58,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerException_WhenUser_IsNull()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
 

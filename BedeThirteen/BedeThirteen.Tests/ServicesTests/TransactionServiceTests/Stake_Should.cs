@@ -21,12 +21,12 @@
         [DataRow("110025")]
         public async Task Stake_AnyDecimal_Amount(string amountToStake)
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"Stake_AnyDecimal_Amount_{amountToStake}").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+              .UseInMemoryDatabase($"Stake_AnyDecimal_Amount_{amountToStake}").Options;
+
             decimal startingBalance = 10000000;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockTransactionType = new TransactionType() { Name = "Stake" };
@@ -58,12 +58,12 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowException_WhenUserBalanceIsLessThanStaked()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowException_WhenUserBalanceIsLessThanStaked").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                         .UseInMemoryDatabase($"ThrowException_WhenUserBalanceIsLessThanStaked").Options;
+
             decimal startingBalance = 50;
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = startingBalance };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -93,8 +93,10 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerException_When_AmountZero()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
+
             // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
@@ -123,6 +125,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerException_WhenUser_IsNull()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
 
@@ -144,6 +147,7 @@
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerException_When_AmountIsNegative(string amount)
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
 

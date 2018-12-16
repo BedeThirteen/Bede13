@@ -18,10 +18,10 @@
         [TestMethod]
         public async Task ReturnUser_WhenValidIdIsPassed()
         {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-              .UseInMemoryDatabase($"ReturnUser_WhenValidIdIsPassed").Options;
-
             // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                       .UseInMemoryDatabase($"ReturnUser_WhenValidIdIsPassed").Options;
+
             var id = Guid.NewGuid().ToString();
             var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             User userToAdd = new User() { Id = id };

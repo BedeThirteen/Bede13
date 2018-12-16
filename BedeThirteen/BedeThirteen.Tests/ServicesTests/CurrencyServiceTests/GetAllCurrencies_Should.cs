@@ -35,6 +35,7 @@
                 results = await sut.GetAllCurrenciesAsync();
             }
 
+            // Assert
             using (var context = new BedeThirteenContext(options))
             {
                 Assert.IsTrue(results.Count == 2);

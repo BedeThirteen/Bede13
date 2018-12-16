@@ -1,20 +1,17 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services;
-using BedeThirteen.Services.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
+﻿namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
 {
+    using System;
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services;
+    using BedeThirteen.Services.Exceptions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class Deposit_Should
     {
-
         [TestMethod]
         [DataRow("1")]
         [DataRow("2.123")]
@@ -24,47 +21,12 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
         [DataRow("11002565987")]
         public async Task Deposit_AnyDecimal_Amount(string balanceToHaveStr)
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"Deposit_AnyDecimal_Amount_{balanceToHaveStr}").Options;
+                .UseInMemoryDatabase($"Deposit_AnyDecimal_Amount_{balanceToHaveStr}")
+                .Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
-            var userToAdd = new User() { Balance = 0 };
-
-            var mockCreditCard = new CreditCard() {  Number = "1234123412341234",Cvv="123",Expiry = DateTime.Now };
-            var mockTransactionType = new TransactionType() { Name = "Deposit" };
-
-            using (var context = new BedeThirteenContext(options))
-            {
-                context.TransactionTypes.Add(mockTransactionType);
-                context.Currencies.Add(mockCurrency);
-                userToAdd.CurrencyId = mockCurrency.Id;
-                context.Users.Add(userToAdd);
-                mockCreditCard.User = userToAdd;
-                context.CreditCards.Add(mockCreditCard);
-                context.SaveChanges();
-            }
-            //Act
-            decimal result;
-            using (var context = new BedeThirteenContext(options))
-            {
-                var sut = new TransactionService(context);
-                result = await sut.DepositAsync(userToAdd.Id , decimal.Parse( balanceToHaveStr),mockCreditCard.Id);
-            }
-            //Assert
-            Assert.AreEqual(balanceToHaveStr, result.ToString());
-
-        }
-
-        [TestMethod]   
-        [ExpectedException(typeof(ServiceException))]
-        public async Task ThrowServerExceptio_When_AmountZero()
-        {
-            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
-
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -80,27 +42,62 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.CreditCards.Add(mockCreditCard);
                 context.SaveChanges();
             }
-            //Act
+
+            // Act
+            decimal result;
+            using (var context = new BedeThirteenContext(options))
+            {
+                var sut = new TransactionService(context);
+                result = await sut.DepositAsync(userToAdd.Id, decimal.Parse(balanceToHaveStr), mockCreditCard.Id);
+            }
+
+            // Assert
+            Assert.AreEqual(balanceToHaveStr, result.ToString());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public async Task ThrowServerExceptio_When_AmountZero()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                 .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountZero").Options;
+
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
+            var userToAdd = new User() { Balance = 0 };
+
+            var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
+            var mockTransactionType = new TransactionType() { Name = "Deposit" };
+
+            using (var context = new BedeThirteenContext(options))
+            {
+                context.TransactionTypes.Add(mockTransactionType);
+                context.Currencies.Add(mockCurrency);
+                userToAdd.CurrencyId = mockCurrency.Id;
+                context.Users.Add(userToAdd);
+                mockCreditCard.User = userToAdd;
+                context.CreditCards.Add(mockCreditCard);
+                context.SaveChanges();
+            }
+
+            // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 result = await sut.DepositAsync(userToAdd.Id, 0, mockCreditCard.Id);
             }
-          
-
         }
 
-
-        [TestMethod]         
+        [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_DoesNotExitst()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
+               .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_DoesNotExitst").Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -117,27 +114,24 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.SaveChanges();
             }
 
-            //Act
+            // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
-                result = await sut.DepositAsync((new Guid()).ToString(), 1, mockCreditCard.Id);
-
+                result = await sut.DepositAsync(Guid.NewGuid().ToString(), 1, mockCreditCard.Id);
             }
-
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenUser_IsNull()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
+                 .UseInMemoryDatabase($"ThrowServerExceptio_WhenUser_IsNull").Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -153,29 +147,25 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.CreditCards.Add(mockCreditCard);
                 context.SaveChanges();
             }
-            //Act
-           
+
+            // Act
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 await sut.DepositAsync(null, 1, mockCreditCard.Id);
             }
-
-
         }
 
         [TestMethod]
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser").Options;
+    .UseInMemoryDatabase($"ThrowServerExceptio_WhenCard_IsNotRegistered_ToUser").Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
-
-
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
             var mockTransactionType = new TransactionType() { Name = "Deposit" };
 
@@ -191,18 +181,16 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.SaveChanges();
             }
 
-            var cardIdNotRegisteredToUser = new Guid();
-            //Act
+            var cardIdNotRegisteredToUser = Guid.NewGuid();
 
+            // Act
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 await sut.DepositAsync(userToAdd.Id, 1m, cardIdNotRegisteredToUser);
-
             }
-
-
         }
+
         [TestMethod]
         [DataRow("-1")]
         [DataRow("-2.14")]
@@ -213,11 +201,11 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
         [ExpectedException(typeof(ServiceException))]
         public async Task ThrowServerExceptio_When_AmountIsNegative(string balanceToHaveStr)
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
+             .UseInMemoryDatabase($"ThrowServerExceptio_When_AmountIsNegative").Options;
 
-            //Arrange
-            var mockCurrency = new Currency() { Id = new Guid(), Name = "FOO" };
+            var mockCurrency = new Currency() { Id = Guid.NewGuid(), Name = "FOO" };
             var userToAdd = new User() { Balance = 0 };
 
             var mockCreditCard = new CreditCard() { Number = "1234123412341234", Cvv = "123", Expiry = DateTime.Now };
@@ -233,14 +221,14 @@ namespace BedeThirteen.Tests.ServicesTests.TransactionServiceTests
                 context.CreditCards.Add(mockCreditCard);
                 context.SaveChanges();
             }
-            //Act
+
+            // Act
             decimal result;
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new TransactionService(context);
                 result = await sut.DepositAsync(userToAdd.Id, decimal.Parse(balanceToHaveStr), mockCreditCard.Id);
-            }           
-
+            }
         }
     }
 }
