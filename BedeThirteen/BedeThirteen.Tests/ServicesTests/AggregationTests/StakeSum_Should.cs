@@ -23,7 +23,7 @@ namespace BedeThirteen.Tests.ServicesTests.AggregationTests
         {
             // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase($"ReturnSum_WhenInput_Isvalid_{numberOfTransactions}").Options;
+                .UseInMemoryDatabase($"ReturnStakeSum_WhenInput_Isvalid_{numberOfTransactions}").Options;
             var stakeTransactionType = new TransactionType() { Name = "Stake", };
             var creationTime = DateTime.Now;
             var baselineTransactionAmount = 2;
@@ -62,7 +62,7 @@ namespace BedeThirteen.Tests.ServicesTests.AggregationTests
         {
             // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase("ReturnSum_WhenInput_Isvalid").Options;
+                .UseInMemoryDatabase("ReturnStakeSum_WhenInput_Isvalid").Options;
 
             var stakeTransactionType = new TransactionType() { Name = "Stake", };
             var creationTime = DateTime.Now;
@@ -111,7 +111,7 @@ namespace BedeThirteen.Tests.ServicesTests.AggregationTests
         {
             // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
-                .UseInMemoryDatabase("ReturnZero_TimeInterval_IsEmpty").Options;
+                .UseInMemoryDatabase("ReturnZeroStake_TimeInterval_IsEmpty").Options;
 
             var stakeTransactionType = new TransactionType() { Name = "Stake" };
             var creationTime = DateTime.MinValue;
