@@ -1,0 +1,82 @@
+﻿@model TransactionsResultViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+
+<body>
+    <partial name="_SearchTypePartial">
+
+        <div class="row text-center">
+            <div class="col-lg-1">
+                <label for="pageSizeDdl">Page size</label>
+                <select id="pageSizeDdl" class="custom-select">
+                    <option selected value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <label for="sortByDdl">Sort by</label>
+                <select id="sortByDdl" class="custom-select">
+                    <option value="date">Date Ascending</option>
+                    <option selected value="date_desc">Date Descenging</option>
+                    <option value="amount">Amount Ascending</option>
+                    <option value="amount_desc">Amount Descending</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <label for="filterByDdl">Filter by</label>
+                <select id="filterByDdl" class="custom-select">
+                    <option selected value="all">All</option>
+                    <option value="date">Date</option>
+                    <option value="amount">Amount</option>
+                    <option value="type">Type</option>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <option value="user">User</option>
+                    }
+                </select>
+            </div>
+
+            <div id="output" class="col-lg-4">
+                <label>Criteria</label>
+                <input id="all" placeholder="All data" class="form-control criteria all" disabled />
+                <div class="input-group">
+                    <input id="date" type='date' data-trigger="manual" data-container="body" data-placement="top" data-content="Must be a valid date!"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control criteria date" style="display: none;" />
+                    <input id="dateA" type='date' data-trigger="manual" data-container="body" data-placement="top" data-content="Must be a valid date!"
+                           value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control criteria date" style="display: none;" />
+                </div>
+                <div class="input-group">
+                    <input type="text" id="amount" data-trigger="manual" data-container="body" data-placement="top"
+                           data-content="Must be a positive number!" placeholder="From" class="form-control criteria amount" style="display: none;" />
+                    <input type="text" id="amountA" data-trigger="manual" data-container="body" data-placement="top"
+                           data-content="Must be a positive number!" placeholder="To" class="form-control criteria amount" style="display: none;" />
+                </div>
+                <input id="user" placeholder="Name" class="form-control criteria user" style="display: none;" />
+                <select id="type" class="custom-select form-control criteria" style="display: none;">
+                    <option selected value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                    <option value="stake">Stake</option>
+                    <option value="win">Win</option>
+                </select>
+            </div>
+            <div class="col-lg-1">
+                <button id="searchBtn" class="btn btn-secondary btn-lg mt-4">
+                    Search
+                </button>
+            </div>
+        </div>
+
+        <div id="searchResult" class="row">
+            <partial name="_SearchResultPartial" model="@Model">
+        </div>
+</body>
+
+@section Scripts {
+    <script src="~/js/search.js"></script>
+}

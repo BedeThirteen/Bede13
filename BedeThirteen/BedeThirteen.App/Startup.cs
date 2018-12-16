@@ -91,10 +91,10 @@ namespace BedeThirteen.App
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped<IGameManager,GameManager>(); 
+            services.AddScoped<IGameManager, GameManager>();
+            services.AddScoped<IDataAggregationService, DataAggregationService>();
 
         }
-
         private void RegisterAuthentication(IServiceCollection services)
         {
             services.AddIdentity<User, IdentityRole>()

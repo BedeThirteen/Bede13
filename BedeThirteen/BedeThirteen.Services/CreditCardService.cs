@@ -26,9 +26,17 @@
                 throw new ServiceException("Invalid parameters!");
             }
 
-            if (await this.context.Users.FindAsync(userId) == null)
+            var user = await this.context.Users
+                .Include(u => u.CreditCards)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
             {
                 throw new ServiceException($"No user found with Id {userId}.");
+            }
+
+            if (user.CreditCards.Any(cc => cc.Number == number))
+            {
+                throw new ServiceException($"User has already a card with number {number}!");
             }
 
             var card = new CreditCard() { Number = number, Cvv = cvv, Expiry = expiry, UserId = userId };
@@ -40,11 +48,6 @@
 
         public async Task<ICollection<CreditCard>> GetUserCardsAsync(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ServiceException("Invalid parameter: userId.");
-            }
-
             if (await this.context.Users.FindAsync(id) == null)
             {
                 throw new ServiceException($"No user found with Id {id}.");

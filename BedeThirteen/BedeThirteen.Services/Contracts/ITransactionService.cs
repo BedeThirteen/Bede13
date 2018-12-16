@@ -1,16 +1,30 @@
-﻿namespace BedeThirteen.Services
+﻿namespace BedeThirteen.Services.Contracts
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services.CompositeModels;
 
     public interface ITransactionService
     {
-        Task<IEnumerable<Transaction>> GetLastNTransactions(int pageLength, int pagesToSkip = 0);
 
         Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId);
 
         Task<decimal> WithdrawAsync(string userId, decimal amount, Guid cardId);
+
+        Task<decimal> StakeAsync(string userId, decimal amount, string gameName);
+
+        Task<decimal> WinAsync(string userId, decimal amount, string gameName);
+
+        Task<TransactionsResult> GetTransactionsAsync(
+            string filterBy,
+            string filterCriteria,
+            string aditionalCriteria,
+            int pageSize,
+            int pageNumber,
+            string sortBy,
+            int archiveKey,
+            string userId);
+
+        Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo);
     }
 }

@@ -7,6 +7,7 @@
     using BedeThirteen.Data.Context;
     using BedeThirteen.Data.Models;
     using BedeThirteen.Services.Contracts;
+    using BedeThirteen.Services.Exceptions;
     using Microsoft.EntityFrameworkCore;
 
     public class CurrencyService : ICurrencyService
@@ -18,15 +19,26 @@
             this.context = context;
         }
 
-        public async Task<Currency> FindCurrencyAsync(Guid currencyId)
+        public async Task<Currency> GetCurrencyAsync(Guid currencyId)
         {
             var currency = await this.context.Currencies.FindAsync(currencyId);
+            if (currency == null)
+            {
+                throw new ServiceException("No currency found!");
+            }
+
             return currency;
         }
 
         public async Task<Currency> GetCurrencyByNameAsync(string name)
         {
-            return await this.context.Currencies.FirstAsync(currency => currency.Name == name);
+            var currency = await this.context.Currencies.FirstOrDefaultAsync(c => c.Name == name);
+            if (currency == null)
+            {
+                throw new ServiceException("No currency found!");
+            }
+
+            return currency;
         }
 
         public async Task<IList<Currency>> GetAllCurrenciesAsync()

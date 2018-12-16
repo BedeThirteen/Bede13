@@ -1,29 +1,33 @@
-﻿<div class="panel panel-primary">
-    <div class="panel-heading"> <h4>Deposit</h4></div>
+﻿@model MoneyAmountViewModel
+<div class="panel panel-primary">
+    <div class="panel-heading"></div>
     <div class="panel-body">
-        <form method="post" >
+        <form method="post">
             <div class="form-group">
-                <label>Credit Card</label>
+                <label class="text-black">Credit Card</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                     </div>
-                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                    <select class="form-control" id="creditCardsDdl"></select>
+                    <span data-validation-for="CardNumber" class="text-danger"></span>
+                    <select name="creditCardsDdl" class="form-control" required id="creditCardsDdl"></select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Amount</label>
+                <label class="text-black">Amount</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-alt"></i></span>
                     </div>
-                    @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-                    <input type="text" id="depositAmount" class="form-control">
+                    <input id="depositAmount" asp-for="Amount" placeholder="Enter Amount" class="form-control">
+
                 </div>
+                <span asp-validation-for="Amount"
+                      class="text-danger"></span>
+
             </div>
-            <button class="btn btn-primary btn-block" id="depositBtn">Deposit</button>
+            <button class="btn btn-primary btn-block mb-3" id="depositBtn">Deposit</button>
         </form>
     </div>
 </div>

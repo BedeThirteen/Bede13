@@ -1,78 +1,87 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BedeThirteen.Tests.ServicesTests.CreditCardServiceTests
+{
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services;
+    using BedeThirteen.Services.Exceptions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BedeThirteen.Tests.ServicesTests.CreditCardServiceTests
-{   
     [TestClass]
     public class GetUserCards_Should
     {
         [TestMethod]
         public async Task GetCards_WhenInputs_AreValid()
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                 .UseInMemoryDatabase("GetCards_WhenInputs_AreValid").Options;
 
             var cardToSeedWith = new[]
             {
                    new CreditCard()
-            {
-                Number = "1234567889101112",
-                Cvv = "123"
-
-            },
-             new CreditCard()
-            {
-                Number = "121110987654321",
-                Cvv = "321"
-            },
-             new CreditCard()
-            {
-                Number = "111110987654321",
-                Cvv = "321"
-            }};
-
-            var cardFromDiffrentUser = new CreditCard()
-            {
-                Number = "121110987654111",
-                Cvv = "321"
+                  {
+                      Number = "1234567889101112",
+                      Cvv = "123"
+                  },
+                   new CreditCard()
+                  {
+                      Number = "121110987654321",
+                      Cvv = "321"
+                  },
+                   new CreditCard()
+                  {
+                      Number = "111110987654321",
+                      Cvv = "321"
+                  }
             };
 
-            var userToAdd = new User();
+            var userToAdd = new User() { Id = "totalyaGuid" };
             var userDiffrentUser = new User();
 
-
-            using (var contex = new BedeThirteenContext(options))
+            using (var context = new BedeThirteenContext(options))
             {
-                contex.Users.Add(userToAdd);
-                contex.Users.Add(userDiffrentUser);
-
-
-                //Act
-                var sut = new CreditCardService(contex);
+                context.Users.Add(userToAdd);
+                context.Users.Add(userDiffrentUser);
+                await context.SaveChangesAsync();
 
                 foreach (var card in cardToSeedWith)
                 {
-                    await sut.AddCreditCardAsync(card.Number, card.Cvv, DateTime.Now, userToAdd.Id);
+                    card.UserId = userToAdd.Id;
+                    context.CreditCards.Add(card);
                 }
 
-                await sut.AddCreditCardAsync(cardFromDiffrentUser.Number, cardFromDiffrentUser.Cvv, DateTime.Now, userDiffrentUser.Id);
+                await context.SaveChangesAsync();
             }
 
-
-            using (var contex = new BedeThirteenContext(options))
+            // Act
+            ICollection<CreditCard> results;
+            using (var context = new BedeThirteenContext(options))
             {
+                var sut = new CreditCardService(context);
+                results = await sut.GetUserCardsAsync(userToAdd.Id);
+            }
 
-                Assert.IsTrue(contex.CreditCards.Any());
-                Assert.IsTrue(contex.CreditCards.Count() ==4);
-                Assert.IsTrue(contex.CreditCards.Count(cc => cc.UserId == userToAdd.Id) == 3);
+            // Assert
+            Assert.IsTrue(results.Any());
+            Assert.IsTrue(results.Count() == 3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public async Task ThrowException_WhenUser_DoesNotExist()
+        {
+            var options = new DbContextOptionsBuilder<BedeThirteenContext>()
+                .UseInMemoryDatabase("ThrowException_WhenUser_DoesNotExist").Options;
+
+            using (var context = new BedeThirteenContext(options))
+            {
+                // Act
+                var sut = new CreditCardService(context);
+                await sut.GetUserCardsAsync("invalidId");
             }
         }
     }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using BedeThirteen.Data.Models.Abstract;
 
     public class Transaction : Entity
@@ -12,6 +13,7 @@
 
         [Required]
         [Range(0, double.MaxValue)]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
         [MaxLength(150)]

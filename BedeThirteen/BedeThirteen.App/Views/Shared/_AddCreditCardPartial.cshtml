@@ -1,18 +1,19 @@
-﻿<form method="post">
+﻿<form id="addCreditCardForm" method="post">
     <div class="form-group">
-        <label for="cardNumber">Card number</label>
+        <label class="text-black">Card number</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
             </div>
-            @*<span asp-validation-for="CardNumber" class="text-danger"></span>*@
-            <input type="text" id="cardNumber" class="form-control" placeholder="">
+            <input name="cardNumber" maxlength="16" id="cardNumber" data-val="true" required class="form-control">
         </div>
+        <label id="cardNumber-error" class="error text-danger" for="cardNumber"></label>
+
     </div>
     <div class="row">
         <div class="col-sm-8">
             <div class="form-group">
-                <label><span class="hidden-xs">Expiration</span> </label>
+                <label class="text-black"><span class="hidden-xs">Expiration</span> </label>
                 <div class="form-inline">
                     <select class="form-control" id="expirationMonth" style="width:45%">
                         @for (int i = 1; i <= 12; i++)
@@ -27,17 +28,21 @@
                             <option>@DateTime.UtcNow.AddYears(i).Year</option>
                         }
                     </select>
+                    <span id="dateError" style="display:none" class="text-danger">Invalid date!</span>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                @*<span asp-validation-for="CardCVV" class="text-danger"></span>*@
-                <input class="form-control" id="cvv" required="" type="text">
+                <label class="text-black" data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+
+                <input class="form-control" name="cvv" id="cvv" required digits maxlength="4" minlenght="3" data-val="true" type="text" placeholder="CVV">
+                <label id="cvv-error" class="error text-danger" for="cvv"></label>
+
             </div>
+            <span class="text-danger field-validation-valid text-center"
+                  data-valmsg-for="cvv" data-valmsg-replace="true"></span>
         </div>
     </div>
-    @*<input name="__RequestVerificationToken" id="verfToken" type="hidden" value=@Html.AntiForgeryToken()>*@
-    <button class="subscribe btn btn-primary btn-block" id="addCardBtn" data-toggle="collapse" href="#collapse1">Add</button>
+    <button class="subscribe btn btn-primary btn-block mb-3" id="addCardBtn">Add</button>
 </form>

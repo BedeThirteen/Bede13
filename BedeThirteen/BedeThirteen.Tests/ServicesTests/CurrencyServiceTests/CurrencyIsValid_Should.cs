@@ -1,12 +1,12 @@
-﻿using BedeThirteen.Data.Context;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
-
-namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
+﻿namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
 {
+    using System.Threading.Tasks;
+    using BedeThirteen.Data.Context;
+    using BedeThirteen.Data.Models;
+    using BedeThirteen.Services;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class CurrencyIsValid_Should
     {
@@ -18,7 +18,7 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
         [DataRow("usd")]
         public async Task ReturnTrue_WhenCurrencyName_Isvalid(string otherCurrencyName)
         {
-            //Arrange
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                     .UseInMemoryDatabase($"ReturnTrue_WhenCurrencyName_Isvalid-{otherCurrencyName}").Options;
 
@@ -29,7 +29,7 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 context.SaveChanges();
             }
 
-
+            // Act && Assert
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new CurrencyService(context);
@@ -47,7 +47,7 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
         [DataRow("usd")]
         public async Task ReturnFalse_WhenCurrencyName_IsInvalid(string otherCurrencyName)
         {
-            //Arrange
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                     .UseInMemoryDatabase($"ReturnFalse_WhenCurrencyName_IsInvalid-{otherCurrencyName}").Options;
 
@@ -58,7 +58,7 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 context.SaveChanges();
             }
 
-
+            // Act && Assert
             using (var context = new BedeThirteenContext(options))
             {
                 var sut = new CurrencyService(context);
@@ -67,14 +67,15 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 Assert.IsFalse(result);
             }
         }
+
         [TestMethod]
-        [DataRow("yen","YEN")]
-        [DataRow("BgN","BGN")]
+        [DataRow("yen", "YEN")]
+        [DataRow("BgN", "BGN")]
         [DataRow("rUb", "RUB")]
-        [DataRow("USD", "USD")] 
-        public async Task Ingnore_CaseSensitivity(string currencyName,string exprected)
+        [DataRow("USD", "USD")]
+        public async Task Ingnore_CaseSensitivity(string currencyName, string exprected)
         {
-            //Arrange
+            // Arrange
             var options = new DbContextOptionsBuilder<BedeThirteenContext>()
                     .UseInMemoryDatabase($"Ingnore_CaseSensitivity-{currencyName}").Options;
 
@@ -84,7 +85,6 @@ namespace BedeThirteen.Tests.ServicesTests.CurrencyServiceTests
                 context.Currencies.Add(testCurrency);
                 context.SaveChanges();
             }
-
 
             using (var context = new BedeThirteenContext(options))
             {

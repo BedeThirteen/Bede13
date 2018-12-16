@@ -12,23 +12,24 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div  >
-    <form class="form-signin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
-        <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+    <form class="form-signin col-10 col-md-4 card mx-auto" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
+        <h1 class="h3 my-3 font-weight-normal text-center">Please sign in</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
-        <label asp-for="Email" class="sr-only"></label>
-        <input id="inputEmail" asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
-        <span asp-validation-for="Email" class="text-danger"></span>
-
-
-        <label asp-for="Password" class="sr-only"></label>
-        <input id="inputPassword" asp-for="Password" class="form-control" placeholder="Password" required />
-        <span asp-validation-for="Password" class="text-danger"></span>
-
+        <div class="form-group">
+            <label asp-for="Email" class="sr-only"></label>
+            <input id="inputEmail" asp-for="Email" class="form-control" placeholder="Email address" required autofocus />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="sr-only"></label>
+            <input id="inputPassword" asp-for="Password" class="form-control" placeholder="Password" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
         <div class="checkbox mb-3">
-            <label asp-for="RememberMe">
+            <label asp-for="RememberMe" class="text-black">
                 <input asp-for="RememberMe" />
                 @Html.DisplayNameFor(m => m.RememberMe)
             </label>
@@ -46,9 +47,6 @@
             </p>
         </div>
     </form>
-
-</div>
- 
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

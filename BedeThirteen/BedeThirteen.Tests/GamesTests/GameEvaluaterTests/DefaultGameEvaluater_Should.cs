@@ -1,9 +1,9 @@
-﻿using BedeThirteen.Games;
-using BedeThirteen.Games.GameEvaluator.Abstract;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
+﻿namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 {
+    using BedeThirteen.Games;
+    using BedeThirteen.Games.GameEvaluator.Abstract;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class DefaultGameEvaluater_Should
     {
@@ -23,7 +23,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 3);
         }
@@ -37,7 +37,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -47,11 +47,11 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
         {
             var testingToken = new Token(1, 5);
             var wildcard = new Token();
-            Token[][] tokens = new Token[][] { new Token[] { testingToken,  wildcard, testingToken } };
+            Token[][] tokens = new Token[][] { new Token[] { testingToken, wildcard, testingToken } };
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -65,7 +65,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 2);
         }
@@ -77,10 +77,11 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == 0);
         }
+
         [DataTestMethod]
         [DataRow("1", 55)]
         [DataRow("2", 8)]
@@ -102,7 +103,7 @@ namespace BedeThirteen.Tests.GamesTests.GameEvaluaterTests
 
             var sut = new DefaultGameEvaluator();
 
-            var res = sut.CalculateCoefficient(tokens);
+            (var res, var lines) = sut.CalculateCoefficientAndLines(tokens);
 
             Assert.IsTrue(res == testingToken.Coefficient * 3 * numberOfRows);
         }

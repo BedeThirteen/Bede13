@@ -2,19 +2,24 @@
 @using BedeThirteen.Data.Models
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
- 
+
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav  ">
-           
             <li class="btn-group">
                 <button type="button" class="btn dropdown-toggle btn-outline-light" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     <span class="fas fa-hand-peace"></span> Hello @UserManager.GetUserName(User)!
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><span class="fas fa-home mr-2"></span> Your Profile</a>
+                    <button class="dropdown-item" asp-area="" asp-controller="Manage" asp-action="ChangePassword" title="Manage"><span class="fas fa-home mr-2"></span> Your Profile</button>
+
+                    @if (User.IsInRole("User"))
+                    {
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-controller="Transaction" asp-action="Search" title="Transactions Panel"><span class="fas fa-unlock mr-2"></span>Transactions</a>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="dropdown-divider"></div>
@@ -26,7 +31,6 @@
             </li>
         </ul>
     </form>
-
 }
 else
 {

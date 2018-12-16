@@ -76,10 +76,10 @@ namespace BedeThirteen.Data.Migrations
 
                     b.HasData(
                         new { Id = new Guid("618d2663-fd74-497e-965b-572076e97ca0"), IsDeleted = false, Name = "none" },
-                        new { Id = new Guid("ff4d9d9a-1f00-47cc-b589-5c467a343b67"), IsDeleted = false, Name = "EUR" },
-                        new { Id = new Guid("9310f845-318a-4f1b-b1fd-c845df9e78c9"), IsDeleted = false, Name = "USD" },
-                        new { Id = new Guid("2bd37350-b648-4d2f-b511-188897edf963"), IsDeleted = false, Name = "BGN" },
-                        new { Id = new Guid("3d449b15-e7a7-4344-97e1-354585461680"), IsDeleted = false, Name = "GBP" }
+                        new { Id = new Guid("00823139-1422-4f85-aaf7-6a077e866985"), IsDeleted = false, Name = "EUR" },
+                        new { Id = new Guid("a426bb10-1572-495b-b19a-cab14876e96e"), IsDeleted = false, Name = "USD" },
+                        new { Id = new Guid("27ec70df-cd0c-4d55-b273-47542b34f239"), IsDeleted = false, Name = "BGN" },
+                        new { Id = new Guid("5ad45dbc-18ac-4193-b6af-290cbedb5b34"), IsDeleted = false, Name = "GBP" }
                     );
                 });
 
@@ -88,7 +88,8 @@ namespace BedeThirteen.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Amount");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("CreatedOn");
 
@@ -142,10 +143,10 @@ namespace BedeThirteen.Data.Migrations
                     b.ToTable("TransactionTypes");
 
                     b.HasData(
-                        new { Id = new Guid("1d67ab84-1ac0-438a-9c0a-6136e6264ba2"), IsDeleted = false, Name = "Withdraw" },
-                        new { Id = new Guid("047669c6-0d3c-4b53-8cbe-c4c67b3cfa50"), IsDeleted = false, Name = "Deposit" },
-                        new { Id = new Guid("79d5466a-6dec-466e-94e4-68aa5b89bb5a"), IsDeleted = false, Name = "Win" },
-                        new { Id = new Guid("fa1355ae-76be-40ec-9cd3-d252e5088f66"), IsDeleted = false, Name = "Stake" }
+                        new { Id = new Guid("1e9d12bb-3624-4873-b791-414062c57289"), IsDeleted = false, Name = "Withdraw" },
+                        new { Id = new Guid("90f2c7c7-6879-484c-9fab-8c5826772f27"), IsDeleted = false, Name = "Deposit" },
+                        new { Id = new Guid("6f39da3b-5b8f-42ba-afbc-70b569b563b0"), IsDeleted = false, Name = "Win" },
+                        new { Id = new Guid("a566914c-7e8a-4456-baec-a32252d8d5e7"), IsDeleted = false, Name = "Stake" }
                     );
                 });
 
@@ -156,7 +157,8 @@ namespace BedeThirteen.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<decimal>("Balance");
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("BirthDate");
 

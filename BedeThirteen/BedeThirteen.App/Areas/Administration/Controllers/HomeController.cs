@@ -1,57 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BedeThirteen.App.Areas.Administration.Models;
+using BedeThirteen.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BedeThirteen.App.Areas.Administration.Models;
-using BedeThirteen.Data.Models;
-using BedeThirteen.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BedeThirteen.App.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin")]
+
     public class HomeController : Controller
     {
-        private readonly ITransactionService transactionService;
-        public HomeController(ITransactionService transactionService)
+        private readonly IDataAggregationService dataAggregationService;
+        private readonly IUserService userService;
+
+
+        public HomeController(IDataAggregationService dataAggregationService, IUserService userService)
         {
-            this.transactionService = transactionService;
+            this.dataAggregationService = dataAggregationService;
+            this.userService = userService;
         }
-        
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var stakeSum = await dataAggregationService.StakesSum(DateTime.MinValue, DateTime.MaxValue);
+            var winSum = await dataAggregationService.WinsSum(DateTime.MinValue, DateTime.MaxValue);
+            var depositSum = await dataAggregationService.DepositSum(DateTime.MinValue, DateTime.MaxValue);
+
+            var withdrawSum = await dataAggregationService.WithdrawSum(DateTime.MinValue, DateTime.MaxValue);
+
+            var model = new HomeViewModel()
+            {
+                StakeSum = decimal.Round(stakeSum, 2, MidpointRounding.AwayFromZero),
+                WinSum = decimal.Round(winSum, 2, MidpointRounding.AwayFromZero),
+                DepositeSum = decimal.Round(depositSum, 2, MidpointRounding.AwayFromZero),
+                WithdrawSum = decimal.Round(withdrawSum, 2, MidpointRounding.AwayFromZero)
+            };
+            return View(model);
         }
 
-        public async Task<IActionResult> Transactions()
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Promote(string email)
         {
-
-            var results = await this.transactionService.GetLastNTransactions(10);
-
-            if (results == null)
+            if (string.IsNullOrEmpty(email))
             {
-                return View(new List<TransactionViewModel>());
-               
+                throw new ArgumentException("Invalid parameter!");
             }
-            else
+            if (await this.userService.PromoteUserAsync(email) == null)
             {
-                var viewModel = new List<TransactionViewModel>();
-                foreach(var transaction in results)
-                {
-                    viewModel.Add(new TransactionViewModel()
-                    {
-                        Amount = transaction.Amount,
-                        Date = transaction.Date,
-                        Id = transaction.Id.ToString(),
-                        User = transaction.User.UserName,
-                        Type = transaction.TransactionType.Name,
-                        Description = transaction.Description
-
-                    });
-
-                };
-                return View(viewModel);
+                throw new ArgumentException("Invalid parameter!");
             }
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> AutoCompleteAsync(string term)
+        {
+            return base.Json((await this.userService.FetchEmailsAsync(term))
+                                        .Select(e => new { Email = e }).ToList());
         }
     }
 }

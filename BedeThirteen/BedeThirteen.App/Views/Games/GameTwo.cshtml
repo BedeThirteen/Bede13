@@ -1,48 +1,7 @@
 ﻿@model GameResult
 
-<div class="container container-fluid">
-    <div class="row justify-content-center">
+@{await Html.RenderPartialAsync("_GamePartial", new GamesViewModel("GameTwo", Model));}
 
-        <!--Slot -->
-        <div class="col-9">
-            <div class="container  container-fluid">
-
-                @foreach (var slotLine in Model.RolledValues)
-                {
-                    <div class="row justify-content-center">
-                        @foreach (var token in slotLine)
-                        {
-                            <div class="col-2 text-center">@token.Type</div>
-                        }
-                    </div>
-
-                }
-            </div>
-        </div>
-        <!--Bet Histroy -->
-        <div class="col-2">
-            Bet History
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-3">
-
-            <span id="gameBalanceAccount"></span>
-        </div>
-        <div class="col-4">
-            <form id="gameStakeForm" asp-area="" asp-controller="Games" asp-action="GameTwo" method="post">
-                <input type="text" name="stakeAmount" placeholder="Your Stake" />
-                <button type="submit">BET</button>
-            </form>
-        </div>
-        <div class="col-3">
-            Coef: @Model.WinCoefficient
-        </div>
-
-    </div>
-    <div class="col-12">
-
-        The RULES AND OR BET History
-    </div>
-
-</div>
+@section Scripts {
+    <script src="~/js/game.js"></script>
+}
