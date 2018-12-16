@@ -26,7 +26,7 @@ namespace BedeThirteen.App.Models.AccountViewModels
         public string Currency { get; set; }
 
         [Required]
-        [OverEighteen]
+      //  [OverEighteen]
         public DateTime DateOfBirth { get; set; }
 
     }

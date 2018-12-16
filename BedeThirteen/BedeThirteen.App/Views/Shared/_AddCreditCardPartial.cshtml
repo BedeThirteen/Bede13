@@ -5,11 +5,10 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
             </div>
-            <input name="cardNumber" id="cardNumber" data-val="true" required class="form-control">
+            <input name="cardNumber" maxlength="16" id="cardNumber" data-val="true" required class="form-control">
         </div>
         <label id="cardNumber-error" class="error text-danger" for="cardNumber"></label>
-        
-         
+
     </div>
     <div class="row">
         <div class="col-sm-8">
@@ -45,5 +44,5 @@
                   data-valmsg-for="cvv" data-valmsg-replace="true"></span>
         </div>
     </div>
-    <button class="subscribe btn btn-primary btn-block mb-3" id="addCardBtn" >Add</button>
+    <button class="subscribe btn btn-primary btn-block mb-3" id="addCardBtn">Add</button>
 </form>

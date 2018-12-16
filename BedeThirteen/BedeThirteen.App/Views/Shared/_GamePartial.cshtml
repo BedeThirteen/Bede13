@@ -1,9 +1,7 @@
 ﻿@model GamesViewModel
-
-
 <div class="container   pt-3 mt-3 w-70  rounded-top">
     <div class="d-inline-flex ">
-        <table class=" p-3 card container-fluid" >
+        <table class=" p-3 card container-fluid">
 
             <tbody id="gameSlotsValues">
 
@@ -41,7 +39,7 @@
 
                     </tr>
                 }
-                 </tbody>
+            </tbody>
         </table>
 
 
@@ -67,38 +65,21 @@
             <h3 class=" h3">Your Bet:</h3>
             <form id="gameStakeForm" asp-area="" asp-controller="Games" asp-action="@Model.GameName" method="post">
 
-                <div class="input-group w-30">
+                <div class="input-group w-50">
                     <input id="stakeAmount" class="form-control" type="text" name="stakeAmount" min="0.10" number data-val="true" data-val-required="Enter amount to bet." placeholder="Your Stake" />
                     <button id="gameBetButton" class="btn" type="submit">BET</button>
                 </div>
-
-
                 <span class="text-danger field-validation-valid text-center"
                       data-valmsg-for="stakeAmount" data-valmsg-replace="true"></span>
-
-
             </form>
         </div>
 
     </div>
-
-
-
-
     <div class="row justify-content-center card">
         <div class="col-3">
             <span id="gameBalanceAccount"></span>
         </div>
         <div class="col-4">
-
-
         </div>
-
-
     </div>
-    <div class="col-12">
-
-        The RULES AND OR BET History
-    </div>
-
 </div>
