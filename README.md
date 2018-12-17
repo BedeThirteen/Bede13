@@ -11,7 +11,7 @@ Telerik Academy Alpha final project, set by Bede Gaming.
   - Charts Representing Money in Site
   - Complex Transaction Filtering with Paging
   - Admin / User Areas
-  - Admin Promting
+  - Admin Promoting
   - Transaction Archiving/Deleting
   
 
