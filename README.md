@@ -1,7 +1,7 @@
 # bede13
 [![Build status](https://dev.azure.com/hristodgunov/hristodgunov/_apis/build/status/Bede13-Master-CI)](https://dev.azure.com/hristodgunov/hristodgunov/_build/latest?definitionId=1) 
 
-Telerik Academy Aplha final project, set by Bede Gaming.
+Telerik Academy Alpha final project, set by Bede Gaming.
 
 ## Features
   Bede13 has some of the following features:
@@ -18,7 +18,7 @@ Telerik Academy Aplha final project, set by Bede Gaming.
 
 ## Technologies
 
-The General technologies used in the developing the Bede13 are these:
+The technologies used in the developing the Bede13 are these:
   - ASP.NET Core 
   - Entity Framework
   - Razor for all of the apps pages
