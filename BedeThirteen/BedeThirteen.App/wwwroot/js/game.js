@@ -11,7 +11,6 @@
     }).done(function (data) {
         $("#gameBetButton").prop("disabled", true);
         RunSlotMachine(0, 16, UpdateSiteData, data);
-
     });
 });
 
@@ -24,8 +23,6 @@ function UpdateSiteData(data) {
 
     AddToGameLog(data.logHistory);
     FlashWinningLines(data.winningLines);
-
-
 }
 
 function UpdateBalance(number, currency) {

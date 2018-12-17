@@ -14,7 +14,7 @@ namespace BedeThirteen.App.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Contact page.";
+            ViewData["Message"] = "Contact support.";
 
             return View();
         }
