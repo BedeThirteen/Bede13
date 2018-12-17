@@ -195,3 +195,7 @@ opition:hover {
 #gamesBtn {
     margin-left: 15%;
 }
+
+.ui-helper-hidden-accessible {
+    display: none;
+}

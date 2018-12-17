@@ -136,7 +136,7 @@ $("#addCreditCardForm").validate({
         cvv: {
             required: true,
             digits: true,
-            minlength: 4,
+            minlength: 3,
             maxlength: 4
         }
     }
