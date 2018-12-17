@@ -11,7 +11,7 @@
     }).done(function (data) {
         $("#gameBetButton").prop("disabled", true);
         RunSlotMachine(0, 16, UpdateSiteData, data);
-      
+
     });
 });
 
@@ -43,7 +43,7 @@ $(function () {
 
     $("#gameBalanceAccount").text($("#balanceValue").text());
 
-     //Sets form's maximum betable amount
+    //Sets form's maximum betable amount
     $("#stakeAmount").attr("max", $("#balanceValue").text().split(" ")[0]);
 })
 
@@ -53,7 +53,7 @@ function AddToGameLog(rolledValues) {
 
 
     rolledValues.forEach(function (msg) {
-        $("#gameBetHistory").append(`<p class="text-dark h4">${msg}</p>`);
+        $("#gameBetHistory").append(`<p class="text-white h5">${msg}</p>`);
     });
 
     let numberOfLogs = $(log).children().length;
@@ -70,7 +70,6 @@ function UpdateSlotsImages(values) {
 
     var tokenToImage = { 0: "wildcard", 1: "apple", 2: "watermelon", 3: "seven" }
 
-
     let rols = $("#gameSlotsValues").children();
     for (let y = 0; y < rols.length; y++) {
         let foo = $(rols[y]);
@@ -86,7 +85,7 @@ function UpdateSlotsImages(values) {
 
 
 
-function UpdateWinnings(amount,currency) {
+function UpdateWinnings(amount, currency) {
     $("#gameWinnings").text(`${amount} ${currency}`);
 }
 function RunSlotMachine(currentSteps, stepsToGo, functionOnEnd, data) {
@@ -112,11 +111,11 @@ function RandomizeSlots() {
     var tokenToImage = { 0: "wildcard", 1: "apple", 2: "watermelon", 3: "seven" }
 
     let rols = $("#gameSlotsValues").children();
-    for (let y = 0; y < rols.length; y++) { 
+    for (let y = 0; y < rols.length; y++) {
 
         let line = $(rols[y]).children();
         for (let x = 0; x < line.length; x++) {
-             
+
             let s = $(line[x]).children().first("a");
             s.attr("src", `/images/slot/${tokenToImage[Math.floor((Math.random() * 4))]}.png`);
         }
@@ -141,7 +140,7 @@ function FlashWinningLines(winningRows) {
 
         }, 1700);
         setTimeout(function () {
-           
+
             el.css("background-color", "");
 
         }, 2200);
@@ -157,5 +156,3 @@ function FlashWinningLines(winningRows) {
         }, 2800);
     }
 }
-
- 

@@ -1,7 +1,7 @@
 ﻿@model GamesViewModel
 <div class="container   pt-3 mt-3 w-70  rounded-top">
-    <div class="d-inline-flex ">
-        <table class=" p-3 card container-fluid">
+    <div id="gameBackgroundContainer" class="d-inline-flex ">
+        <table class=" p-3 container-fluid">
 
             <tbody id="gameSlotsValues">
 
@@ -34,9 +34,7 @@
                             <td class="w-20 mx-auto">
                                 <img class=" slotImg img-fluid rounded" src="~/images/slot/@(imageName).png" alt="@token.Type" />
                             </td>
-
                         }
-
                     </tr>
                 }
             </tbody>
@@ -44,8 +42,8 @@
 
 
         <!--Bet Histroy -->
-        <div id="gameBetHistory" class="col-md-5 d-none d-sm-block text-black card">
-            Bet History
+        <div id="gameBetHistory" class="col-md-5 d-none d-sm-block text-white">
+            <h4> Bet History</h4>
         </div>
 
     </div>

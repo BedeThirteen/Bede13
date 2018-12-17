@@ -35,10 +35,10 @@
     <div class="form-group">
         <input type="date" asp-for="DateOfBirth" class="form-control" id="dateOfBirth" required />
         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        <span id="birthDateError" style="display:none" class="text-red">Invalid Date of birth.</span>
     </div>
-
     <div class="form-group">
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+        <button id="registerBtn" type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
     </div>
 </form>
 
