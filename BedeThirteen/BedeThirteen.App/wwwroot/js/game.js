@@ -23,7 +23,7 @@ function UpdateSiteData(data) {
     UpdateSlotsImages(data.rolledValues);
 
     AddToGameLog(data.logHistory);
-    FlashWinningLines(data.winningLines)
+    FlashWinningLines(data.winningLines);
 
 
 }
@@ -122,37 +122,33 @@ function RandomizeSlots() {
     }
 }
 
+
+$("#gameBetButton").click(function () {
+
+    let rows = $("#gameSlotsValues").children();
+    for (var i = 0; i < rows.length; i++) {
+        let el = $(rows[i]);
+        el.css(
+            {
+                "border-color": "",
+                "border-style": "",
+                "border-width": ""
+            }
+        );
+    }
+});
+
 function FlashWinningLines(winningRows) {
 
     let rows = $("#gameSlotsValues").children();
     for (var i = 0; i < winningRows.length; i++) {
         let el = $(rows[winningRows[i]]);
-        el.css("background-color", "green");
-
-        setTimeout(function () {
-
-            el.css("background-color", "");
-
-        }, 1000);
-        setTimeout(function () {
-
-            el.css("background-color", "green");
-
-        }, 1700);
-        setTimeout(function () {
-
-            el.css("background-color", "");
-
-        }, 2200);
-        setTimeout(function () {
-
-            el.css("background-color", "green");
-
-        }, 2500);
-        setTimeout(function () {
-
-            el.css("background-color", "");
-
-        }, 2800);
+        el.css(
+            {
+                "border-color": "red",
+                "border-style": "solid",
+                "border-width": "5px"
+            }
+        );
     }
 }

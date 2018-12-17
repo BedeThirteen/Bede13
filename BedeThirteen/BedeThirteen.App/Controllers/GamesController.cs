@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BedeThirteen.Data.Models;
 using BedeThirteen.Games;
 using BedeThirteen.Games.Abstract;
-using BedeThirteen.Services;
 using BedeThirteen.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BedeThirteen.App.Controllers
