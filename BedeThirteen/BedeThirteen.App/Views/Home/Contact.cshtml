@@ -2,21 +2,41 @@
     ViewData["Title"] = "Contact";
 }
 
-
-
-<h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<div class="card card-block bg-faded p-4">
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<div class="container text-white">
+    <div class="row">
+        <div class="col-lg-6">
+            <h4 class="">Address</h4>
+            <div>
+                31 Alexander Malinov Blvd.
+                Sofia 1729, Bulgaria
+            </div>
+            <h4>Email</h4>
+            <div>
+                <a class="text-white" href="mailto:support@bedeThirteen.com">support@bedeThirteen.com</a>
+            </div>
+            <h4>Phone</h4>
+            <div>+359 111 1111</div>
+        </div>
 
-    <address>
-        <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+        <div class="col-lg-6">
+            <div id="map"></div>
+            <script>
+                // Initialize and add the map
+                function initMap() {
+                    // The location of Uluru
+                    var uluru = { lat: 42.65084700000001, lng: 23.379431000000068 };
+                    // The map, centered at Uluru
+                    var map = new google.maps.Map(
+                        document.getElementById('map'), { zoom: 18, center: uluru });
+                    // The marker, positioned at Uluru
+                    var marker = new google.maps.Marker({ position: uluru, map: map });
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbGBfxwfVNuXS1OY-O8qbuglmWIbkEC70&callback=initMap">
+            </script>
+        </div>
+    </div>
 </div>

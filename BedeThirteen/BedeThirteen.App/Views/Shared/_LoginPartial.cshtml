@@ -19,6 +19,8 @@
                     {
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" asp-controller="Transaction" asp-action="Search" title="Transactions Panel"><span class="fas fa-unlock mr-2"></span>Transactions</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Contact" title="Contact support"><span class="fas fa-headset mr-2"></span>Contact support</a>
                     }
                     @if (User.IsInRole("Admin"))
                     {

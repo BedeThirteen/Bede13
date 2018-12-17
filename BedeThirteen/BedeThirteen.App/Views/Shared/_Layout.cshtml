@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top  bg-primary">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
 
-            <img class="logoImg" src="~/images/logo/logo.png" title="logo" alt="Bede13" />
+            <img class="logoImg" src="~/images/logo/logo.png" title="bede13" alt="Bede13" />
 
 
         </a>
@@ -39,25 +39,21 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
 
-                @*<li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
-
                 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                 {
-                    <li class="btn-group">
+                    <li class="btn-group ml-4">
                         <button type="button" class="btn dropdown-toggle btn-outline-light" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span class="fas fa-hand-peace"></span> Games
+                            <i class="fas fa-dice"></i> Games
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameOne"><span class="fas fa-dice"></span> 4x3</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameOne"><span class="fas fa-dice-four"></span> 4x3</a>
                             <div class="dropdown-divider"></div>
 
-                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameTwo"><span class="fas fa-dice"></span> 5x5</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameTwo"><span class="fas fa-dice-five"></span> 5x5</a>
                             <div class="dropdown-divider"></div>
 
-                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameThree"><span class="fas fa-dice"></span> 8x5</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Games" asp-action="GameThree"><span class="fas fa-dice-six"></span> 8x5</a>
                         </div>
                     </li>
                 }

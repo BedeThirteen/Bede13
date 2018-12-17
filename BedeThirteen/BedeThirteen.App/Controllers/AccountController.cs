@@ -128,7 +128,7 @@
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, BirthDate=model.DateOfBirth };
 
                 user.Currency = await _currencyService.GetCurrencyAsync(model.CurrencyId);
 
