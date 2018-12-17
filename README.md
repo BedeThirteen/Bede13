@@ -18,7 +18,7 @@ Telerik Academy Aplha final project, set by Bede Gaming.
 
 ## Technologies
 
-The General technologies used in the developing the SmartDormitoryApp are these:
+The General technologies used in the developing the Bede13 are these:
   - ASP.NET Core 
   - Entity Framework
   - Razor for all of the apps pages
