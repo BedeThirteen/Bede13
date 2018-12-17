@@ -30,3 +30,15 @@ The technologies used in the developing the Bede13 are these:
   - 97% Unit test code coverage of the Service Layer
 
 Contributors: Georgi Ivanov and Hristo Gunov.
+
+# Screenshots
+
+
+|                                     |                                |
+| ----------------------------------- |:------------------------------:|
+| ![alt tag](./Screenshots/1.png)     | ![alt tag](./Screenshots/2.png)|
+| ![alt tag](./Screenshots/3.png)     | ![alt tag](./Screenshots/4.png)|
+| ![alt tag](./Screenshots/5.png)     | ![alt tag](./Screenshots/6.png)|
+| ![alt tag](./Screenshots/7.png)     | ![alt tag](./Screenshots/8.png)|
+| ![alt tag](./Screenshots/9.png)     |				       |
+| ![alt tag](./Screenshots/10.png)    |				       |
