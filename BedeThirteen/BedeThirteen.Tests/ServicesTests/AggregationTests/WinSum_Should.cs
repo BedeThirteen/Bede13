@@ -149,6 +149,5 @@
                 Assert.IsTrue(result == 0);
             }
         }
-
     }
 }
