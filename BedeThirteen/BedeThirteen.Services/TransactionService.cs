@@ -103,9 +103,11 @@
             return new TransactionsResult() { Transactions = result, TotalCount = count };
         }
 
-        public async Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId)
+
+        private async Task<decimal> AddBalanceTargetedTransaction(string userId, decimal changeInBalance, Guid cardId, TransactionType type)
         {
-            if (string.IsNullOrEmpty(userId) || amount <= 0 || string.IsNullOrEmpty(cardId.ToString()))
+
+            if (string.IsNullOrEmpty(userId) || changeInBalance == 0 || string.IsNullOrEmpty(cardId.ToString()))
             {
                 throw new ServiceException("Invalid parameters!");
             }
@@ -118,72 +120,56 @@
                 throw new ServiceException($"Invalid credit card!");
             }
 
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
-
+            if (user.Balance + changeInBalance < 0)
+            {
+                throw new ServiceException("Invalid amount!");
+            }
             var deposit = new Transaction()
             {
                 Date = DateTime.UtcNow,
-                Amount = amount,
-                Description = $"Deposit with card {this.Mask(card.Number)}",
+                Amount = Math.Abs(changeInBalance),
+                Description = $"{type.Name} with card {this.Mask(card.Number)}",
                 UserId = userId,
                 TransactionTypeId = type.Id
             };
 
             this.context.Transactions.Add(deposit);
-            user.Balance += deposit.Amount;
+
+            user.Balance += changeInBalance;
 
             await this.context.SaveChangesAsync();
 
             return user.Balance;
+        }
+
+
+        public async Task<decimal> DepositAsync(string userId, decimal amount, Guid cardId)
+        {
+            if (amount <= 0)
+            {
+                throw new ServiceException("Invalid parameters!");
+            }
+
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Deposit");
+            return await this.AddBalanceTargetedTransaction(userId, amount, cardId,type);
         }
 
         public async Task<decimal> WithdrawAsync(string userId, decimal amount, Guid cardId)
         {
-            if (string.IsNullOrEmpty(userId) || amount <= 0 || string.IsNullOrEmpty(cardId.ToString()))
+            if (amount <= 0)
             {
                 throw new ServiceException("Invalid parameters!");
-            }
-
-            var user = await this.context.Users.FindAsync(userId);
-
-            if (user == null)
-            {
-                throw new ServiceException("User not found.");
-            }
-
-            if (user.Balance < amount)
-            {
-                throw new ServiceException("Invalid amount!");
-            }
-
-            var card = await this.context.CreditCards.FirstOrDefaultAsync(c => c.Id == cardId && c.UserId == userId);
-            if (card == null)
-            {
-                throw new ServiceException($"Invalid credit card!");
             }
 
             var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Withdraw");
-
-            var withdraw = new Transaction()
-            {
-                Date = DateTime.UtcNow,
-                Amount = amount,
-                Description = $"Withdraw to card {this.Mask(card.Number)}",
-                UserId = userId,
-                TransactionTypeId = type.Id
-            };
-
-            this.context.Transactions.Add(withdraw);
-            user.Balance -= withdraw.Amount;
-
-            await this.context.SaveChangesAsync();
-
-            return user.Balance;
+            return await this.AddBalanceTargetedTransaction(userId, -1 * amount, cardId, type);
         }
 
-        public async Task<decimal> StakeAsync(string userId, decimal amount, string gameName)
+
+        private async Task<decimal> AddGameTargetedTransaction(string userId, decimal amount,
+            string gameName, TransactionType type)
         {
-            if (string.IsNullOrEmpty(userId) || amount <= 0)
+            if (string.IsNullOrEmpty(userId) || amount == 0)
             {
                 throw new ServiceException("Invalid parameters!");
             }
@@ -195,61 +181,49 @@
                 throw new ServiceException("User not found.");
             }
 
-            if (user.Balance < amount)
+            if (user.Balance + amount < 0)
             {
                 throw new ServiceException("Invalid amount!");
             }
-
-            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
 
             var stake = new Transaction()
             {
                 Date = DateTime.UtcNow,
                 Amount = amount,
-                Description = $"Stake on game {gameName}",
+                Description = $"{type.Name} on game {gameName}",
                 UserId = userId,
                 TransactionTypeId = type.Id
             };
 
             this.context.Transactions.Add(stake);
-            user.Balance -= stake.Amount;
+            user.Balance += amount;
 
             await this.context.SaveChangesAsync();
 
             return user.Balance;
         }
 
-        public async Task<decimal> WinAsync(string userId, decimal amount, string gameName)
+            public async Task<decimal> StakeAsync(string userId, decimal amount, string gameName)
         {
-            if (string.IsNullOrEmpty(userId) || amount <= 0)
+            if(amount <= 0)
             {
                 throw new ServiceException("Invalid parameters!");
             }
 
-            var user = await this.context.Users.FindAsync(userId);
+            var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Stake");
 
-            if (user == null)
+            return await this.AddGameTargetedTransaction(userId, -1 * amount, gameName, type);
+        }
+
+        public async Task<decimal> WinAsync(string userId, decimal amount, string gameName)
+        {
+            if (amount <= 0)
             {
-                throw new ServiceException("User not found.");
+                throw new ServiceException("Invalid parameters!");
             }
 
             var type = await this.context.TransactionTypes.FirstOrDefaultAsync(tt => tt.Name == "Win");
-
-            var win = new Transaction()
-            {
-                Date = DateTime.UtcNow,
-                Amount = amount,
-                Description = $"Win on game {gameName}",
-                UserId = userId,
-                TransactionTypeId = type.Id
-            };
-
-            this.context.Transactions.Add(win);
-            user.Balance += win.Amount;
-
-            await this.context.SaveChangesAsync();
-
-            return user.Balance;
+            return await this.AddGameTargetedTransaction(userId, amount, gameName, type);
         }
 
         public async Task<int> ArchiveTransactionsAsync(DateTime dateFrom, DateTime dateTo)
